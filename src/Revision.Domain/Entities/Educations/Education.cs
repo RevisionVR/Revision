@@ -1,6 +1,7 @@
 ﻿using Revision.Domain.Commons;
-using Revision.Domain.Entities.Categories.EducationCategories;
 using Revision.Domain.Entities.Users;
+using Revision.Domain.Entities.Addresses;
+using Revision.Domain.Entities.Categories.EducationCategories;
 
 namespace Revision.Domain.Entities.Educations;
 
@@ -15,8 +16,9 @@ public class Education : Auditable
     public long UserId { get; set; }
     public User User { get; set; }
 
+    public long AddressId { get; set; }
+    public Address Address { get; set; }
 
     public long EducationCategoryId {  get; set; }
     public EducationCategory EducationCategory { get; set; }
-    // addres
 }
