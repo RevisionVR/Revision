@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: revision-backend-container
+    image: revision-backend-image:latest
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 8080:80
+      - 4343:443
+    
