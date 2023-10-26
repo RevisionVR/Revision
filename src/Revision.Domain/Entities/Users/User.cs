@@ -1,5 +1,6 @@
-﻿using Revision.Domain.Commons;
-using Revision.Domain.Enums;
+﻿using Revision.Domain.Enums;
+using Revision.Domain.Commons;
+using Revision.Domain.Entities.Addresses;
 
 namespace Revision.Domain.Entities.Users;
 
@@ -12,7 +13,9 @@ public class User : Auditable
     public string PhoneNumber { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string Salt { get; set; } = string.Empty;
-    // adress
     public Gender Gender { get; set; }
     public Role Role { get; set; }
+
+    public long AddressId { get; set; }
+    public Address Address { get; set; }
 }
