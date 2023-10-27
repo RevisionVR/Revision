@@ -44,7 +44,6 @@ public class MappingProfile : Profile
 
         //Countries
         CreateMap<Country, CountryResultDto>().ReverseMap();
-        CreateMap<Country, CountryUpdateDto>().ReverseMap();
         CreateMap<Country, CountryCreationDto>().ReverseMap();
 
         //DevicePayments
