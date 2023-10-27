@@ -5,7 +5,7 @@ namespace Revision.Domain.Entities.Payments;
 
 public class DevicePayment : Auditable
 {
-    public decimal Price { get; set; } 
+    public decimal Price { get; set; }
     public decimal TotalPrice { get; set; }
     public int DeviceCount { get; set; }
     public DateTime LastDay { get; set; }

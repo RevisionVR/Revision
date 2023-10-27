@@ -1,6 +1,6 @@
 ﻿using Revision.Domain.Commons;
-using System.Collections.ObjectModel;
 using Revision.Domain.Entities.Educations;
+using System.Collections.ObjectModel;
 
 namespace Revision.Domain.Entities.Categories.EducationCategories;
 
