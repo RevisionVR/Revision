@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Revision.DataAccess\Revision.DataAccess.csproj" />
     <ProjectReference Include="..\Revision.Domain\Revision.Domain.csproj" />
   </ItemGroup>
 
