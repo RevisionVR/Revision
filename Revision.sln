@@ -7,13 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.WebApi", "src\Revi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Test", "tests\Revision.Test\Revision.Test.csproj", "{334667B1-2D41-4FB1-B916-FA6CC6A9C0F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revision.Domain", "src\Revision.Domain\Revision.Domain.csproj", "{5437B831-4556-4963-B26F-3B829E7C4F03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Domain", "src\Revision.Domain\Revision.Domain.csproj", "{5437B831-4556-4963-B26F-3B829E7C4F03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revision.Service", "src\Revision.Service\Revision.Service.csproj", "{88C7CF56-ABDA-4C1C-A3DE-250F64C0CCA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Service", "src\Revision.Service\Revision.Service.csproj", "{88C7CF56-ABDA-4C1C-A3DE-250F64C0CCA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revision.DataAccess", "src\Revision.DataAccess\Revision.DataAccess.csproj", "{AE027893-9DD9-4C40-A1F3-11EBF3D1C89D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.DataAccess", "src\Revision.DataAccess\Revision.DataAccess.csproj", "{AE027893-9DD9-4C40-A1F3-11EBF3D1C89D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revision.Wep", "src\Revision.Wep\Revision.Wep.csproj", "{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Wep", "src\Revision.Wep\Revision.Wep.csproj", "{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revision.Shared", "src\Revision.Shared\Revision.Shared.csproj", "{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
