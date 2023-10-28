@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
+using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Regions;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
 
-namespace Revision.Service.Services.Regions;
+namespace Revision.Service.Services.Addresses;
 
 public class RegionService : IRegionService
 {
@@ -32,6 +33,8 @@ public class RegionService : IRegionService
         foreach (var region in regions)
         {
             var mappedRegion = _mapper.Map<Region>(region);
+            mappedRegion.CreatedAt = TimeHelper.GetDateTime();
+
             await _regionRepository.AddAsync(mappedRegion);
             await _regionRepository.SaveAsync();
         }
@@ -40,10 +43,11 @@ public class RegionService : IRegionService
 
     public async Task<RegionResultDto> GetByIdAsync(long id)
     {
-        var region = await _regionRepository.SelectAsync(r => r.Id.Equals(id), includes: new[] { "Country" })
+        var existRegion = await _regionRepository.SelectAsync(region => region.Id.Equals(id), 
+            includes: new[] { "Country" })
             ?? throw new RevisionException(404, "This region is not found");
 
-        return _mapper.Map<RegionResultDto>(region);
+        return _mapper.Map<RegionResultDto>(existRegion);
     }
 
     public async Task<IEnumerable<RegionResultDto>> GetAllAsync()
