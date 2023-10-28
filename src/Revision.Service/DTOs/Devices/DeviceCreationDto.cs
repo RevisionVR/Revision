@@ -8,6 +8,5 @@ public class DeviceCreationDto
     public decimal Price { get; set; }
     public bool Glove { get; set; }
     public bool Fragrant { get; set; }
-    public DeviceStatus Status { get; set; }
     public long EducationId { get; set; }
 }
