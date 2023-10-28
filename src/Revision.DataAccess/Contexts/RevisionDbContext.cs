@@ -38,7 +38,8 @@ public class RevisionDbContext : DbContext
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<SubjectCategory> SubjectCategories { get; set; }
     public DbSet<UserAddress> UserAddresses { get; set; }
-    
+    public DbSet<EducationAddress> EducationAddresses { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         #region Filtering "IsDeleted" status for entities
@@ -50,7 +51,6 @@ public class RevisionDbContext : DbContext
         modelBuilder.Entity<Message>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Room>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Conversation>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<UserAddress>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<AdminRoom>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<EducationRoom>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Education>().HasQueryFilter(e => !e.IsDeleted);
@@ -61,6 +61,8 @@ public class RevisionDbContext : DbContext
         modelBuilder.Entity<Topic>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Subject>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<SubjectCategory>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<UserAddress>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<EducationAddress>().HasQueryFilter(e => !e.IsDeleted);
         #endregion
     }
 }
