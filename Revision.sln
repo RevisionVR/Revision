@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.DataAccess", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Wep", "src\Revision.Wep\Revision.Wep.csproj", "{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revision.Shared", "src\Revision.Shared\Revision.Shared.csproj", "{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Shared", "src\Revision.Shared\Revision.Shared.csproj", "{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
