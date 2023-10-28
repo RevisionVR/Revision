@@ -9,6 +9,7 @@ using Revision.Service.Exceptions;
 using Revision.Service.Commons.Security;
 using Revision.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Revision.Service.Commons.Helpers;
 
 namespace Revision.Service.Services.Users;
 
@@ -35,7 +36,7 @@ public class UserService : IUserService
         mappedUser.Role = Role.User;
         mappedUser.Salt = result.Salt;
         mappedUser.PasswordHash = result.Hash;
-
+        mappedUser.CreatedAt = TimeHelper.GetDateTime();
 
         await _userRepository.AddAsync(mappedUser);
         await _userRepository.SaveAsync();
@@ -54,13 +55,14 @@ public class UserService : IUserService
         if (checkUser is not null)
             throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
 
-        var mappedUser = _mapper.Map<User>(dto);
+        var mappedUser = _mapper.Map(dto, existUser);
 
         var result = PasswordHasher.Hash(dto.Password);
         mappedUser.Id = id;
         mappedUser.Role = Role.User;
         mappedUser.Salt = result.Salt;
         mappedUser.PasswordHash = result.Hash;
+        mappedUser.UpdatedAt = TimeHelper.GetDateTime();
 
         _userRepository.Update(mappedUser);
         await _userRepository.SaveAsync();
@@ -75,6 +77,7 @@ public class UserService : IUserService
            ?? throw new RevisionException(404, "This user is not found");
 
         _userRepository.Delete(existUser);
+         await _userRepository.SaveAsync();
         return true;
     }
 
@@ -97,7 +100,11 @@ public class UserService : IUserService
         var existUser = await _userRepository.SelectAsync(u => u.Id.Equals(id))
              ?? throw new RevisionException(404, "This user is not found");
 
+        existUser.Id = id;
         existUser.Role = role;
+        existUser.UpdatedAt = TimeHelper.GetDateTime();
+
+        _userRepository.Update(existUser);
         await _userRepository.SaveAsync();
 
         return _mapper.Map<UserResultDto>(existUser);

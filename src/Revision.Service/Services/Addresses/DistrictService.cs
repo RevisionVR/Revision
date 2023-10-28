@@ -6,8 +6,9 @@ using Revision.Service.DTOs.Districts;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Commons.Helpers;
 
-namespace Revision.Service.Services.Districts;
+namespace Revision.Service.Services.Addresses;
 
 public class DistrictService : IDistrictService
 {
@@ -32,6 +33,8 @@ public class DistrictService : IDistrictService
         foreach (var district in districts)
         {
             var mappedDistrict = _mapper.Map<District>(district);
+            mappedDistrict.CreatedAt = TimeHelper.GetDateTime();
+
             await _districtRepository.AddAsync(mappedDistrict);
             await _districtRepository.SaveAsync();
         }
@@ -40,15 +43,17 @@ public class DistrictService : IDistrictService
 
     public async Task<DistrictResultDto> GetByIdAsync(long id)
     {
-        var district = await _districtRepository.SelectAsync(r => r.Id.Equals(id), includes: new[] { "Region.Country" })
+        var existDistrict = await _districtRepository.SelectAsync(district => district.Id.Equals(id),
+            includes: new[] { "Region.Country" })
             ?? throw new RevisionException(404, "This district is not found");
 
-         return _mapper.Map<DistrictResultDto>(district);
+        return _mapper.Map<DistrictResultDto>(existDistrict);
     }
 
     public async Task<IEnumerable<DistrictResultDto>> GetAllAsync()
     {
-        var districts = await _districtRepository.SelectAll(includes: new[] { "Region.Country" }).ToListAsync();
+        var districts = await _districtRepository.SelectAll(includes: new[] { "Region.Country" })
+            .ToListAsync();
         return _mapper.Map<IEnumerable<DistrictResultDto>>(districts);
     }
 }

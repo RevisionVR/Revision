@@ -6,8 +6,9 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Interfaces.Addresses;
 using Microsoft.EntityFrameworkCore;
+using Revision.Service.Commons.Helpers;
 
-namespace Revision.Service.Services.Countries;
+namespace Revision.Service.Services.Addresses;
 
 public class CountryService : ICountryService
 {
@@ -23,7 +24,7 @@ public class CountryService : ICountryService
     {
         var dbSource = _countryRepository.SelectAll();
         if (dbSource.Any())
-            throw new RevisionException(403,"Countries already exist");
+            throw new RevisionException(403, "Countries already exist");
 
         string path = "";
         var source = File.ReadAllText(path);
@@ -32,18 +33,20 @@ public class CountryService : ICountryService
         foreach (var country in countries)
         {
             var mappedCountry = _mapper.Map<Country>(country);
+            mappedCountry.CreatedAt = TimeHelper.GetDateTime();
+
             await _countryRepository.AddAsync(mappedCountry);
             await _countryRepository.SaveAsync();
         }
         return true;
     }
-    
+
     public async Task<CountryResultDto> GetByIdAsync(long id)
     {
-        var country = await _countryRepository.SelectAsync(r => r.Id.Equals(id))
+        var existCountry = await _countryRepository.SelectAsync(country => country.Id.Equals(id))
             ?? throw new RevisionException(404, "This country is not found");
 
-        return _mapper.Map<CountryResultDto>(country);
+        return _mapper.Map<CountryResultDto>(existCountry);
     }
 
     public async Task<IEnumerable<CountryResultDto>> GetAllAsync()
