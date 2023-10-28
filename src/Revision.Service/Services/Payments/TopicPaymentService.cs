@@ -85,7 +85,8 @@ public class TopicPaymentService : ITopicPaymentService
 
     public async Task<TopicPaymentResultDto> GetByIdAsync(long id)
     {
-        var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
+        var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id),
+            includes: new[] { "Topic", "Education" })
             ?? throw new RevisionException(404, "This topic payment is not found");
 
         return _mapper.Map<TopicPaymentResultDto>(existPayment);
@@ -93,7 +94,7 @@ public class TopicPaymentService : ITopicPaymentService
 
     public async Task<IEnumerable<TopicPaymentResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var topicPayments = await _paymentRepository.SelectAll()
+        var topicPayments = await _paymentRepository.SelectAll(includes: new[] { "Topic", "Education" } )
             .ToPaginate(pagination)
             .ToListAsync();
 
