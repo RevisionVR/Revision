@@ -57,11 +57,8 @@ public class UserService : IUserService
 
         var mappedUser = _mapper.Map(dto, existUser);
 
-        var result = PasswordHasher.Hash(dto.Password);
         mappedUser.Id = id;
         mappedUser.Role = Role.User;
-        mappedUser.Salt = result.Salt;
-        mappedUser.PasswordHash = result.Hash;
         mappedUser.UpdatedAt = TimeHelper.GetDateTime();
 
         _userRepository.Update(mappedUser);
