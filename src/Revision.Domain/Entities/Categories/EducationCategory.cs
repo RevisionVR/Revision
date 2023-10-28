@@ -2,7 +2,7 @@
 using Revision.Domain.Entities.Educations;
 using System.Collections.ObjectModel;
 
-namespace Revision.Domain.Entities.Categories.EducationCategories;
+namespace Revision.Domain.Entities.Categories;
 
 public class EducationCategory : Auditable
 {

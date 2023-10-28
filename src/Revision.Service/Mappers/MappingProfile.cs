@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Revision.Domain.Entities.Addresses;
-using Revision.Domain.Entities.Categories.EducationCategories;
-using Revision.Domain.Entities.Categories.SubjectCategories;
+using Revision.Domain.Entities.Categories;
 using Revision.Domain.Entities.Chats.Messages;
 using Revision.Domain.Entities.Chats.Rooms;
 using Revision.Domain.Entities.Devices;

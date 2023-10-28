@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
-using Revision.Domain.Entities.Categories.SubjectCategories;
+using Revision.Domain.Entities.Categories;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.Exceptions;

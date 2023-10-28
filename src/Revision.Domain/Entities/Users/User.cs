@@ -15,7 +15,4 @@ public class User : Auditable
     public string Salt { get; set; } = string.Empty;
     public Gender Gender { get; set; }
     public Role Role { get; set; }
-
-    public long AddressId { get; set; }
-    public Address Address { get; set; }
 }
