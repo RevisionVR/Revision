@@ -56,6 +56,7 @@ public class SubjectService : ISubjectService
             ?? throw new RevisionException(404, "This subject category is not found");
 
         var mappedSubject = _mapper.Map(dto, existSubject);
+        mappedSubject.Id = id;
         mappedSubject.SubjectCategory = existCategory;
         mappedSubject.UpdatedAt = TimeHelper.GetDateTime();
 
