@@ -6,5 +6,5 @@ public interface IDistrictService
 {
     Task<bool> SetAsync();
     Task<DistrictResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<DistrictResultDto>> GetByIdAsync();
+    Task<IEnumerable<DistrictResultDto>> GetAllAsync();
 }
