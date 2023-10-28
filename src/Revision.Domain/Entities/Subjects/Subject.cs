@@ -1,4 +1,5 @@
 ﻿using Revision.Domain.Commons;
+using Revision.Domain.Entities.Topics;
 using Revision.Domain.Entities.Categories.SubjectCategories;
 
 namespace Revision.Domain.Entities.Subjects;
@@ -9,4 +10,5 @@ public class Subject : Auditable
 
     public long SubjectCategoryId { get; set; }
     public SubjectCategory SubjectCategory { get; set; }
+    public ICollection<Topic> Topics { get; set; }
 }
