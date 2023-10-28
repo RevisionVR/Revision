@@ -6,5 +6,5 @@ public interface ICountryService
 {
     Task<bool> SetAsync();
     Task<CountryResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<CountryResultDto>> GetByIdAsync();
+    Task<IEnumerable<CountryResultDto>> GetAllAsync();
 }

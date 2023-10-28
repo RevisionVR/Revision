@@ -53,7 +53,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditabl
         return await entities.FirstOrDefaultAsync();
     }
 
-    public IQueryable<TEntity> Select(Expression<Func<TEntity, bool>> expression = null, bool isTracking = false, string[] includes = null)
+    public IQueryable<TEntity> SelectAll(Expression<Func<TEntity, bool>> expression = null, bool isTracking = false, string[] includes = null)
     {
         IQueryable<TEntity> entities = expression == null ? _dbSet.AsQueryable()
             : _dbSet.Where(expression).AsQueryable();
