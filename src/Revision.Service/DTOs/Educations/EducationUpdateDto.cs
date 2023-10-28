@@ -8,6 +8,5 @@ public class EducationUpdateDto
     public string Email { get; set; } = string.Empty;
     public string Description { get; set; }
     public long UserId { get; set; }
-    public long AddressId { get; set; }
     public long EducationCategoryId { get; set; }
 }

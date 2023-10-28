@@ -13,5 +13,4 @@ public class UserResultDto
     public string Phone { get; set; } = string.Empty;
     public Gender Gender { get; set; }
     public Role Role { get; set; }
-    public AddressResultDto Address { get; set; }
 }

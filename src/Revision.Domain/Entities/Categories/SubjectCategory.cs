@@ -2,7 +2,7 @@
 using Revision.Domain.Entities.Subjects;
 using System.Collections.ObjectModel;
 
-namespace Revision.Domain.Entities.Categories.SubjectCategories;
+namespace Revision.Domain.Entities.Categories;
 
 public class SubjectCategory : Auditable
 {
