@@ -65,7 +65,7 @@ public class EducationService : IEducationService
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] {"Address"})
+            includes: new[] {"Address", "TopicPayments", "DevicePayments", "Devices" })
             ?? throw new RevisionException(404, "This education is not found");
 
         var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
@@ -102,8 +102,17 @@ public class EducationService : IEducationService
 
     public async Task<EducationResultDto> GetByIdAsync(long id)
     {
-        var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] { "User", "EducationCategory", "Address" })
+        var existEducation = await _educationRepository.SelectAsync(
+            education => education.Id.Equals(id),
+            includes: new[] 
+            { 
+                "User", 
+                "Address", 
+                "Devices",
+                "TopicPayments", 
+                "DevicePayments", 
+                "EducationCategory"
+            })
            ?? throw new RevisionException(404, "This education is not found");
 
         return _mapper.Map<EducationResultDto>(existEducation);
@@ -111,7 +120,16 @@ public class EducationService : IEducationService
 
     public async Task<IEnumerable<EducationResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var educations = await _educationRepository.SelectAll(includes: new[] { "User", "EducationCategory", "Address" })
+        var educations = await _educationRepository.SelectAll(
+            includes: new[]
+            {
+                "User",
+                "Address",
+                "Devices",
+                "TopicPayments",
+                "DevicePayments",
+                "EducationCategory"
+            })
             .ToPaginate(pagination)
             .ToListAsync();
 

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Revision.Domain.Entities.Addresses;
 using Revision.Domain.Entities.Categories;
-using Revision.Domain.Entities.Chats.Messages;
-using Revision.Domain.Entities.Chats.Rooms;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
@@ -16,9 +14,7 @@ using Revision.Service.DTOs.Devices;
 using Revision.Service.DTOs.Districts;
 using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.DTOs.Educations;
-using Revision.Service.DTOs.Messages;
 using Revision.Service.DTOs.Regions;
-using Revision.Service.DTOs.Rooms;
 using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.DTOs.Subjects;
 using Revision.Service.DTOs.TopicPayments;
@@ -70,18 +66,18 @@ public class MappingProfile : Profile
         CreateMap<Education, EducationCreationDto>().ReverseMap();
 
         //Messages
-        CreateMap<Message, MessageResultDto>().ReverseMap();
-        CreateMap<Message, MessageUpdateDto>().ReverseMap();
-        CreateMap<Message, MessageCreationDto>().ReverseMap();
+        //CreateMap<Message, MessageResultDto>().ReverseMap();
+        //CreateMap<Message, MessageUpdateDto>().ReverseMap();
+        //CreateMap<Message, MessageCreationDto>().ReverseMap();
 
         //Regions
         CreateMap<Region, RegionResultDto>().ReverseMap();
         CreateMap<Region, RegionCreationDto>().ReverseMap();
 
         //Rooms
-        CreateMap<Room, RoomResultDto>().ReverseMap();
-        CreateMap<Room, RoomUpdateDto>().ReverseMap();
-        CreateMap<Room, RoomCreationDto>().ReverseMap();
+        //CreateMap<Room, RoomResultDto>().ReverseMap();
+        //CreateMap<Room, RoomUpdateDto>().ReverseMap();
+        //CreateMap<Room, RoomCreationDto>().ReverseMap();
 
         //SubjectCategories
         CreateMap<SubjectCategory, SubjectCategoryResultDto>().ReverseMap();
