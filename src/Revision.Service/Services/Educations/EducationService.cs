@@ -10,21 +10,25 @@ using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Revision.Service.Interfaces.Addresses;
 
 namespace Revision.Service.Services.Educations;
 
 public class EducationService : IEducationService
 {
     private readonly IMapper _mapper;
+    private readonly IAddressService _addressService;
     private readonly IRepository<User> _userRepository;
     private readonly IRepository<Education> _educationRepository;
     private readonly IRepository<EducationCategory> _categoryRepository;
     public EducationService(
+        IAddressService addressService,
         IRepository<User> userRepository,
         IRepository<EducationCategory> categoryRepository,
         IMapper mapper, IRepository<Education> educationRepository)
     {
         _mapper = mapper;
+        _addressService = addressService;
         _userRepository = userRepository;
         _categoryRepository = categoryRepository;
         _educationRepository = educationRepository;
@@ -49,6 +53,9 @@ public class EducationService : IEducationService
         mappedEducation.User = existUser;
         mappedEducation.EducationCategory = existCategory;
 
+        if (dto.AddressCreationDto is not null)
+            mappedEducation.Address = await _addressService.CreateAsync(dto.AddressCreationDto);
+
         await _educationRepository.AddAsync(mappedEducation);
         await _educationRepository.SaveAsync();
 
@@ -57,7 +64,8 @@ public class EducationService : IEducationService
 
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
     {
-        var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id))
+        var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
+            includes: new[] {"Address"})
             ?? throw new RevisionException(404, "This education is not found");
 
         var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
@@ -66,6 +74,9 @@ public class EducationService : IEducationService
         var existCategory = await _categoryRepository.SelectAsync(
             category => category.Id.Equals(dto.EducationCategoryId))
             ?? throw new RevisionException(404, "This education category is not found");
+
+        if (existEducation.Address is not null)
+            existEducation.Address = await _addressService.UpdateAsync(existEducation.Address.Id, dto.AddressUpdateDto);
 
         var mappedEducation = _mapper.Map(dto, existEducation);
         mappedEducation.UpdatedAt = TimeHelper.GetDateTime();
@@ -80,7 +91,8 @@ public class EducationService : IEducationService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id))
+        var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
+            includes: new[] { "Address" })
            ?? throw new RevisionException(404, "This education is not found");
 
         _educationRepository.Delete(existEducation);
@@ -91,7 +103,7 @@ public class EducationService : IEducationService
     public async Task<EducationResultDto> GetByIdAsync(long id)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] { "User", "EducationCategory" })
+            includes: new[] { "User", "EducationCategory", "Address" })
            ?? throw new RevisionException(404, "This education is not found");
 
         return _mapper.Map<EducationResultDto>(existEducation);
@@ -99,7 +111,7 @@ public class EducationService : IEducationService
 
     public async Task<IEnumerable<EducationResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var educations = await _educationRepository.SelectAll(includes: new[] { "User", "EducationCategory" })
+        var educations = await _educationRepository.SelectAll(includes: new[] { "User", "EducationCategory", "Address" })
             .ToPaginate(pagination)
             .ToListAsync();
 

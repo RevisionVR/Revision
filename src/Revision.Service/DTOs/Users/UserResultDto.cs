@@ -1,5 +1,4 @@
 ﻿using Revision.Domain.Enums;
-using Revision.Service.DTOs.Addresses;
 
 namespace Revision.Service.DTOs.Users;
 

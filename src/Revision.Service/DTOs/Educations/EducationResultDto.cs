@@ -1,4 +1,5 @@
-﻿using Revision.Service.DTOs.EducationCategories;
+﻿using Revision.Service.DTOs.Addresses;
+using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.DTOs.Users;
 
 namespace Revision.Service.DTOs.Educations;
@@ -13,4 +14,5 @@ public class EducationResultDto
     public string Description { get; set; }
     public UserResultDto User { get; set; }
     public EducationCategoryResultDto EducationCategory { get; set; }
+    public AddressResultDto AddressResultDto { get; set; }
 }
