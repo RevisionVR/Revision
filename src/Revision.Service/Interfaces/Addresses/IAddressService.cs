@@ -1,4 +1,5 @@
-﻿using Revision.Service.DTOs.Addresses;
+﻿using Revision.Domain.Entities.Addresses;
+using Revision.Service.DTOs.Addresses;
 
 namespace Revision.Service.Interfaces.Addresses;
 
