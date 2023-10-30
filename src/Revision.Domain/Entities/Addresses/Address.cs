@@ -1,4 +1,5 @@
 ﻿using Revision.Domain.Commons;
+using Revision.Domain.Entities.Educations;
 
 namespace Revision.Domain.Entities.Addresses;
 
@@ -17,4 +18,5 @@ public class Address : Auditable
 
     public long DistrictId { get; set; }
     public District District { get; set; }
+    public ICollection<Education> Educations { get; set; }
 }

@@ -30,7 +30,7 @@ public class AddressService : IAddressService
         _districtRepository = districtRepository;
     }
 
-    public async Task<AddressResultDto> CreateAsync(AddressCreationDto dto)
+    public async Task<Address> CreateAsync(AddressCreationDto dto)
     {
         var existCountry = await _countryRepository.SelectAsync(country => country.Id.Equals(dto.CountryId))
             ?? throw new RevisionException(404, "This country is not found");
@@ -50,12 +50,13 @@ public class AddressService : IAddressService
         await _addressRepository.AddAsync(mappedAddress);
         await _addressRepository.SaveAsync();
 
-        return _mapper.Map<AddressResultDto>(mappedAddress);
+        return mappedAddress;
     }
 
-    public async Task<AddressResultDto> UpdateAsync(long id, AddressUpdateDto dto)
+    public async Task<Address> UpdateAsync(long id, AddressUpdateDto dto)
     {
-        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id))
+        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id),
+            includes: new[] { "Educations" })
             ?? throw new RevisionException(404, "This address is not found");
 
         var existCountry = await _countryRepository.SelectAsync(country => country.Id.Equals(dto.CountryId))
@@ -77,7 +78,7 @@ public class AddressService : IAddressService
         _addressRepository.Update(mappedAddress);
         await _addressRepository.SaveAsync();
 
-        return _mapper.Map<AddressResultDto>(mappedAddress);
+        return mappedAddress;
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -92,7 +93,8 @@ public class AddressService : IAddressService
 
     public async Task<AddressResultDto> GetByIdAsync(long id)
     {
-        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id))
+        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id), 
+            includes: new[] { "Educations" })
             ?? throw new RevisionException(404, "This address is not found");
 
         return _mapper.Map<AddressResultDto>(existAddress);
@@ -100,7 +102,9 @@ public class AddressService : IAddressService
 
     public async Task<IEnumerable<AddressResultDto>> GetAllAsync()
     {
-        var addesses = await _addressRepository.SelectAll().ToListAsync();
+        var addesses = await _addressRepository.SelectAll(includes: new[] { "Educations" })
+            .ToListAsync();
+
         return _mapper.Map<IEnumerable<AddressResultDto>>(addesses);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Revision.Service.DTOs.Educations;
+﻿using Revision.Service.DTOs.Addresses;
+
+namespace Revision.Service.DTOs.Educations;
 
 public class EducationUpdateDto
 {
@@ -9,4 +11,5 @@ public class EducationUpdateDto
     public string Description { get; set; }
     public long UserId { get; set; }
     public long EducationCategoryId { get; set; }
+    public AddressUpdateDto AddressUpdateDto { get; set; }
 }

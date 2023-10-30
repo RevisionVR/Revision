@@ -1,4 +1,5 @@
-﻿using Revision.Service.DTOs.Countries;
+﻿using Revision.Domain.Entities.Educations;
+using Revision.Service.DTOs.Countries;
 using Revision.Service.DTOs.Districts;
 using Revision.Service.DTOs.Regions;
 
@@ -14,4 +15,5 @@ public class AddressResultDto
     public CountryResultDto Country { get; set; }
     public RegionResultDto Region { get; set; }
     public DistrictResultDto District { get; set; }
+    public IEnumerable<Education> Educations { get; set; }
 }

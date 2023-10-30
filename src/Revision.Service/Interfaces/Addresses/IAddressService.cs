@@ -5,8 +5,8 @@ namespace Revision.Service.Interfaces.Addresses;
 
 public interface IAddressService
 {
-    Task<AddressResultDto> CreateAsync(AddressCreationDto dto);
-    Task<AddressResultDto> UpdateAsync(long id, AddressUpdateDto dto);
+    Task<Address> CreateAsync(AddressCreationDto dto);
+    Task<Address> UpdateAsync(long id, AddressUpdateDto dto);
     Task<bool> DeleteAsync(long id);
     Task<AddressResultDto> GetByIdAsync(long id);
     Task<IEnumerable<AddressResultDto>> GetAllAsync();

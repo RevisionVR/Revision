@@ -36,8 +36,6 @@ public class RevisionDbContext : DbContext
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<SubjectCategory> SubjectCategories { get; set; }
-    public DbSet<UserAddress> UserAddresses { get; set; }
-    public DbSet<EducationAddress> EducationAddresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,8 +58,6 @@ public class RevisionDbContext : DbContext
         modelBuilder.Entity<Topic>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Subject>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<SubjectCategory>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<UserAddress>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<EducationAddress>().HasQueryFilter(e => !e.IsDeleted);
         #endregion
     }
 }
