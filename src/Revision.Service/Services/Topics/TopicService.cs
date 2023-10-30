@@ -83,7 +83,7 @@ public class TopicService : ITopicService
     public async Task<TopicResultDto> GetByIdAsync(long id)
     {
         var existTopic = await _topicRepository.SelectAsync(topic => topic.Id.Equals(id),
-            includes: new[] { "Subjects.SubjectCategory" })
+            includes: new[] { "Subjects.SubjectCategory", "TopicPayments" })
             ?? throw new RevisionException(404, "This topic is not found");
 
         return _mapper.Map<TopicResultDto>(existTopic);
@@ -91,7 +91,8 @@ public class TopicService : ITopicService
 
     public async Task<IEnumerable<TopicResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var topics = await _topicRepository.SelectAll(includes: new[] { "Subjects.SubjectCategory" })
+        var topics = await _topicRepository.SelectAll(
+            includes: new[] { "Subjects.SubjectCategory", "TopicPayments" })
             .ToPaginate(pagination)
             .ToListAsync();
 

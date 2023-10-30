@@ -1,4 +1,5 @@
 ﻿using Revision.Domain.Commons;
+using Revision.Domain.Entities.Payments;
 using Revision.Domain.Entities.Subjects;
 
 namespace Revision.Domain.Entities.Topics;
@@ -10,4 +11,5 @@ public class Topic : Auditable
 
     public long SubjectId { get; set; }
     public Subject Subject { get; set; }
+    public ICollection<TopicPayment> TopicPayments { get; set; }
 }
