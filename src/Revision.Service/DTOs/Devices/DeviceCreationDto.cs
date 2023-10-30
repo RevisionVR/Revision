@@ -1,6 +1,4 @@
-﻿using Revision.Domain.Enums;
-
-namespace Revision.Service.DTOs.Devices;
+﻿namespace Revision.Service.DTOs.Devices;
 
 public class DeviceCreationDto
 {
