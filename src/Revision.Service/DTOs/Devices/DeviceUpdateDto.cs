@@ -1,6 +1,4 @@
-﻿using Revision.Domain.Enums;
-
-namespace Revision.Service.DTOs.Devices;
+﻿namespace Revision.Service.DTOs.Devices;
 
 public class DeviceUpdateDto
 {
@@ -8,6 +6,6 @@ public class DeviceUpdateDto
     public decimal Price { get; set; }
     public bool Glove { get; set; }
     public bool Fragrant { get; set; }
-    public DeviceStatus Status { get; set; }
+    public bool IsActive { get; set; }
     public long EducationId { get; set; }
 }
