@@ -12,8 +12,8 @@ using Revision.DataAccess.Contexts;
 namespace Revision.DataAccess.Migrations
 {
     [DbContext(typeof(RevisionDbContext))]
-    [Migration("20231027101859_IsDeleteMigration")]
-    partial class IsDeleteMigration
+    [Migration("20231030142002_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,8 +39,8 @@ namespace Revision.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Description")
-                        .HasColumnType("integer");
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
 
                     b.Property<long>("DistrictId")
                         .HasColumnType("bigint");
@@ -162,7 +162,7 @@ namespace Revision.DataAccess.Migrations
                     b.ToTable("Regions");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.EducationCategories.EducationCategory", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Categories.EducationCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,7 +187,7 @@ namespace Revision.DataAccess.Migrations
                     b.ToTable("EducationCategories");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.SubjectCategories.SubjectCategory", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Categories.SubjectCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,14 +389,14 @@ namespace Revision.DataAccess.Migrations
                     b.Property<bool>("Glove")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
 
                     b.Property<string>("UniqueId")
                         .HasColumnType("text");
@@ -419,7 +419,7 @@ namespace Revision.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AddressId")
+                    b.Property<long?>("AddressId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -439,9 +439,6 @@ namespace Revision.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
-
-                    b.Property<int?>("Number")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Phone")
                         .HasColumnType("text");
@@ -617,9 +614,6 @@ namespace Revision.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AddressId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -638,9 +632,6 @@ namespace Revision.DataAccess.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("text");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
@@ -657,8 +648,6 @@ namespace Revision.DataAccess.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.ToTable("Users");
                 });
@@ -779,7 +768,7 @@ namespace Revision.DataAccess.Migrations
             modelBuilder.Entity("Revision.Domain.Entities.Devices.Device", b =>
                 {
                     b.HasOne("Revision.Domain.Entities.Educations.Education", "Education")
-                        .WithMany()
+                        .WithMany("Devices")
                         .HasForeignKey("EducationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -790,12 +779,10 @@ namespace Revision.DataAccess.Migrations
             modelBuilder.Entity("Revision.Domain.Entities.Educations.Education", b =>
                 {
                     b.HasOne("Revision.Domain.Entities.Addresses.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Educations")
+                        .HasForeignKey("AddressId");
 
-                    b.HasOne("Revision.Domain.Entities.Categories.EducationCategories.EducationCategory", "EducationCategory")
+                    b.HasOne("Revision.Domain.Entities.Categories.EducationCategory", "EducationCategory")
                         .WithMany("Educations")
                         .HasForeignKey("EducationCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -817,7 +804,7 @@ namespace Revision.DataAccess.Migrations
             modelBuilder.Entity("Revision.Domain.Entities.Payments.DevicePayment", b =>
                 {
                     b.HasOne("Revision.Domain.Entities.Educations.Education", "Education")
-                        .WithMany()
+                        .WithMany("DevicePayments")
                         .HasForeignKey("EducationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -828,13 +815,13 @@ namespace Revision.DataAccess.Migrations
             modelBuilder.Entity("Revision.Domain.Entities.Payments.TopicPayment", b =>
                 {
                     b.HasOne("Revision.Domain.Entities.Educations.Education", "Education")
-                        .WithMany()
+                        .WithMany("TopicPayments")
                         .HasForeignKey("EducationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Revision.Domain.Entities.Topics.Topic", "Topic")
-                        .WithMany()
+                        .WithMany("TopicPayments")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -846,7 +833,7 @@ namespace Revision.DataAccess.Migrations
 
             modelBuilder.Entity("Revision.Domain.Entities.Subjects.Subject", b =>
                 {
-                    b.HasOne("Revision.Domain.Entities.Categories.SubjectCategories.SubjectCategory", "SubjectCategory")
+                    b.HasOne("Revision.Domain.Entities.Categories.SubjectCategory", "SubjectCategory")
                         .WithMany("Subjects")
                         .HasForeignKey("SubjectCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -858,7 +845,7 @@ namespace Revision.DataAccess.Migrations
             modelBuilder.Entity("Revision.Domain.Entities.Topics.Topic", b =>
                 {
                     b.HasOne("Revision.Domain.Entities.Subjects.Subject", "Subject")
-                        .WithMany()
+                        .WithMany("Topics")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -866,25 +853,38 @@ namespace Revision.DataAccess.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Users.User", b =>
-                {
-                    b.HasOne("Revision.Domain.Entities.Addresses.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.EducationCategories.EducationCategory", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Addresses.Address", b =>
                 {
                     b.Navigation("Educations");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.SubjectCategories.SubjectCategory", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Categories.EducationCategory", b =>
+                {
+                    b.Navigation("Educations");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Categories.SubjectCategory", b =>
                 {
                     b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Educations.Education", b =>
+                {
+                    b.Navigation("DevicePayments");
+
+                    b.Navigation("Devices");
+
+                    b.Navigation("TopicPayments");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Subjects.Subject", b =>
+                {
+                    b.Navigation("Topics");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Topics.Topic", b =>
+                {
+                    b.Navigation("TopicPayments");
                 });
 #pragma warning restore 612, 618
         }
