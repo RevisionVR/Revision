@@ -4,10 +4,9 @@ public class EmailValidation
 {
     public static bool IsValid(string email)
     {
-        if (email.Length < 0 && email.Contains("@") && email.Contains("."))
-        {
-            return false;
-        }
-        return true;
+        if (email.Contains("@") && email.Contains(".") && email.Length > 0)
+            return true;
+        
+        return false;
     }
 }
