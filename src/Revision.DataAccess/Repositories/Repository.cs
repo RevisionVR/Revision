@@ -11,7 +11,7 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditabl
 {
     private readonly DbSet<TEntity> _dbSet;
     private readonly RevisionDbContext _dbContext;
-    public Repository(RevisionDbContext dbContext, DbSet<TEntity> dbSet)
+    public Repository(RevisionDbContext dbContext)
     {
         _dbContext = dbContext;
         _dbSet = _dbContext.Set<TEntity>();

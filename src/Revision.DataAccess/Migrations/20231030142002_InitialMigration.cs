@@ -77,6 +77,29 @@ public partial class InitialMigration : Migration
             });
 
         migrationBuilder.CreateTable(
+            name: "Users",
+            columns: table => new
+            {
+                Id = table.Column<long>(type: "bigint", nullable: false)
+                    .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                FirstName = table.Column<string>(type: "text", nullable: true),
+                LastName = table.Column<string>(type: "text", nullable: true),
+                Email = table.Column<string>(type: "text", nullable: true),
+                Phone = table.Column<string>(type: "text", nullable: true),
+                PasswordHash = table.Column<string>(type: "text", nullable: true),
+                Salt = table.Column<string>(type: "text", nullable: true),
+                Gender = table.Column<int>(type: "integer", nullable: false),
+                Role = table.Column<int>(type: "integer", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Users", x => x.Id);
+            });
+
+        migrationBuilder.CreateTable(
             name: "Regions",
             columns: table => new
             {
@@ -146,6 +169,35 @@ public partial class InitialMigration : Migration
             });
 
         migrationBuilder.CreateTable(
+            name: "AdminRooms",
+            columns: table => new
+            {
+                Id = table.Column<long>(type: "bigint", nullable: false)
+                    .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                RoomId = table.Column<long>(type: "bigint", nullable: false),
+                AdminId = table.Column<long>(type: "bigint", nullable: false),
+                UserId = table.Column<long>(type: "bigint", nullable: true),
+                CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_AdminRooms", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_AdminRooms_Rooms_RoomId",
+                    column: x => x.RoomId,
+                    principalTable: "Rooms",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+                table.ForeignKey(
+                    name: "FK_AdminRooms_Users_UserId",
+                    column: x => x.UserId,
+                    principalTable: "Users",
+                    principalColumn: "Id");
+            });
+
+        migrationBuilder.CreateTable(
             name: "Districts",
             columns: table => new
             {
@@ -199,7 +251,7 @@ public partial class InitialMigration : Migration
                 Id = table.Column<long>(type: "bigint", nullable: false)
                     .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                 Home = table.Column<string>(type: "text", nullable: true),
-                Description = table.Column<int>(type: "integer", nullable: false),
+                Description = table.Column<string>(type: "text", nullable: true),
                 Longitude = table.Column<float>(type: "real", nullable: false),
                 Latitude = table.Column<float>(type: "real", nullable: false),
                 CountryId = table.Column<long>(type: "bigint", nullable: false),
@@ -233,78 +285,17 @@ public partial class InitialMigration : Migration
             });
 
         migrationBuilder.CreateTable(
-            name: "Users",
-            columns: table => new
-            {
-                Id = table.Column<long>(type: "bigint", nullable: false)
-                    .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                FirstName = table.Column<string>(type: "text", nullable: true),
-                LastName = table.Column<string>(type: "text", nullable: true),
-                MiddleName = table.Column<string>(type: "text", nullable: true),
-                Email = table.Column<string>(type: "text", nullable: true),
-                Phone = table.Column<string>(type: "text", nullable: true),
-                PasswordHash = table.Column<string>(type: "text", nullable: true),
-                Salt = table.Column<string>(type: "text", nullable: true),
-                Gender = table.Column<int>(type: "integer", nullable: false),
-                Role = table.Column<int>(type: "integer", nullable: false),
-                AddressId = table.Column<long>(type: "bigint", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_Users", x => x.Id);
-                table.ForeignKey(
-                    name: "FK_Users_Addresses_AddressId",
-                    column: x => x.AddressId,
-                    principalTable: "Addresses",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.Cascade);
-            });
-
-        migrationBuilder.CreateTable(
-            name: "AdminRooms",
-            columns: table => new
-            {
-                Id = table.Column<long>(type: "bigint", nullable: false)
-                    .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                RoomId = table.Column<long>(type: "bigint", nullable: false),
-                AdminId = table.Column<long>(type: "bigint", nullable: false),
-                UserId = table.Column<long>(type: "bigint", nullable: true),
-                CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_AdminRooms", x => x.Id);
-                table.ForeignKey(
-                    name: "FK_AdminRooms_Rooms_RoomId",
-                    column: x => x.RoomId,
-                    principalTable: "Rooms",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.Cascade);
-                table.ForeignKey(
-                    name: "FK_AdminRooms_Users_UserId",
-                    column: x => x.UserId,
-                    principalTable: "Users",
-                    principalColumn: "Id");
-            });
-
-        migrationBuilder.CreateTable(
             name: "Educations",
             columns: table => new
             {
                 Id = table.Column<long>(type: "bigint", nullable: false)
                     .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                 Name = table.Column<string>(type: "text", nullable: true),
-                Number = table.Column<int>(type: "integer", nullable: true),
                 Phone = table.Column<string>(type: "text", nullable: true),
                 Email = table.Column<string>(type: "text", nullable: true),
                 Description = table.Column<string>(type: "text", nullable: true),
+                AddressId = table.Column<long>(type: "bigint", nullable: true),
                 UserId = table.Column<long>(type: "bigint", nullable: false),
-                AddressId = table.Column<long>(type: "bigint", nullable: false),
                 EducationCategoryId = table.Column<long>(type: "bigint", nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                 UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -317,8 +308,7 @@ public partial class InitialMigration : Migration
                     name: "FK_Educations_Addresses_AddressId",
                     column: x => x.AddressId,
                     principalTable: "Addresses",
-                    principalColumn: "Id",
-                    onDelete: ReferentialAction.Cascade);
+                    principalColumn: "Id");
                 table.ForeignKey(
                     name: "FK_Educations_EducationCategories_EducationCategoryId",
                     column: x => x.EducationCategoryId,
@@ -406,7 +396,7 @@ public partial class InitialMigration : Migration
                 Price = table.Column<decimal>(type: "numeric", nullable: false),
                 Glove = table.Column<bool>(type: "boolean", nullable: false),
                 Fragrant = table.Column<bool>(type: "boolean", nullable: false),
-                Status = table.Column<int>(type: "integer", nullable: false),
+                IsActive = table.Column<bool>(type: "boolean", nullable: false),
                 EducationId = table.Column<long>(type: "bigint", nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                 UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -581,11 +571,6 @@ public partial class InitialMigration : Migration
             name: "IX_Topics_SubjectId",
             table: "Topics",
             column: "SubjectId");
-
-        migrationBuilder.CreateIndex(
-            name: "IX_Users_AddressId",
-            table: "Users",
-            column: "AddressId");
     }
 
     /// <inheritdoc />
@@ -622,6 +607,9 @@ public partial class InitialMigration : Migration
             name: "Topics");
 
         migrationBuilder.DropTable(
+            name: "Addresses");
+
+        migrationBuilder.DropTable(
             name: "EducationCategories");
 
         migrationBuilder.DropTable(
@@ -631,13 +619,10 @@ public partial class InitialMigration : Migration
             name: "Subjects");
 
         migrationBuilder.DropTable(
-            name: "Addresses");
+            name: "Districts");
 
         migrationBuilder.DropTable(
             name: "SubjectCategories");
-
-        migrationBuilder.DropTable(
-            name: "Districts");
 
         migrationBuilder.DropTable(
             name: "Regions");

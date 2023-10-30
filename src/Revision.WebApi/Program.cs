@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.Contexts;
-using System;
+using Revision.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<RevisionDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Services
+builder.Services.AddServices();
 
 var app = builder.Build();
 
