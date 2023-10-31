@@ -7,6 +7,7 @@ using Revision.Domain.Entities.Addresses;
 using Revision.Service.Interfaces.Addresses;
 using Microsoft.EntityFrameworkCore;
 using Revision.Service.Commons.Helpers;
+using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -26,7 +27,7 @@ public class CountryService : ICountryService
         if (dbSource.Any())
             throw new RevisionException(403, "Countries already exist");
 
-        string path = "";
+        string path = EnvironmentHelper.CountryPath;
         var source = File.ReadAllText(path);
         var countries = JsonConvert.DeserializeObject<IEnumerable<CountryCreationDto>>(source);
 

@@ -7,6 +7,7 @@ using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Regions;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -26,7 +27,7 @@ public class RegionService : IRegionService
         if (dbSource.Any())
             throw new RevisionException(403, "Regions already exist");
 
-        string path = "";
+        string path = EnvironmentHelper.RegionPath;
         var source = File.ReadAllText(path);
         var regions = JsonConvert.DeserializeObject<IEnumerable<RegionCreationDto>>(source);
 
