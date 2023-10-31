@@ -1,7 +1,7 @@
 ﻿using Revision.Domain.Configurations;
 using Revision.Service.DTOs.SubjectCategories;
 
-namespace Revision.Service.Interfaces.Categories;
+namespace Revision.Service.Interfaces.Subjects;
 
 public interface ISubjectCategoryService
 {

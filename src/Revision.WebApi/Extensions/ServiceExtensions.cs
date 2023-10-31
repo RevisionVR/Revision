@@ -2,8 +2,10 @@
 using Revision.DataAccess.IRepositories;
 using Revision.DataAccess.Repositories;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Interfaces.Subjects;
 using Revision.Service.Mappers;
 using Revision.Service.Services.Addresses;
+using Revision.Service.Services.Subjects;
 using Revision.WebApi.Middlewares;
 
 namespace Revision.WebApi.Extensions;
@@ -26,5 +28,8 @@ public static class ServiceExtensions
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IDistrictService, DistrictService>();
         services.AddScoped<IRegionService, RegionService>();
+
+        //SubjectCategory
+        services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
     }
 }

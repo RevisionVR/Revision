@@ -1,7 +1,7 @@
 ﻿using Revision.Domain.Configurations;
 using Revision.Service.DTOs.EducationCategories;
 
-namespace Revision.Service.Interfaces.Categories;
+namespace Revision.Service.Interfaces.Educations;
 
 public interface IEducationCategoryService
 {

@@ -40,7 +40,10 @@ public class TopicPaymentService : ITopicPaymentService
             ?? throw new RevisionException(404, "This education is not found");
 
         var mappedPayment = _mapper.Map<TopicPayment>(dto);
+
         mappedPayment.CreatedAt = TimeHelper.GetDateTime();
+        mappedPayment.LastDay = TimeHelper.GetDateTime();
+        mappedPayment.NextDay = mappedPayment.LastDay.AddMonths(1);
         mappedPayment.Topic = existTopic;
         mappedPayment.Education = education;
 

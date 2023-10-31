@@ -13,26 +13,19 @@ namespace Revision.Service.Services.Auth;
 
 public class AuthService : IAuthService
 {
-    private IRepository<User> _userRepository;
     private IMapper _mapper;
+    private IRepository<User> _userRepository;
 
-    public AuthService(
-        IRepository<User> repository,
-        IMapper mapper)
+    public AuthService(IRepository<User> repository, IMapper mapper)
     {
-        this._userRepository = repository;
         this._mapper = mapper;
-    }
-    public Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
-    {
-        throw new NotImplementedException();
+        this._userRepository = repository;
     }
 
     public async Task<bool> RegisterAsync(UserCreationDto dto)
     {
-        var DbResult = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
-
-        if(DbResult is  null)
+        var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
+        if(existUser is not null)
             throw new RevisionException(403, $"This user already exists this phone = {dto.Phone}");
 
         var result = PasswordHasher.Hash(dto.Password);
@@ -52,6 +45,11 @@ public class AuthService : IAuthService
 
         
         return true;
+    }
+
+    public Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
+    {
+        throw new NotImplementedException();
     }
 
     public Task<(bool Result, int CachedMinutes)> ResetPasswordAsync(UserResetPasswordDto dto)

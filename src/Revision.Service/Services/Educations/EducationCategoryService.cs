@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
-using Revision.Domain.Entities.Categories;
+using Revision.Domain.Entities.Educations;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
-using Revision.Service.Interfaces.Categories;
+using Revision.Service.Interfaces.Educations;
 
 namespace Revision.Service.Services.Educations;
 

@@ -1,7 +1,6 @@
 ﻿using Revision.Domain.Commons;
-using Revision.Domain.Entities.Educations;
 
-namespace Revision.Domain.Entities.Categories;
+namespace Revision.Domain.Entities.Educations;
 
 public class EducationCategory : Auditable
 {

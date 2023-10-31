@@ -1,6 +1,5 @@
 ﻿using Revision.Domain.Commons;
 using Revision.Domain.Entities.Addresses;
-using Revision.Domain.Entities.Categories;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Payments;
 using Revision.Domain.Entities.Users;

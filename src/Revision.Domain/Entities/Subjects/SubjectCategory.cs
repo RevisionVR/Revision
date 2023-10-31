@@ -1,7 +1,6 @@
 ﻿using Revision.Domain.Commons;
-using Revision.Domain.Entities.Subjects;
 
-namespace Revision.Domain.Entities.Categories;
+namespace Revision.Domain.Entities.Subjects;
 
 public class SubjectCategory : Auditable
 {
