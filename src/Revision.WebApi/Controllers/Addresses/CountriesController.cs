@@ -1,15 +1,16 @@
 ﻿using Revision.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
+using Revision.WebApi.Controllers.Common;
 
-namespace Revision.WebApi.Controllers.Common.Addresses;
+namespace Revision.WebApi.Controllers.Addresses;
 
-public class RegionsController : BaseController
+public class CountriesController : BaseController
 {
-    private readonly IRegionService _regionService;
-    public RegionsController(IRegionService regionService)
+    private readonly ICountryService _countryService;
+    public CountriesController(ICountryService countryService)
     {
-        _regionService = regionService;
+        _countryService = countryService;
     }
 
     [HttpPost("set")]
@@ -18,8 +19,9 @@ public class RegionsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _regionService.SetAsync()
+            Data = await _countryService.SetAsync()
         });
+
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetByIdAsync(long id)
@@ -27,7 +29,7 @@ public class RegionsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _regionService.GetByIdAsync(id)
+            Data = await _countryService.GetByIdAsync(id)
         });
 
 
@@ -37,6 +39,6 @@ public class RegionsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _regionService.GetAllAsync()
+            Data = await _countryService.GetAllAsync()
         });
 }

@@ -2,9 +2,11 @@
 using Revision.DataAccess.IRepositories;
 using Revision.DataAccess.Repositories;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Interfaces.Educations;
 using Revision.Service.Interfaces.Subjects;
 using Revision.Service.Mappers;
 using Revision.Service.Services.Addresses;
+using Revision.Service.Services.Educations;
 using Revision.Service.Services.Subjects;
 using Revision.WebApi.Middlewares;
 
@@ -28,8 +30,11 @@ public static class ServiceExtensions
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IDistrictService, DistrictService>();
         services.AddScoped<IRegionService, RegionService>();
-
-        //SubjectCategory
+         
+        //Subject category
         services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
-    }
+
+        //Education category
+        services.AddScoped<IEducationCategoryService, EducationCategoryService>()
+;    }
 }
