@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
-namespace Revision.WebApi.Controllers.SuperAdmin
-{
-    [Authorize(Roles ="SuperAdmin")]
-    public class SuperAdminBaseController : ControllerBase
-    {}
-}
+namespace Revision.WebApi.Controllers.SuperAdmin;
+
+[Authorize(Roles = "SuperAdmin")]
+public class SuperAdminBaseController : ControllerBase
+{ }

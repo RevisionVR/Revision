@@ -43,7 +43,6 @@ public class MappingProfile : Profile
 
         //DevicePayments
         CreateMap<DevicePayment, DevicePaymentResultDto>().ReverseMap();
-        CreateMap<DevicePayment, DevicePaymentUpdateDto>().ReverseMap();
         CreateMap<DevicePayment, DevicePaymentCreationDto>().ReverseMap();
 
         //Devices
@@ -91,7 +90,6 @@ public class MappingProfile : Profile
 
         //TopicPayments
         CreateMap<TopicPayment, TopicPaymentResultDto>().ReverseMap();
-        CreateMap<TopicPayment, TopicPaymentUpdateDto>().ReverseMap();
         CreateMap<TopicPayment, TopicPaymentCreationDto>().ReverseMap();
 
         //Topics

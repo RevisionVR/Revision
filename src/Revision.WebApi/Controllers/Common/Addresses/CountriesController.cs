@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
 
-namespace Revision.WebApi.Controllers.Addresses;
+namespace Revision.WebApi.Controllers.Common.Addresses;
 
-public class DistrictsController : BaseController
+public class CountriesController : BaseController
 {
-    private readonly IDistrictService _districtService;
-    public DistrictsController(IDistrictService districtService)
+    private readonly ICountryService _countryService;
+    public CountriesController(ICountryService countryService)
     {
-        _districtService = districtService;
+        _countryService = countryService;
     }
 
     [HttpPost("set")]
@@ -18,7 +18,7 @@ public class DistrictsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _districtService.SetAsync()
+            Data = await _countryService.SetAsync()
         });
 
 
@@ -28,7 +28,7 @@ public class DistrictsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _districtService.GetByIdAsync(id)
+            Data = await _countryService.GetByIdAsync(id)
         });
 
 
@@ -38,6 +38,6 @@ public class DistrictsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _districtService.GetAllAsync()
+            Data = await _countryService.GetAllAsync()
         });
 }

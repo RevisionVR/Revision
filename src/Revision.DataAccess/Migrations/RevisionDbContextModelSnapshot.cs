@@ -386,14 +386,14 @@ namespace Revision.DataAccess.Migrations
                     b.Property<bool>("Glove")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("UniqueId")
                         .HasColumnType("text");
