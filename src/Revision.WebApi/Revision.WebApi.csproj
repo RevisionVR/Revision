@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Revision.Service\Revision.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Common\" />
+  </ItemGroup>
+
 </Project>

@@ -43,7 +43,7 @@ public class DevicePaymentService : IDevicePaymentService
         return _mapper.Map<DevicePaymentResultDto>(mappedPayment);
     }
 
-    public async Task<DevicePaymentResultDto> UpdateAsync(long id, DevicePaymentUpdateDto dto)
+  /*  public async Task<DevicePaymentResultDto> UpdateAsync(long id, DevicePaymentUpdateDto dto)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
             ?? throw new RevisionException(404, "This device payment is not found");
@@ -59,9 +59,9 @@ public class DevicePaymentService : IDevicePaymentService
         await _paymentRepository.SaveAsync();
 
         return _mapper.Map<DevicePaymentResultDto>(mappedPayment);
-    }
+    }*/
 
-    public async Task<bool> DeleteAsync(long id)
+  /*  public async Task<bool> DeleteAsync(long id)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
             ?? throw new RevisionException(404, "This device payment is not found");
@@ -70,7 +70,7 @@ public class DevicePaymentService : IDevicePaymentService
         await _educationRepository.SaveAsync();
         return true;
     }
-
+*/
     public async Task<DevicePaymentResultDto> GetByIdAsync(long id)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id),

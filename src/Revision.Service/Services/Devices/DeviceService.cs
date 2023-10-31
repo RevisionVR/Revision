@@ -4,6 +4,7 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
+using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Devices;
 using Revision.Service.Exceptions;
@@ -67,12 +68,12 @@ public class DeviceService : IDeviceService
         return _mapper.Map<DeviceResultDto>(mappedDevice);
     }
 
-    public async Task<DeviceResultDto> UpdateIsActiveAsync(string uniqueId, bool isActive)
+    public async Task<DeviceResultDto> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
     {
         var existDevice = await _deviceRepository.SelectAsync(device => device.UniqueId.Equals(uniqueId))
            ?? throw new RevisionException(404, "This device is not found");
 
-        existDevice.IsActive = isActive;
+        existDevice.Status = status;
         _deviceRepository.Update(existDevice);
         await _deviceRepository.SaveAsync();
 
@@ -120,6 +121,7 @@ public class DeviceService : IDeviceService
     public async Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination)
     {
         var devices = await _deviceRepository.SelectAll().ToPaginate(pagination).ToListAsync();
+
         return _mapper.Map<IEnumerable<DeviceResultDto>>(devices);
     }
 }
