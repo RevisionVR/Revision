@@ -15,7 +15,6 @@ public class AuthService : IAuthService
 {
     private IMapper _mapper;
     private IRepository<User> _userRepository;
-
     public AuthService(IRepository<User> repository, IMapper mapper)
     {
         this._mapper = mapper;
