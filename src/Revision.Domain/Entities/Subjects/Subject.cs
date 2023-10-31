@@ -1,5 +1,4 @@
 ﻿using Revision.Domain.Commons;
-using Revision.Domain.Entities.Categories;
 using Revision.Domain.Entities.Topics;
 
 namespace Revision.Domain.Entities.Subjects;

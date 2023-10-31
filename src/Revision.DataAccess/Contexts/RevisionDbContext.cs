@@ -9,7 +9,6 @@ using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Chats.Rooms;
 using Revision.Domain.Entities.Chats.Messages;
 using Revision.Domain.Entities.Chats.Conversations;
-using Revision.Domain.Entities.Categories;
 
 namespace Revision.DataAccess.Contexts;
 

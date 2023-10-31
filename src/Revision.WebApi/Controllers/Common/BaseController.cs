@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Revision.WebApi.Controllers;
+namespace Revision.WebApi.Controllers.Common;
 
 [ApiController]
 [Route("[controller]")]

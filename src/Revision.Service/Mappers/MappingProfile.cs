@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Revision.Domain.Entities.Addresses;
-using Revision.Domain.Entities.Categories;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;

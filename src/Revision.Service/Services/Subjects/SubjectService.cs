@@ -8,7 +8,6 @@ using Revision.Service.DTOs.Subjects;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Subjects;
-using Revision.Domain.Entities.Categories;
 
 namespace Revision.Service.Services.Subjects;
 

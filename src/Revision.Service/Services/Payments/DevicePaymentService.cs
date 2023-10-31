@@ -34,6 +34,10 @@ public class DevicePaymentService : IDevicePaymentService
             ?? throw new RevisionException(404, "This education is not found");
 
         var mappedPayment = _mapper.Map<DevicePayment>(dto);
+
+        mappedPayment.TotalPrice = dto.Price * dto.DeviceCount;
+        mappedPayment.LastDay = TimeHelper.GetDateTime();
+        mappedPayment.NextDay = mappedPayment.LastDay.AddMonths(1);
         mappedPayment.CreatedAt = TimeHelper.GetDateTime();
         mappedPayment.Education = existEducation;
 

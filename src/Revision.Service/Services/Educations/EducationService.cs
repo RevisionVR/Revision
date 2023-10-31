@@ -4,7 +4,6 @@ using Revision.Service.DTOs.Educations;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Educations;
 using Revision.Service.Interfaces.Educations;
-using Revision.Domain.Entities.Categories;
 using Revision.Service.Exceptions;
 using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
