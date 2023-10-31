@@ -1,8 +1,9 @@
 ﻿using Revision.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
+using Revision.WebApi.Controllers.Common;
 
-namespace Revision.WebApi.Controllers.Common.Addresses;
+namespace Revision.WebApi.Controllers.Addresses;
 
 public class DistrictsController : BaseController
 {
