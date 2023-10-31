@@ -49,16 +49,10 @@ public class UserService : IUserService
         var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(id))
             ?? throw new RevisionException(404, "This user is not found");
 
-        var checkUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone)
-        && !user.Phone.Equals(existUser.Phone));
-
-        if (checkUser is not null)
-            throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
-
         var mappedUser = _mapper.Map(dto, existUser);
 
         mappedUser.Id = id;
-        mappedUser.Role = Role.User;
+        mappedUser.Role = existUser.Role;
         mappedUser.UpdatedAt = TimeHelper.GetDateTime();
 
         _userRepository.Update(mappedUser);
@@ -75,6 +69,7 @@ public class UserService : IUserService
 
         _userRepository.Delete(existUser);
          await _userRepository.SaveAsync();
+
         return true;
     }
 
@@ -89,6 +84,7 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination)
     {
         var users = await _userRepository.SelectAll().ToPaginate(pagination).ToListAsync();
+
         return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 

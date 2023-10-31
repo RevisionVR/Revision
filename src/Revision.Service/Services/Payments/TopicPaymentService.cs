@@ -50,7 +50,7 @@ public class TopicPaymentService : ITopicPaymentService
         return _mapper.Map<TopicPaymentResultDto>(mappedPayment);
     }
 
-    public async Task<TopicPaymentResultDto> UpdateAsync(long id, TopicPaymentUpdateDto dto)
+   /* public async Task<TopicPaymentResultDto> UpdateAsync(long id, TopicPaymentUpdateDto dto)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
             ?? throw new RevisionException(404, "This topic payment is not found");
@@ -71,9 +71,9 @@ public class TopicPaymentService : ITopicPaymentService
         await _paymentRepository.SaveAsync();
 
         return _mapper.Map<TopicPaymentResultDto>(mappedPayment);
-    }
+    }*/
 
-    public async Task<bool> DeleteAsync(long id)
+    /*public async Task<bool> DeleteAsync(long id)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
             ?? throw new RevisionException(404, "This topic payment is not found");
@@ -81,7 +81,7 @@ public class TopicPaymentService : ITopicPaymentService
         _paymentRepository.Delete(existPayment);
         await _paymentRepository.SaveAsync();
         return true;
-    }
+    }*/
 
     public async Task<TopicPaymentResultDto> GetByIdAsync(long id)
     {
