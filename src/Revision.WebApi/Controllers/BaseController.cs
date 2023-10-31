@@ -5,6 +5,6 @@ namespace Revision.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "User")]
+//[Authorize(Roles = "User")]
 public class BaseController : ControllerBase
 { }

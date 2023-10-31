@@ -1,6 +1,6 @@
 ﻿namespace Revision.Domain.Constants;
 
-public class TimeConstants
+public class TimeConstant
 {
     public const int UTC = 5;
 }

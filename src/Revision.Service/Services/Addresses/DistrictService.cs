@@ -7,6 +7,7 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Interfaces.Addresses;
 using Revision.Service.Commons.Helpers;
+using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -26,7 +27,7 @@ public class DistrictService : IDistrictService
         if (dbSource.Any())
             throw new RevisionException(403, "Districts already exist");
 
-        string path = "";
+        string path = EnvironmentHelper.DistrictPath;
         var source = File.ReadAllText(path);
         var districts = JsonConvert.DeserializeObject<IEnumerable<DistrictCreationDto>>(source);
 

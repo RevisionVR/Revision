@@ -5,5 +5,8 @@ namespace Revision.Service.Commons.Helpers;
 public class TimeHelper
 {
     public static DateTime GetDateTime()
-        => DateTime.Now.AddHours(TimeConstants.UTC);
+    {
+        var time = DateTime.UtcNow;
+        return time.AddHours(TimeConstant.UTC);
+    }
 }
