@@ -50,39 +50,6 @@ public class TopicPaymentService : ITopicPaymentService
         return _mapper.Map<TopicPaymentResultDto>(mappedPayment);
     }
 
-   /* public async Task<TopicPaymentResultDto> UpdateAsync(long id, TopicPaymentUpdateDto dto)
-    {
-        var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
-            ?? throw new RevisionException(404, "This topic payment is not found");
-
-        var existTopic = await _topicRepository.SelectAsync(topic => topic.Id.Equals(dto.TopicId))
-            ?? throw new RevisionException(404, "This topic is not found");
-
-        var education = await _educationRepository.SelectAsync(education => education.Id.Equals(dto.EducationId))
-            ?? throw new RevisionException(404, "This education is not found");
-
-        var mappedPayment = _mapper.Map(dto, existPayment);
-        mappedPayment.Id = id;
-        mappedPayment.UpdatedAt = TimeHelper.GetDateTime();
-        mappedPayment.Topic = existTopic;
-        mappedPayment.Education = education;
-
-        _paymentRepository.Update(mappedPayment);
-        await _paymentRepository.SaveAsync();
-
-        return _mapper.Map<TopicPaymentResultDto>(mappedPayment);
-    }*/
-
-    /*public async Task<bool> DeleteAsync(long id)
-    {
-        var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
-            ?? throw new RevisionException(404, "This topic payment is not found");
-
-        _paymentRepository.Delete(existPayment);
-        await _paymentRepository.SaveAsync();
-        return true;
-    }*/
-
     public async Task<TopicPaymentResultDto> GetByIdAsync(long id)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id),

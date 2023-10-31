@@ -49,6 +49,11 @@ public class UserService : IUserService
         var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(id))
             ?? throw new RevisionException(404, "This user is not found");
 
+        var checkUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone) &&
+        !user.Phone.Equals(existUser.Phone));
+
+        if (checkUser is not null)
+            throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
         var mappedUser = _mapper.Map(dto, existUser);
 
         mappedUser.Id = id;

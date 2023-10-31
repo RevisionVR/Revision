@@ -12,7 +12,7 @@ using Revision.DataAccess.Contexts;
 namespace Revision.DataAccess.Migrations
 {
     [DbContext(typeof(RevisionDbContext))]
-    [Migration("20231030142002_InitialMigration")]
+    [Migration("20231031084216_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -389,14 +389,14 @@ namespace Revision.DataAccess.Migrations
                     b.Property<bool>("Glove")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("UniqueId")
                         .HasColumnType("text");

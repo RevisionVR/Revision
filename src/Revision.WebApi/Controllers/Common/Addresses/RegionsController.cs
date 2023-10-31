@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
 
-namespace Revision.WebApi.Controllers.Addresses;
+namespace Revision.WebApi.Controllers.Common.Addresses;
 
 public class RegionsController : BaseController
 {
