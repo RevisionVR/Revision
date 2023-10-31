@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.DataAccess.Repositories;
 using Revision.Service.Interfaces.Addresses;
@@ -20,6 +21,14 @@ public static class ServiceExtensions
         services.AddControllers(options => 
         options.Conventions.Add(new RouteTokenTransformerConvention(new SlugParameterTransformer())));
 
+
+        //Json serializer
+        services.AddControllers().AddNewtonsoftJson(o =>
+        {
+            o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
+
+
         //Auto mapping Dependency Injection
         services.AddAutoMapper(typeof(MappingProfile));
 
@@ -33,8 +42,9 @@ public static class ServiceExtensions
          
         //Subject category
         services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
+        services.AddScoped<ISubjectService, SubjectService>();
 
         //Education category
-        services.AddScoped<IEducationCategoryService, EducationCategoryService>()
+        services.AddScoped<IEducationCategoryService, EducationCategoryService>();
 ;    }
 }

@@ -94,6 +94,17 @@ public class SubjectService : ISubjectService
         return _mapper.Map<SubjectResultDto>(existSubject);
     }
 
+    public async Task<IEnumerable<SubjectResultDto>> GetBySubjectCategoryIdAsync(long subjectCategoryId)
+    {
+        var subjects = await _subjectRepository.SelectAll(subject => subject.SubjectCategoryId.Equals(subjectCategoryId),
+        includes: new[] { "SubjectCategory", "Topics" }).ToListAsync();
+
+        if (!subjects.Any())
+            throw new RevisionException(404,"This subject category is not found");
+
+        return _mapper.Map<IEnumerable<SubjectResultDto>>(subjects);    
+    }
+    
     public async Task<IEnumerable<SubjectResultDto>> GetAllAsync(PaginationParams pagination)
     {
         var subjects = await _subjectRepository.SelectAll(includes: new[] { "SubjectCategory", "Topics" })
