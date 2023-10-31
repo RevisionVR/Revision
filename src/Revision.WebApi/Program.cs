@@ -26,6 +26,7 @@ EnvironmentHelper.CountryPath = Path.GetFullPath(builder.Configuration.GetValue<
 EnvironmentHelper.RegionPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:RegionsFilePath")));
 EnvironmentHelper.DistrictPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:DistrictsFilePath")));
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
