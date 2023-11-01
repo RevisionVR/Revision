@@ -4,12 +4,12 @@ using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Countries;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
-using Revision.Shared.Helpers;
-using Revision.Service.Commons.Models;
 using Revision.Service.Validations.Addresses.Countries;
+using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -30,7 +30,7 @@ public class CountryService : ICountryService
         if (!result.IsValid)
             throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
 
-        var existCountry = await _countryRepository.SelectAsync(country => 
+        var existCountry = await _countryRepository.SelectAsync(country =>
         country.Name.Equals(dto.Name) || country.CountryCode.Equals(dto.CountryCode));
         if (existCountry is not null)
             throw new RevisionException(403, "This country already exists");
@@ -39,7 +39,7 @@ public class CountryService : ICountryService
         mappedCountry.CreatedAt = TimeHelper.GetDateTime();
         await _countryRepository.AddAsync(mappedCountry);
         await _countryRepository.SaveAsync();
-        
+
         return _mapper.Map<CountryResultDto>(mappedCountry);
     }
 

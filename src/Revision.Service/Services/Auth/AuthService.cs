@@ -63,7 +63,7 @@ public class AuthService : IAuthService
 
     public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
     {
-        var existUser = await _userRepository.SelectAsync(user => 
+        var existUser = await _userRepository.SelectAsync(user =>
         user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email));
         if (existUser is null)
             throw new RevisionException(404, "This user is not found");

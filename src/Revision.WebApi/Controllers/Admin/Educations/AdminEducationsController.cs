@@ -1,8 +1,8 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
 using Revision.Service.DTOs.Educations;
 using Revision.Service.Interfaces.Educations;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Educations;
 
