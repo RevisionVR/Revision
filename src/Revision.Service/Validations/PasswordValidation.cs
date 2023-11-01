@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Revision.Service.Validations;
+﻿namespace Revision.Service.Validations;
 
 public class PasswordValidation
 {

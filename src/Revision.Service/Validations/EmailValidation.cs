@@ -6,7 +6,7 @@ public class EmailValidation
     {
         if (email.Contains("@") && email.Contains(".") && email.Length > 0)
             return true;
-        
+
         return false;
     }
 }

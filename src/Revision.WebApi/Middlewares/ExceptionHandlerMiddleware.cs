@@ -1,5 +1,5 @@
-﻿using Revision.WebApi.Models;
-using Revision.Service.Exceptions;
+﻿using Revision.Service.Exceptions;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Middlewares;
 

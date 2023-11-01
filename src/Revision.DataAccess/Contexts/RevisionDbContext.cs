@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Revision.Domain.Entities.Users;
-using Revision.Domain.Entities.Topics;
-using Revision.Domain.Entities.Devices;
-using Revision.Domain.Entities.Subjects;
-using Revision.Domain.Entities.Payments;
 using Revision.Domain.Entities.Addresses;
-using Revision.Domain.Entities.Educations;
-using Revision.Domain.Entities.Chats.Rooms;
-using Revision.Domain.Entities.Chats.Messages;
 using Revision.Domain.Entities.Chats.Conversations;
+using Revision.Domain.Entities.Chats.Messages;
+using Revision.Domain.Entities.Chats.Rooms;
+using Revision.Domain.Entities.Devices;
+using Revision.Domain.Entities.Educations;
+using Revision.Domain.Entities.Payments;
+using Revision.Domain.Entities.Subjects;
+using Revision.Domain.Entities.Topics;
+using Revision.Domain.Entities.Users;
 
 namespace Revision.DataAccess.Contexts;
 

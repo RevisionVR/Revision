@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using Revision.Domain.Configurations;
-using Revision.Service.DTOs.Educations;
+using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
+using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
-using Revision.Service.Interfaces.Educations;
-using Revision.Service.Exceptions;
 using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.Educations;
+using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
-using Microsoft.EntityFrameworkCore;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Interfaces.Educations;
 
 namespace Revision.Service.Services.Educations;
 
@@ -64,7 +64,7 @@ public class EducationService : IEducationService
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] {"Address", "TopicPayments", "DevicePayments", "Devices" })
+            includes: new[] { "Address", "TopicPayments", "DevicePayments", "Devices" })
             ?? throw new RevisionException(404, "This education is not found");
 
         var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
@@ -103,13 +103,13 @@ public class EducationService : IEducationService
     {
         var existEducation = await _educationRepository.SelectAsync(
             education => education.Id.Equals(id),
-            includes: new[] 
-            { 
-                "User", 
-                "Address", 
+            includes: new[]
+            {
+                "User",
+                "Address",
                 "Devices",
-                "TopicPayments", 
-                "DevicePayments", 
+                "TopicPayments",
+                "DevicePayments",
                 "EducationCategory"
             })
            ?? throw new RevisionException(404, "This education is not found");

@@ -1,26 +1,16 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
-using Revision.WebApi.Controllers.Common;
+using Revision.WebApi.Models;
 
-namespace Revision.WebApi.Controllers.Addresses;
+namespace Revision.WebApi.Controllers.Common.Addresses;
 
-public class RegionsController : BaseController
+public class CommonRegionsController : BaseController
 {
     private readonly IRegionService _regionService;
-    public RegionsController(IRegionService regionService)
+    public CommonRegionsController(IRegionService regionService)
     {
         _regionService = regionService;
     }
-
-    [HttpPost("set")]
-    public async Task<IActionResult> PostAsync()
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _regionService.SetAsync()
-        });
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetByIdAsync(long id)

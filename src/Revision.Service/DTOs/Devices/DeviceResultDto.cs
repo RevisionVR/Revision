@@ -1,5 +1,4 @@
-﻿using Revision.Domain.Enums;
-using Revision.Service.DTOs.Educations;
+﻿using Revision.Service.DTOs.Educations;
 
 namespace Revision.Service.DTOs.Devices;
 

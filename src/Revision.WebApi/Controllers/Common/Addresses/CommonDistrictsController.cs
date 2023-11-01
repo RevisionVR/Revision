@@ -1,27 +1,16 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
-using Revision.WebApi.Controllers.Common;
+using Revision.WebApi.Models;
 
-namespace Revision.WebApi.Controllers.Addresses;
+namespace Revision.WebApi.Controllers.Common.Addresses;
 
-public class DistrictsController : BaseController
+public class CommonDistrictsController : BaseController
 {
     private readonly IDistrictService _districtService;
-    public DistrictsController(IDistrictService districtService)
+    public CommonDistrictsController(IDistrictService districtService)
     {
         _districtService = districtService;
     }
-
-    [HttpPost("set")]
-    public async Task<IActionResult> PostAsync()
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _districtService.SetAsync()
-        });
-
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetByIdAsync(long id)

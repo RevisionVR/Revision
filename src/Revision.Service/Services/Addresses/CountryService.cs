@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Revision.Service.Exceptions;
-using Revision.Service.DTOs.Countries;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
-using Revision.Service.Interfaces.Addresses;
-using Microsoft.EntityFrameworkCore;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.Countries;
+using Revision.Service.Exceptions;
+using Revision.Service.Interfaces.Addresses;
 using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;

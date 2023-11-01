@@ -1,5 +1,5 @@
-﻿using Revision.Service.DTOs.Topics;
-using Revision.Domain.Configurations;
+﻿using Revision.Domain.Configurations;
+using Revision.Service.DTOs.Topics;
 
 namespace Revision.Service.Interfaces.Topics;
 

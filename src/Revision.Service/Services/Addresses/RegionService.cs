@@ -44,7 +44,7 @@ public class RegionService : IRegionService
 
     public async Task<RegionResultDto> GetByIdAsync(long id)
     {
-        var existRegion = await _regionRepository.SelectAsync(region => region.Id.Equals(id), 
+        var existRegion = await _regionRepository.SelectAsync(region => region.Id.Equals(id),
             includes: new[] { "Country" })
             ?? throw new RevisionException(404, "This region is not found");
 

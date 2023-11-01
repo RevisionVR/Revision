@@ -88,6 +88,6 @@ public class EducationCategoryService : IEducationCategoryService
             .ToPaginate(pagination)
             .ToListAsync();
 
-        return _mapper.Map< IEnumerable<EducationCategoryResultDto>>(categories);
+        return _mapper.Map<IEnumerable<EducationCategoryResultDto>>(categories);
     }
 }

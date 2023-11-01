@@ -19,8 +19,8 @@ public class DeviceService : IDeviceService
     private readonly IRepository<Device> _deviceRepository;
     private readonly IRepository<Education> _educationRepository;
     public DeviceService(
-        IMapper mapper, 
-        IRepository<Device> deviceRepository, 
+        IMapper mapper,
+        IRepository<Device> deviceRepository,
         IRepository<Education> educationRepository)
     {
         _mapper = mapper;
@@ -79,7 +79,7 @@ public class DeviceService : IDeviceService
 
         return _mapper.Map<DeviceResultDto>(existDevice);
     }
-    
+
     public async Task<bool> DeleteAsync(long id)
     {
         var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id))
@@ -89,11 +89,11 @@ public class DeviceService : IDeviceService
         await _deviceRepository.SaveAsync();
         return true;
     }
-    
+
     public async Task<DeviceResultDto> GetByIdAsync(long id)
     {
         var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id),
-            includes: new[] { "Education" } )
+            includes: new[] { "Education" })
            ?? throw new RevisionException(404, "This device is not found");
 
         return _mapper.Map<DeviceResultDto>(existDevice);
@@ -107,7 +107,7 @@ public class DeviceService : IDeviceService
 
         return _mapper.Map<DeviceResultDto>(existDevice);
     }
-    
+
     public async Task<IEnumerable<DeviceResultDto>> GetByEducationIdAsync(long educationId)
     {
         var existDevices = await _deviceRepository.SelectAll(device => device.EducationId.Equals(educationId),
@@ -117,7 +117,7 @@ public class DeviceService : IDeviceService
 
         return _mapper.Map<IEnumerable<DeviceResultDto>>(existDevices);
     }
-    
+
     public async Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination)
     {
         var devices = await _deviceRepository.SelectAll().ToPaginate(pagination).ToListAsync();

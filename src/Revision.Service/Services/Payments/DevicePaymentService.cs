@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.Internal.TypeHandlers.DateTimeHandlers;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
@@ -19,7 +18,7 @@ public class DevicePaymentService : IDevicePaymentService
     private readonly IRepository<Education> _educationRepository;
     private readonly IRepository<DevicePayment> _paymentRepository;
     public DevicePaymentService(
-        IMapper mapper, 
+        IMapper mapper,
         IRepository<Education> educationRepository,
         IRepository<DevicePayment> paymentRepository)
     {

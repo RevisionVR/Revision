@@ -1,5 +1,4 @@
-﻿using Revision.Domain.Entities.Devices;
-using Revision.Service.DTOs.Addresses;
+﻿using Revision.Service.DTOs.Addresses;
 using Revision.Service.DTOs.DevicePayments;
 using Revision.Service.DTOs.Devices;
 using Revision.Service.DTOs.EducationCategories;

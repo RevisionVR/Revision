@@ -1,5 +1,5 @@
-﻿using Revision.Domain.Enums;
-using Revision.Domain.Commons;
+﻿using Revision.Domain.Commons;
+using Revision.Domain.Enums;
 
 namespace Revision.Domain.Entities.Users;
 

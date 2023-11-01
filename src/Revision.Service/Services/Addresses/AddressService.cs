@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Revision.Service.Exceptions;
-using Revision.Service.DTOs.Addresses;
-using Revision.Service.Commons.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
+using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.Addresses;
+using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
-using Microsoft.EntityFrameworkCore;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -17,10 +17,10 @@ public class AddressService : IAddressService
     private readonly IRepository<Address> _addressRepository;
     private readonly IRepository<District> _districtRepository;
     public AddressService(
-        IMapper mapper, 
-        IRepository<Region> regionRepository, 
-        IRepository<Country> countryRepository, 
-        IRepository<Address> addressRepository, 
+        IMapper mapper,
+        IRepository<Region> regionRepository,
+        IRepository<Country> countryRepository,
+        IRepository<Address> addressRepository,
         IRepository<District> districtRepository)
     {
         _mapper = mapper;
@@ -93,7 +93,7 @@ public class AddressService : IAddressService
 
     public async Task<AddressResultDto> GetByIdAsync(long id)
     {
-        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id), 
+        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id),
             includes: new[] { "Educations" })
             ?? throw new RevisionException(404, "This address is not found");
 

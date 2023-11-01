@@ -18,7 +18,7 @@ public static class ServiceExtensions
     public static void AddCustomServices(this IServiceCollection services)
     {
         //SlugParameterTransformer make upper case to lower case
-        services.AddControllers(options => 
+        services.AddControllers(options =>
         options.Conventions.Add(new RouteTokenTransformerConvention(new SlugParameterTransformer())));
 
 
@@ -39,12 +39,13 @@ public static class ServiceExtensions
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IDistrictService, DistrictService>();
         services.AddScoped<IRegionService, RegionService>();
-         
+
         //Subject category
         services.AddScoped<ISubjectCategoryService, SubjectCategoryService>();
         services.AddScoped<ISubjectService, SubjectService>();
 
         //Education category
         services.AddScoped<IEducationCategoryService, EducationCategoryService>();
-;    }
+        ;
+    }
 }
