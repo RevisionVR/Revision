@@ -1,0 +1,110 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Revision.Service.DTOs.Countries;
+using Revision.Service.DTOs.Districts;
+using Revision.Service.DTOs.Regions;
+using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Validations.Addresses.Countries;
+using Revision.Service.Validations.Addresses.Districts;
+using Revision.Service.Validations.Addresses.Regions;
+using Revision.WebApi.Models;
+
+namespace Revision.WebApi.Controllers.Admin.Addresses;
+
+public class AdminAddressesController : AdminBaseController
+{
+    private IRegionService _regionService;
+    private ICountryService _countryService;
+    private IDistrictService _districtService;
+    public AdminAddressesController(
+        IRegionService regionService,
+        ICountryService countryService,
+        IDistrictService districtService)
+    {
+        _regionService = regionService;
+        _countryService = countryService;
+        _districtService = districtService;
+    }
+
+    [HttpPost("country/create")]
+    public async Task<IActionResult> PostContryAsync([FromForm] CountryCreationDto dto)
+    {
+        var validation = new CountryCreateDtoValidation();
+        var isValid = validation.Validate(dto);
+
+        if (isValid.IsValid)
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _countryService.CreateAsync(dto)
+            });
+
+        return BadRequest();
+    }
+
+
+    [HttpPost("region/create")]
+    public async Task<IActionResult> PostRegionAsync([FromForm] RegionCreationDto dto)
+    {
+        var validation = new RegionCreateDtoValidation();
+        var isValid = validation.Validate(dto);
+
+        if (isValid.IsValid)
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _regionService.CreateAsync(dto)
+            });
+
+        return BadRequest();
+    }
+
+
+    [HttpPost("district/create")]
+    public async Task<IActionResult> PostDistrictAsync([FromForm] DistrictCreationDto dto)
+    {
+        var validation = new DistrictCreateDtoValidation();
+        var isValid = validation.Validate(dto);
+
+        if (isValid.IsValid)
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _districtService.CreateAsync(dto)
+            });
+
+        return BadRequest();
+    }
+
+
+    [HttpPost("country/set")]
+    public async Task<IActionResult> SetContryAsync()
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _countryService.SetAsync()
+        });
+
+
+    [HttpPost("region/set")]
+    public async Task<IActionResult> SetRegionAsync()
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _regionService.SetAsync()
+        });
+
+
+    [HttpPost("district/set")]
+    public async Task<IActionResult> SetDistrictAsync()
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _districtService.SetAsync()
+        });
+}

@@ -1,37 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
-using Revision.Service.DTOs.SubjectCategories;
+using Revision.Service.DTOs.Subjects;
 using Revision.Service.Interfaces.Subjects;
-using Revision.WebApi.Controllers.Common;
 using Revision.WebApi.Models;
 
-namespace Revision.WebApi.Controllers.Subjects;
+namespace Revision.WebApi.Controllers.Admin.Subjects;
 
-public class SubjectCategoriesController : BaseController
+public class AdminSubjectsController : AdminBaseController
 {
-    private readonly ISubjectCategoryService _subjectCategoryService;
-    public SubjectCategoriesController(ISubjectCategoryService subjectCategoryService)
+    private readonly ISubjectService _subjectService;
+    public AdminSubjectsController(ISubjectService subjectService)
     {
-        _subjectCategoryService = subjectCategoryService;
+        _subjectService = subjectService;
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(SubjectCategoryCreationDto dto)
+    public async Task<IActionResult> PostAsync(SubjectCreationDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectCategoryService.CreateAsync(dto)
+            Data = await _subjectService.CreateAsync(dto)
         });
 
 
     [HttpPut("update/{id:long}")]
-    public async Task<IActionResult> PutAsync(long id, SubjectCategoryUpdateDto dto)
+    public async Task<IActionResult> PutAsync(long id, SubjectUpdateDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectCategoryService.UpdateAsync(id, dto)
+            Data = await _subjectService.UpdateAsync(id, dto)
         });
 
 
@@ -41,7 +40,7 @@ public class SubjectCategoriesController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectCategoryService.DeleteAsync(id)
+            Data = await _subjectService.DeleteAsync(id)
         });
 
 
@@ -51,7 +50,7 @@ public class SubjectCategoriesController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectCategoryService.DestroyAsync(id)
+            Data = await _subjectService.DestroyAsync(id)
         });
 
 
@@ -61,7 +60,17 @@ public class SubjectCategoriesController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectCategoryService.GetByIdAsync(id)
+            Data = await _subjectService.GetByIdAsync(id)
+        });
+
+
+    [HttpGet("get-by-category/{subjectCategoryId:long}")]
+    public async Task<IActionResult> GetBySubjectCategoryIdAsync(long subjectCategoryId)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _subjectService.GetBySubjectCategoryIdAsync(subjectCategoryId)
         });
 
 
@@ -71,6 +80,6 @@ public class SubjectCategoriesController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectCategoryService.GetAllAsync(pagination)
+            Data = await _subjectService.GetAllAsync(pagination)
         });
 }

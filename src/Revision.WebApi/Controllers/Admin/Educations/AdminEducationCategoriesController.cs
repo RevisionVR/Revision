@@ -2,27 +2,26 @@
 using Revision.Domain.Configurations;
 using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Interfaces.Educations;
-using Revision.WebApi.Controllers.Common;
 using Revision.WebApi.Models;
 
-namespace Revision.WebApi.Controllers.Educations;
+namespace Revision.WebApi.Controllers.Admin.Educations;
 
-public class EducationCategoriesController : BaseController
+public class AdminEducationCategoriesController : AdminBaseController
 {
     private readonly IEducationCategoryService _educationCategoryService;
-    public EducationCategoriesController(IEducationCategoryService educationCategoryService)
+    public AdminEducationCategoriesController(IEducationCategoryService educationCategoryService)
     {
         _educationCategoryService = educationCategoryService;
     }
 
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync(EducationCategoryCreationDto dto)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _educationCategoryService.CreateAsync(dto)
-        });
+    => Ok(new Response
+    {
+        StatusCode = 200,
+        Message = "Success",
+        Data = await _educationCategoryService.CreateAsync(dto)
+    });
 
 
     [HttpPut("update/{id:long}")]
@@ -46,7 +45,7 @@ public class EducationCategoriesController : BaseController
 
 
     [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> GetAsync(long id)
+    public async Task<IActionResult> GeAsync(long id)
         => Ok(new Response
         {
             StatusCode = 200,

@@ -1,5 +1,4 @@
-﻿using Revision.Service.DTOs.Countries;
-using Revision.Service.DTOs.Regions;
+﻿using Revision.Service.DTOs.Regions;
 
 namespace Revision.Service.Interfaces.Addresses;
 
