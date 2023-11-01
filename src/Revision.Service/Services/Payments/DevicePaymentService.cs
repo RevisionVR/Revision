@@ -62,15 +62,21 @@ public class DevicePaymentService : IDevicePaymentService
     }
     public async Task<IEnumerable<DevicePaymentResultDto>> GetByEducationIdAsync(long educationId)
     {
-        var exstPayments = await _paymentRepository.SelectAll(payment => payment.EducationId.Equals(educationId)).ToListAsync()
-            ?? throw new RevisionException(404, "This education is not found");
+        var existPayments = await _paymentRepository.SelectAll(payment => payment.EducationId.Equals(educationId),
+        includes: new[] { "Education" })
+            .ToListAsync();
+           if (!existPayments.Any())
+            throw new RevisionException(404, "This education is not found");
 
-        return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(exstPayments);
+        return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(existPayments);
     }
 
     public async Task<IEnumerable<DevicePaymentResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var payments = await _paymentRepository.SelectAll(includes: new[] { "Education" }).ToPaginate(pagination).ToListAsync();
+        var payments = await _paymentRepository.SelectAll(includes: new[] { "Education" })
+            .ToPaginate(pagination)
+            .ToListAsync();
+
         return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(payments);
     }
 }

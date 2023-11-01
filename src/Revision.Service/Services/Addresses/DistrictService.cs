@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Districts;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
@@ -44,7 +45,7 @@ public class DistrictService : IDistrictService
 
         string path = EnvironmentHelper.DistrictPath;
         var source = File.ReadAllText(path);
-        var districts = JsonConvert.DeserializeObject<IEnumerable<DistrictCreationDto>>(source);
+        var districts = JsonConvert.DeserializeObject<IEnumerable<DistrictModel>>(source);
 
         foreach (var district in districts)
         {

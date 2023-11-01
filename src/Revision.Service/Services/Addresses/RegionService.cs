@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Regions;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
@@ -50,7 +51,7 @@ public class RegionService : IRegionService
 
         string path = EnvironmentHelper.RegionPath;
         var source = File.ReadAllText(path);
-        var regions = JsonConvert.DeserializeObject<IEnumerable<RegionCreationDto>>(source);
+        var regions = JsonConvert.DeserializeObject<IEnumerable<RegionModel>>(source);
 
         foreach (var region in regions)
         {
