@@ -17,15 +17,18 @@ public class AuthService : IAuthService
     private IMapper _mapper;
     private IRepository<User> _userRepository;
     private ISmsSender _smsSender;
+    private ITokenService _token;
 
     public AuthService(
         IRepository<User> repository,
         IMapper mapper,
-        ISmsSender smsSender)
+        ISmsSender smsSender,
+        ITokenService tokenService)
     {
         this._mapper = mapper;
         this._userRepository = repository;
         this._smsSender = smsSender;
+        this._token = tokenService;
     }
 
     public async Task<bool> RegisterAsync(UserCreationDto dto)
@@ -52,9 +55,22 @@ public class AuthService : IAuthService
         return true;
     }
 
-    public Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
+    public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
     {
-        throw new NotImplementedException();
+        var dbResult = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone) 
+            || user.Email.Equals(dto.Email));
+
+        if (dbResult is null)
+            throw new RevisionException(404, "User NotFound");
+
+        var hasherResult = PasswordHasher.Verify(dto.password, dbResult.PasswordHash, dbResult.Salt);
+
+        if (hasherResult == false)
+            throw new RevisionException(403, "Password Is wrong ");
+
+        var token = _token.GenerateTokenAsync(dbResult);
+
+        return (Result: true, token);
     }
 
     public Task<(bool Result, int CachedMinutes)> ResetPasswordAsync(UserResetPasswordDto dto)
