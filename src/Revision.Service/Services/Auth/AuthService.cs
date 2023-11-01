@@ -8,6 +8,7 @@ using Revision.Service.DTOs.Notifications;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Auth;
+using Revision.Service.Interfaces.Notifications;
 
 namespace Revision.Service.Services.Auth;
 
@@ -15,10 +16,16 @@ public class AuthService : IAuthService
 {
     private IMapper _mapper;
     private IRepository<User> _userRepository;
-    public AuthService(IRepository<User> repository, IMapper mapper)
+    private ISmsSender _smsSender;
+
+    public AuthService(
+        IRepository<User> repository,
+        IMapper mapper,
+        ISmsSender smsSender)
     {
         this._mapper = mapper;
         this._userRepository = repository;
+        this._smsSender = smsSender;
     }
 
     public async Task<bool> RegisterAsync(UserCreationDto dto)
@@ -37,11 +44,10 @@ public class AuthService : IAuthService
         await _userRepository.AddAsync(mappedUser);
         await _userRepository.SaveAsync();
 
-        SmsSender smsSender = new SmsSender();
+        SmsSenderDto smsSender = new SmsSenderDto();
         smsSender.Title = "RevisionVr";
         smsSender.Content = "Your login: " + dto.Phone + "\n" + "and password: " + dto.Password;
-        // sender
-
+        var resultSms = await _smsSender.SendAsync(smsSender);
 
         return true;
     }
