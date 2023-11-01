@@ -52,24 +52,4 @@ public class AdminSubjectCategoriesController : AdminBaseController
             Message = "Success",
             Data = await _subjectCategoryService.DestroyAsync(id)
         });
-
-
-    [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> GetAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _subjectCategoryService.GetByIdAsync(id)
-        });
-
-
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _subjectCategoryService.GetAllAsync(pagination)
-        });
 }

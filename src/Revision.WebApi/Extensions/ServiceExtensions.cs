@@ -36,6 +36,7 @@ public static class ServiceExtensions
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         //Addresses
+        services.AddScoped<IAddressService, AddressService>();
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IDistrictService, DistrictService>();
         services.AddScoped<IRegionService, RegionService>();
@@ -46,5 +47,7 @@ public static class ServiceExtensions
 
         //Education category
         services.AddScoped<IEducationCategoryService, EducationCategoryService>();
+        services.AddScoped<IEducationService, EducationService>();
+
     }
 }
