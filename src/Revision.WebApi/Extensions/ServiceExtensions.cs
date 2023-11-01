@@ -46,6 +46,5 @@ public static class ServiceExtensions
 
         //Education category
         services.AddScoped<IEducationCategoryService, EducationCategoryService>();
-        ;
     }
 }
