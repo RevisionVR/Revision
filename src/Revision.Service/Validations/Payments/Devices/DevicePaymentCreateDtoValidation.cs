@@ -10,6 +10,5 @@ public class DevicePaymentCreateDtoValidation : AbstractValidator<DevicePaymentC
         RuleFor(dto => dto.Price).NotEmpty();
 
         RuleFor(dto => dto.EducationId).NotEmpty();
-
     }
 }
