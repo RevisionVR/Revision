@@ -8,6 +8,7 @@ using Revision.Service.DTOs.Notifications;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Auth;
+using Revision.Service.Interfaces.Notifications;
 
 namespace Revision.Service.Services.Auth;
 
@@ -15,10 +16,19 @@ public class AuthService : IAuthService
 {
     private IMapper _mapper;
     private IRepository<User> _userRepository;
-    public AuthService(IRepository<User> repository, IMapper mapper)
+    private ISmsSender _smsSender;
+    private ITokenService _token;
+
+    public AuthService(
+        IRepository<User> repository,
+        IMapper mapper,
+        ISmsSender smsSender,
+        ITokenService tokenService)
     {
         this._mapper = mapper;
         this._userRepository = repository;
+        this._smsSender = smsSender;
+        this._token = tokenService;
     }
 
     public async Task<bool> RegisterAsync(UserCreationDto dto)
@@ -37,18 +47,30 @@ public class AuthService : IAuthService
         await _userRepository.AddAsync(mappedUser);
         await _userRepository.SaveAsync();
 
-        SmsSender smsSender = new SmsSender();
+        SmsSenderDto smsSender = new SmsSenderDto();
         smsSender.Title = "RevisionVr";
         smsSender.Content = "Your login: " + dto.Phone + "\n" + "and password: " + dto.Password;
-        // sender
-
+        var resultSms = await _smsSender.SendAsync(smsSender);
 
         return true;
     }
 
-    public Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
+    public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
     {
-        throw new NotImplementedException();
+        var dbResult = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone) 
+            || user.Email.Equals(dto.Email));
+
+        if (dbResult is null)
+            throw new RevisionException(404, "User NotFound");
+
+        var hasherResult = PasswordHasher.Verify(dto.password, dbResult.PasswordHash, dbResult.Salt);
+
+        if (hasherResult == false)
+            throw new RevisionException(403, "Password Is wrong ");
+
+        var token = _token.GenerateTokenAsync(dbResult);
+
+        return (Result: true, token);
     }
 
     public Task<(bool Result, int CachedMinutes)> ResetPasswordAsync(UserResetPasswordDto dto)
