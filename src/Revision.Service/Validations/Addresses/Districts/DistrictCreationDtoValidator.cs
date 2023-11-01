@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Districts;
 
 namespace Revision.Service.Validations.Addresses.Districts;
 
-public class DistrictCreateDtoValidation : AbstractValidator<DistrictCreationDto>
+public class DistrictCreationDtoValidator : AbstractValidator<DistrictCreationDto>
 {
-    public DistrictCreateDtoValidation()
+    public DistrictCreationDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotEmpty()

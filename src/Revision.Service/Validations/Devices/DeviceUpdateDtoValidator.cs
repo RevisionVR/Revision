@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Devices;
 
 namespace Revision.Service.Validations.Devices;
 
-public class DeviceCreateDtoValidation : AbstractValidator<DeviceCreationDto>
+public class DeviceUpdateDtoValidator : AbstractValidator<DeviceUpdateDto>
 {
-    public DeviceCreateDtoValidation()
+    public DeviceUpdateDtoValidator()
     {
         RuleFor(dto => dto.UniqueId)
             .NotNull()

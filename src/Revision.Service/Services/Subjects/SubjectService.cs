@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
@@ -8,6 +9,8 @@ using Revision.Service.DTOs.Subjects;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Subjects;
+using Revision.Service.Validations.Subjects;
+using Revision.Service.Validations.Subjects.Categories;
 
 namespace Revision.Service.Services.Subjects;
 
@@ -28,6 +31,11 @@ public class SubjectService : ISubjectService
 
     public async Task<SubjectResultDto> CreateAsync(SubjectCreationDto dto)
     {
+        var validation = new SubjectCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existSubject = await _subjectRepository.SelectAsync(subject => subject.Name.ToLower().Equals(dto.Name));
         if (existSubject is not null)
             throw new RevisionException(403, "This subject already exists");
@@ -47,6 +55,11 @@ public class SubjectService : ISubjectService
 
     public async Task<SubjectResultDto> UpdateAsync(long id, SubjectUpdateDto dto)
     {
+        var validation = new SubjectUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existSubject = await _subjectRepository.SelectAsync(subject => subject.Id.Equals(id),
             includes: new[] { "Topics" })
             ?? throw new RevisionException(404, "This subject is not found");

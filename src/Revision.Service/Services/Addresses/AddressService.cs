@@ -6,6 +6,7 @@ using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Addresses;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Validations.Addresses;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -32,6 +33,11 @@ public class AddressService : IAddressService
 
     public async Task<Address> CreateAsync(AddressCreationDto dto)
     {
+        var validation = new AddressCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existCountry = await _countryRepository.SelectAsync(country => country.Id.Equals(dto.CountryId))
             ?? throw new RevisionException(404, "This country is not found");
 
@@ -55,6 +61,11 @@ public class AddressService : IAddressService
 
     public async Task<Address> UpdateAsync(long id, AddressUpdateDto dto)
     {
+        var validation = new AddressUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id),
             includes: new[] { "Educations" })
             ?? throw new RevisionException(404, "This address is not found");

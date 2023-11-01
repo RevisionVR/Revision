@@ -71,7 +71,7 @@ public class SmsSender : ISmsSender
 
     public class EskizLoginDto
     {
-        public string Message { get; set; } = String.Empty;
+        public string Message { get; set; } = string.Empty;
 
         public EskizToken Data { get; set; }
 
@@ -82,7 +82,7 @@ public class SmsSender : ISmsSender
 
         public class EskizToken
         {
-            public string Token { get; set; } = String.Empty;
+            public string Token { get; set; } = string.Empty;
         }
     }
 }

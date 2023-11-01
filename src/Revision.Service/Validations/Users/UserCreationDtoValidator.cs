@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Users;
 
 namespace Revision.Service.Validations.Users;
 
-public class UserCreateDtoValidation : AbstractValidator<UserCreationDto>
+public class UserCreationDtoValidator : AbstractValidator<UserCreationDto>
 {
-    public UserCreateDtoValidation()
+    public UserCreationDtoValidator()
     {
         RuleFor(dto => dto.FirstName)
             .MinimumLength(3)

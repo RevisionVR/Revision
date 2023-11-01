@@ -10,6 +10,8 @@ using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Addresses;
 using Revision.Service.Interfaces.Educations;
+using Revision.Service.Validations.Educations;
+using Revision.Service.Validations.Educations.Categories;
 
 namespace Revision.Service.Services.Educations;
 
@@ -35,6 +37,11 @@ public class EducationService : IEducationService
 
     public async Task<EducationResultDto> CreateAsync(EducationCreationDto dto)
     {
+        var validation = new EducationCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existEducation = await _educationRepository.SelectAsync(
             education => education.Name.ToLower().Equals(dto.Name.ToLower()));
         if (existEducation is not null)
@@ -63,6 +70,11 @@ public class EducationService : IEducationService
 
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
     {
+        var validation = new EducationUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
             includes: new[] { "Address", "TopicPayments", "DevicePayments", "Devices" })
             ?? throw new RevisionException(404, "This education is not found");

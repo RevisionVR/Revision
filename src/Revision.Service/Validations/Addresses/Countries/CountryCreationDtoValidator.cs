@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Countries;
 
 namespace Revision.Service.Validations.Addresses.Countries;
 
-public class CountryCreateDtoValidation : AbstractValidator<CountryCreationDto>
+public class CountryCreationDtoValidator : AbstractValidator<CountryCreationDto>
 {
-    public CountryCreateDtoValidation()
+    public CountryCreationDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotEmpty()

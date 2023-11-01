@@ -6,7 +6,6 @@ namespace Revision.Service.Services.Auth;
 public class IdentityService : IIdentityService
 {
     private IHttpContextAccessor _accessor;
-
     public IdentityService(IHttpContextAccessor accessor)
     {
         _accessor = accessor;
@@ -34,6 +33,7 @@ public class IdentityService : IIdentityService
         {
             if (_accessor.HttpContext is null)
                 return "";
+
             string type = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role";
             var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == type);
             if (claim is null)
@@ -75,14 +75,14 @@ public class IdentityService : IIdentityService
         }
     }
 
-    public string PhoneNumber
+    public string Phone
     {
         get
         {
             if (_accessor.HttpContext is null)
                 return "";
 
-            var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == "PhoneNumber");
+            var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == "Phone");
 
             if (claim is null)
                 return "";

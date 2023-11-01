@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Subjects;
 
 namespace Revision.Service.Validations.Subjects;
 
-public class SubjectCreateDtoValidation : AbstractValidator<SubjectCreationDto>
+public class SubjectUpdateDtoValidator : AbstractValidator<SubjectUpdateDto>
 {
-    public SubjectCreateDtoValidation()
+    public SubjectUpdateDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotNull()
@@ -16,7 +16,7 @@ public class SubjectCreateDtoValidation : AbstractValidator<SubjectCreationDto>
             .WithMessage("Subject category name maximums length 50 characters");
 
         RuleFor(dto => dto.SubjectCategoryId)
-            .NotEmpty()
+            .NotNull()
             .NotEmpty()
             .WithMessage("This is require");
     }

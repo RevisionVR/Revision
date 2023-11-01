@@ -3,9 +3,9 @@ using Revision.Service.DTOs.SubjectCategories;
 
 namespace Revision.Service.Validations.Subjects.Categories;
 
-public class SubjectCategoryUpdateDtoValidation : AbstractValidator<SubjectCategoryUpdateDto>
+public class SubjectCategoryUpdateDtoValidator : AbstractValidator<SubjectCategoryUpdateDto>
 {
-    public SubjectCategoryUpdateDtoValidation()
+    public SubjectCategoryUpdateDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotNull()

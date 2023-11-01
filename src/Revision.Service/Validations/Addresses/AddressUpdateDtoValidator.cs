@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Addresses;
 
 namespace Revision.Service.Validations.Addresses;
 
-public class AddresseeUpdateDtoValidation : AbstractValidator<AddressUpdateDto>
+public class AddressUpdateDtoValidator : AbstractValidator<AddressUpdateDto>
 {
-    public AddresseeUpdateDtoValidation()
+    public AddressUpdateDtoValidator()
     {
         RuleFor(dto => dto.Home)
             .NotNull()

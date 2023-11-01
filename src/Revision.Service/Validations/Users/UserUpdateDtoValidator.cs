@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Users;
 
 namespace Revision.Service.Validations.Users;
 
-public class UserUpdateDtoValidation : AbstractValidator<UserUpdateDto>
+public class UserUpdateDtoValidator : AbstractValidator<UserUpdateDto>
 {
-    public UserUpdateDtoValidation()
+    public UserUpdateDtoValidator()
     {
         RuleFor(dto => dto.FirstName).MinimumLength(3).WithMessage("FirstName must be more than 3 characters")
             .MaximumLength(30).WithMessage("FirstName must be less than 30 characters");
