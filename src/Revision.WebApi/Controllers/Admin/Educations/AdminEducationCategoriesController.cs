@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Revision.WebApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
-using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Interfaces.Educations;
-using Revision.WebApi.Models;
+using Revision.Service.DTOs.EducationCategories;
 
 namespace Revision.WebApi.Controllers.Admin.Educations;
 
@@ -41,6 +41,16 @@ public class AdminEducationCategoriesController : AdminBaseController
             StatusCode = 200,
             Message = "Success",
             Data = await _educationCategoryService.DeleteAsync(id)
+        });
+
+
+    [HttpDelete("destroy/{id:long}")]
+    public async Task<IActionResult> DestroyAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _educationCategoryService.DestroyAsync(id)
         });
 
 
