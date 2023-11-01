@@ -34,7 +34,7 @@ public class SmsSender : ISmsSender
 
         var response = await client.SendAsync(request);
 
-        if(response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
         {
             string json = await response.Content.ReadAsStringAsync();
             EskizLoginDto dto = JsonConvert.DeserializeObject<EskizLoginDto>(json)!;

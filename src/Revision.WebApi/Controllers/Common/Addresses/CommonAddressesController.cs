@@ -1,6 +1,6 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Addresses;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Common.Addresses;
 
@@ -10,8 +10,8 @@ public class CommonAddressesController : BaseController
     private readonly ICountryService _countryService;
     private readonly IDistrictService _districtService;
     public CommonAddressesController(
-        IRegionService regionService, 
-        ICountryService countryService, 
+        IRegionService regionService,
+        ICountryService countryService,
         IDistrictService districtService)
     {
         _regionService = regionService;

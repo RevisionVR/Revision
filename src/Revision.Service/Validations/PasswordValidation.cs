@@ -16,16 +16,16 @@ public class PasswordValidation
 
         foreach (var item in password)
         {
-            if (char.IsUpper(item)) 
+            if (char.IsUpper(item))
                 isUpperCaseExists = true;
 
-            if (char.IsLower(item)) 
+            if (char.IsLower(item))
                 isLowerCaseExists = true;
 
-            if (char.IsDigit(item)) 
+            if (char.IsDigit(item))
                 isNumberExists = true;
 
-            if (Symbols.Contains(item)) 
+            if (Symbols.Contains(item))
                 isCharacterExists = true;
         }
 

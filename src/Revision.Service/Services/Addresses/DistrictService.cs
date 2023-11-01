@@ -7,7 +7,6 @@ using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Districts;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
-using Revision.Service.Validations.Addresses.Districts;
 using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
@@ -24,11 +23,6 @@ public class DistrictService : IDistrictService
 
     public async Task<DistrictResultDto> CreateAsync(DistrictCreationDto dto)
     {
-        var validation = new DistrictCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existDistrict = await _districtRepository.SelectAsync(district => district.Name.Equals(dto.Name)
         && district.RegionId.Equals(dto.RegionId));
         if (existDistrict is not null)
