@@ -15,7 +15,7 @@ public class AdminSubjectsController : AdminBaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(SubjectCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] SubjectCreationDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -25,7 +25,7 @@ public class AdminSubjectsController : AdminBaseController
 
 
     [HttpPut("update/{id:long}")]
-    public async Task<IActionResult> PutAsync(long id, SubjectUpdateDto dto)
+    public async Task<IActionResult> PutAsync(long id, [FromForm] SubjectUpdateDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -53,33 +53,4 @@ public class AdminSubjectsController : AdminBaseController
             Data = await _subjectService.DestroyAsync(id)
         });
 
-
-    [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> GetAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _subjectService.GetByIdAsync(id)
-        });
-
-
-    [HttpGet("get-by-category/{subjectCategoryId:long}")]
-    public async Task<IActionResult> GetBySubjectCategoryIdAsync(long subjectCategoryId)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _subjectService.GetBySubjectCategoryIdAsync(subjectCategoryId)
-        });
-
-
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _subjectService.GetAllAsync(pagination)
-        });
 }

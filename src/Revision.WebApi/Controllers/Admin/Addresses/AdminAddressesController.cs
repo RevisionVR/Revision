@@ -32,6 +32,16 @@ public class AdminAddressesController : AdminBaseController
         });
 
 
+    [HttpPatch("country/set")]
+    public async Task<IActionResult> SetContryAsync()
+    => Ok(new Response
+    {
+        StatusCode = 200,
+        Message = "Success",
+        Data = await _countryService.SetAsync()
+    });
+
+
     [HttpPost("region/create")]
     public async Task<IActionResult> PostRegionAsync([FromForm] RegionCreationDto dto)
     => Ok(new Response
@@ -40,6 +50,16 @@ public class AdminAddressesController : AdminBaseController
         Message = "Success",
         Data = await _regionService.CreateAsync(dto)
     });
+
+
+    [HttpPatch("region/set")]
+    public async Task<IActionResult> SetRegionAsync()
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _regionService.SetAsync()
+        });
 
 
     [HttpPost("district/create")]
@@ -52,27 +72,7 @@ public class AdminAddressesController : AdminBaseController
     });
 
 
-    [HttpPost("country/set")]
-    public async Task<IActionResult> SetContryAsync()
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _countryService.SetAsync()
-        });
-
-
-    [HttpPost("region/set")]
-    public async Task<IActionResult> SetRegionAsync()
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _regionService.SetAsync()
-        });
-
-
-    [HttpPost("district/set")]
+    [HttpPatch("district/set")]
     public async Task<IActionResult> SetDistrictAsync()
         => Ok(new Response
         {

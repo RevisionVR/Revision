@@ -4,11 +4,15 @@ using Revision.DataAccess.IRepositories;
 using Revision.DataAccess.Repositories;
 using Revision.Service.Interfaces.Addresses;
 using Revision.Service.Interfaces.Educations;
+using Revision.Service.Interfaces.Payments;
 using Revision.Service.Interfaces.Subjects;
+using Revision.Service.Interfaces.Topics;
 using Revision.Service.Mappers;
 using Revision.Service.Services.Addresses;
 using Revision.Service.Services.Educations;
+using Revision.Service.Services.Payments;
 using Revision.Service.Services.Subjects;
+using Revision.Service.Services.Topics;
 using Revision.WebApi.Middlewares;
 
 namespace Revision.WebApi.Extensions;
@@ -49,5 +53,10 @@ public static class ServiceExtensions
         services.AddScoped<IEducationCategoryService, EducationCategoryService>();
         services.AddScoped<IEducationService, EducationService>();
 
+        //Topics
+        services.AddScoped<ITopicService, TopicService>();
+
+        //Payment
+        services.AddScoped<ITopicPaymentService, TopicPaymentService>();
     }
 }

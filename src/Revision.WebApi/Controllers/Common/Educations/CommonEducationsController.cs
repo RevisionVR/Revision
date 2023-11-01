@@ -14,7 +14,7 @@ public class CommonEducationsController : BaseController
     }
 
     [HttpPut("update/{id:long}")]
-    public async Task<IActionResult> PutAsync(long id, EducationUpdateDto dto)
+    public async Task<IActionResult> PutAsync(long id, [FromForm] EducationUpdateDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -25,10 +25,10 @@ public class CommonEducationsController : BaseController
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GeAsync(long id)
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _educationService.GetByIdAsync(id)
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _educationService.GetByIdAsync(id)
+        });
 }

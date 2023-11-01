@@ -15,7 +15,7 @@ public class AdminEducationsController : AdminBaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(EducationCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] EducationCreationDto dto)
     => Ok(new Response
     {
         StatusCode = 200,
