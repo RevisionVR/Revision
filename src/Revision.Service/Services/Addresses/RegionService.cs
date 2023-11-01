@@ -21,6 +21,20 @@ public class RegionService : IRegionService
         _regionRepository = regionRepository;
     }
 
+    public async Task<RegionResultDto> CreateAsync(RegionCreationDto dto)
+    {
+        var existRegion = await _regionRepository.SelectAsync(region => region.Name.Equals(dto.Name) && region.CountryId.Equals(dto.CountryId));
+        if (existRegion is not null)
+            throw new RevisionException(403, "This region already exists");
+
+        var mappedRegion = _mapper.Map<Region>(dto);
+        mappedRegion.CreatedAt = TimeHelper.GetDateTime();
+        await _regionRepository.AddAsync(mappedRegion);
+        await _regionRepository.SaveAsync();
+
+        return _mapper.Map<RegionResultDto>(mappedRegion);
+    }
+
     public async Task<bool> SetAsync()
     {
         var dbSource = _regionRepository.SelectAll();
@@ -44,7 +58,7 @@ public class RegionService : IRegionService
 
     public async Task<RegionResultDto> GetByIdAsync(long id)
     {
-        var existRegion = await _regionRepository.SelectAsync(region => region.Id.Equals(id), 
+        var existRegion = await _regionRepository.SelectAsync(region => region.Id.Equals(id),
             includes: new[] { "Country" })
             ?? throw new RevisionException(404, "This region is not found");
 
