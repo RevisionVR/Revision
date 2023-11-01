@@ -7,8 +7,12 @@ public class SubjectCategoryCreateDtoValidation : AbstractValidator<SubjectCateg
 {
     public SubjectCategoryCreateDtoValidation()
     {
-        RuleFor(dto => dto.Name).NotEmpty().NotNull().MinimumLength(3)
-            .WithMessage("Subject category name minimum 3 characters").MaximumLength(50)
-                .WithMessage("Subject category name maximums length 50 characters");
+        RuleFor(dto => dto.Name)
+            .NotNull()
+            .NotEmpty()
+            .MinimumLength(3)
+            .WithMessage("Subject category name minimum 3 characters")
+            .MaximumLength(50)
+            .WithMessage("Subject category name maximums length 50 characters");
     }
 }

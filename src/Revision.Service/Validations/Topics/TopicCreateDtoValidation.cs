@@ -7,12 +7,22 @@ public class TopicCreateDtoValidation : AbstractValidator<TopicCreationDto>
 {
     public TopicCreateDtoValidation()
     {
-        RuleFor(dto => dto.Name).NotEmpty().NotNull().MinimumLength(3)
-            .WithMessage("Topic name minimum 3 characters").MaximumLength(50)
-                .WithMessage("Topic name maximums length 50 characters");
+        RuleFor(dto => dto.Name)
+            .NotNull()
+            .NotEmpty()
+            .MinimumLength(3)
+            .WithMessage("Topic name minimum 3 characters")
+            .MaximumLength(50)
+            .WithMessage("Topic name maximums length 50 characters");
 
-        RuleFor(dto => dto.Price).NotEmpty().NotNull().WithMessage("This is require");
+        RuleFor(dto => dto.Price)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("This is require");
 
-        RuleFor(dto => dto.SubjectId).NotEmpty().NotEmpty().WithMessage("This is require");
+        RuleFor(dto => dto.SubjectId)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("This is require");
     }
 }

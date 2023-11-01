@@ -7,8 +7,12 @@ public class DeviceCreateDtoValidation : AbstractValidator<DeviceCreationDto>
 {
     public DeviceCreateDtoValidation()
     {
-        RuleFor(dto => dto.UniqueId).NotEmpty().NotNull();
+        RuleFor(dto => dto.UniqueId)
+            .NotNull()
+            .NotEmpty();
 
-        RuleFor(dto => dto.Price).NotNull().NotEmpty();
+        RuleFor(dto => dto.Price)
+            .NotNull()
+            .NotEmpty();
     }
 }
