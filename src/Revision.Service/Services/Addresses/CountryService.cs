@@ -8,6 +8,7 @@ using Revision.Service.DTOs.Countries;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
 using Revision.Shared.Helpers;
+using Revision.Service.Commons.Models;
 
 namespace Revision.Service.Services.Addresses;
 
@@ -21,6 +22,21 @@ public class CountryService : ICountryService
         _countryRepository = countryRepository;
     }
 
+    public async Task<CountryResultDto> CreateAsync(CountryCreationDto dto)
+    {
+        var existCountry = await _countryRepository.SelectAsync(country => 
+        country.Name.Equals(dto.Name) || country.CountryCode.Equals(dto.CountryCode));
+        if (existCountry is not null)
+            throw new RevisionException(403, "This country already exists");
+
+        var mappedCountry = _mapper.Map<Country>(dto);
+        mappedCountry.CreatedAt = TimeHelper.GetDateTime();
+        await _countryRepository.AddAsync(mappedCountry);
+        await _countryRepository.SaveAsync();
+        
+        return _mapper.Map<CountryResultDto>(mappedCountry);
+    }
+
     public async Task<bool> SetAsync()
     {
         var dbSource = _countryRepository.SelectAll();
@@ -29,7 +45,7 @@ public class CountryService : ICountryService
 
         string path = EnvironmentHelper.CountryPath;
         var source = File.ReadAllText(path);
-        var countries = JsonConvert.DeserializeObject<IEnumerable<CountryCreationDto>>(source);
+        var countries = JsonConvert.DeserializeObject<IEnumerable<CountryModel>>(source);
 
         foreach (var country in countries)
         {
@@ -39,6 +55,7 @@ public class CountryService : ICountryService
             await _countryRepository.AddAsync(mappedCountry);
             await _countryRepository.SaveAsync();
         }
+
         return true;
     }
 
