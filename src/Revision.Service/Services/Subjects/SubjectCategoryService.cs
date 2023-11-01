@@ -59,7 +59,7 @@ public class SubjectCategoryService : ISubjectCategoryService
 
         _repository.Delete(existCategory);
         await _repository.SaveAsync();
-        return true;    
+        return true;
     }
 
     public async Task<bool> DestroyAsync(long id)
@@ -83,6 +83,6 @@ public class SubjectCategoryService : ISubjectCategoryService
     public async Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync(PaginationParams pagination)
     {
         var categories = await _repository.SelectAll(includes: new[] { "Subjects" }).ToPaginate(pagination).ToListAsync();
-        return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(categories);  
+        return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(categories);
     }
 }

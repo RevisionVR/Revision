@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Revision.Service.DTOs.Notifications;
+﻿namespace Revision.Service.DTOs.Notifications;
 
 public class SmsSender
 {

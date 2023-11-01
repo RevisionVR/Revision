@@ -1,10 +1,9 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
-using Revision.Service.Interfaces.Subjects;
 using Revision.Service.DTOs.SubjectCategories;
-using Revision.WebApi.Controllers.SuperAdmin;
+using Revision.Service.Interfaces.Subjects;
 using Revision.WebApi.Controllers.Common;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Subjects;
 

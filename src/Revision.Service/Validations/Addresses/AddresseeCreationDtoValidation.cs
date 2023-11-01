@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Revision.Service.DTOs.Addresses;
-using System.Data;
 
 namespace Revision.Service.Validations.Addresses;
 
@@ -18,7 +17,7 @@ public class AddresseeCreationDtoValidation : AbstractValidator<AddressCreationD
         RuleFor(dto => dto.CountryId).NotNull().NotEmpty();
 
         RuleFor(dto => dto.RegionId).NotNull().NotEmpty();
-        
+
         RuleFor(dto => dto.DistrictId).NotNull().NotEmpty();
 
     }

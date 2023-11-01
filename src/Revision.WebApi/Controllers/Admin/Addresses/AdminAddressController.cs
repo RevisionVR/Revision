@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Revision.Domain.Entities.Addresses;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.DTOs.Countries;
 using Revision.Service.DTOs.Districts;
 using Revision.Service.DTOs.Regions;
@@ -8,7 +6,6 @@ using Revision.Service.Interfaces.Addresses;
 using Revision.Service.Validations.Addresses.Countries;
 using Revision.Service.Validations.Addresses.Districts;
 using Revision.Service.Validations.Addresses.Regions;
-using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Addresses;
 

@@ -1,6 +1,6 @@
-﻿using Revision.Domain.Enums;
+﻿using Revision.Domain.Configurations;
+using Revision.Domain.Enums;
 using Revision.Service.DTOs.Users;
-using Revision.Domain.Configurations;
 
 namespace Revision.Service.Interfaces.Users;
 

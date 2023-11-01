@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using Revision.Domain.Enums;
-using Revision.Service.DTOs.Users;
-using Revision.Domain.Configurations;
-using Revision.Service.Interfaces.Users;
-using Revision.DataAccess.IRepositories;
-using Revision.Domain.Entities.Users;
-using Revision.Service.Exceptions;
-using Revision.Service.Commons.Security;
-using Revision.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Revision.DataAccess.IRepositories;
+using Revision.Domain.Configurations;
+using Revision.Domain.Entities.Users;
+using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.Commons.Security;
+using Revision.Service.DTOs.Users;
+using Revision.Service.Exceptions;
+using Revision.Service.Extensions;
+using Revision.Service.Interfaces.Users;
 
 namespace Revision.Service.Services.Users;
 
@@ -18,7 +18,7 @@ public class UserService : IUserService
     private readonly IMapper _mapper;
     private readonly IRepository<User> _userRepository;
     public UserService(
-        IMapper mapper, 
+        IMapper mapper,
         IRepository<User> userRepository)
     {
         _mapper = mapper;
@@ -73,7 +73,7 @@ public class UserService : IUserService
            ?? throw new RevisionException(404, "This user is not found");
 
         _userRepository.Delete(existUser);
-         await _userRepository.SaveAsync();
+        await _userRepository.SaveAsync();
 
         return true;
     }

@@ -18,8 +18,8 @@ public class TopicService : ITopicService
     private readonly IRepository<Topic> _topicRepository;
     private readonly IRepository<Subject> _subjectRepository;
     public TopicService(
-        IMapper mapper, 
-        IRepository<Topic> topicRepository, 
+        IMapper mapper,
+        IRepository<Topic> topicRepository,
         IRepository<Subject> subjectRepository)
     {
         _mapper = mapper;
@@ -66,7 +66,7 @@ public class TopicService : ITopicService
             ?? throw new RevisionException(404, "This topic is not found");
 
         _topicRepository.Delete(existTopic);
-        await _topicRepository.SaveAsync(); 
+        await _topicRepository.SaveAsync();
         return true;
     }
 
@@ -96,6 +96,6 @@ public class TopicService : ITopicService
             .ToPaginate(pagination)
             .ToListAsync();
 
-        return _mapper.Map<IEnumerable<TopicResultDto>>(topics);    
+        return _mapper.Map<IEnumerable<TopicResultDto>>(topics);
     }
 }

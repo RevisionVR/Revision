@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration.UserSecrets;
 using Revision.DataAccess.Contexts;
 using Revision.Shared.Helpers;
 using Revision.WebApi.Extensions;

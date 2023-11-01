@@ -20,9 +20,9 @@ public class TopicPaymentService : ITopicPaymentService
     private readonly IRepository<Education> _educationRepository;
     private readonly IRepository<TopicPayment> _paymentRepository;
     public TopicPaymentService(
-        IMapper mapper, 
-        IRepository<Topic> topicRepository, 
-        IRepository<Education> educationRepository, 
+        IMapper mapper,
+        IRepository<Topic> topicRepository,
+        IRepository<Education> educationRepository,
         IRepository<TopicPayment> paymentRepository)
     {
         _mapper = mapper;
@@ -64,10 +64,10 @@ public class TopicPaymentService : ITopicPaymentService
 
     public async Task<IEnumerable<TopicPaymentResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var topicPayments = await _paymentRepository.SelectAll(includes: new[] { "Topic", "Education" } )
+        var topicPayments = await _paymentRepository.SelectAll(includes: new[] { "Topic", "Education" })
             .ToPaginate(pagination)
             .ToListAsync();
 
-        return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(topicPayments);  
+        return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(topicPayments);
     }
 }

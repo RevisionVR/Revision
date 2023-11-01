@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.DTOs.Educations;
 
 namespace Revision.Service.Validations.Educations;

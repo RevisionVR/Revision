@@ -24,7 +24,7 @@ public class AuthService : IAuthService
     public async Task<bool> RegisterAsync(UserCreationDto dto)
     {
         var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
-        if(existUser is not null)
+        if (existUser is not null)
             throw new RevisionException(403, $"This user already exists this phone = {dto.Phone}");
 
         var result = PasswordHasher.Hash(dto.Password);
@@ -39,10 +39,10 @@ public class AuthService : IAuthService
 
         SmsSender smsSender = new SmsSender();
         smsSender.Title = "RevisionVr";
-        smsSender.Content = "Your login: " + dto.Phone + "\n" +"and password: " + dto.Password;
-         // sender
+        smsSender.Content = "Your login: " + dto.Phone + "\n" + "and password: " + dto.Password;
+        // sender
 
-        
+
         return true;
     }
 
