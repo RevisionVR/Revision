@@ -9,6 +9,7 @@ using Revision.Service.DTOs.DevicePayments;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Payments;
+using Revision.Service.Validations.Payments.Devices;
 
 namespace Revision.Service.Services.Payments;
 
@@ -29,6 +30,11 @@ public class DevicePaymentService : IDevicePaymentService
 
     public async Task<DevicePaymentResultDto> CreateAsync(DevicePaymentCreationDto dto)
     {
+        var validation = new DevicePaymentCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(dto.EducationId))
             ?? throw new RevisionException(404, "This education is not found");
 

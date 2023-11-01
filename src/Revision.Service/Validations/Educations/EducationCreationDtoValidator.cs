@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Educations;
 
 namespace Revision.Service.Validations.Educations;
 
-public class EducationCreationDtoValidation : AbstractValidator<EducationCreationDto>
+public class EducationCreationDtoValidator : AbstractValidator<EducationCreationDto>
 {
-    public EducationCreationDtoValidation()
+    public EducationCreationDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotNull()

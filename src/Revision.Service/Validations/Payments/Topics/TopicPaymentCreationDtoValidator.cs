@@ -3,9 +3,9 @@ using Revision.Service.DTOs.TopicPayments;
 
 namespace Revision.Service.Validations.Payments.Topics;
 
-public class TopicPaymentCreateDtoValidation : AbstractValidator<TopicPaymentCreationDto>
+public class TopicPaymentCreationDtoValidator : AbstractValidator<TopicPaymentCreationDto>
 {
-    public TopicPaymentCreateDtoValidation()
+    public TopicPaymentCreationDtoValidator()
     {
         RuleFor(dto => dto.Price).NotEmpty();
 

@@ -3,9 +3,9 @@ using Revision.Service.DTOs.Topics;
 
 namespace Revision.Service.Validations.Topics;
 
-public class TopicCreateDtoValidation : AbstractValidator<TopicCreationDto>
+public class TopicUpdateDtoValidator : AbstractValidator<TopicUpdateDto>
 {
-    public TopicCreateDtoValidation()
+    public TopicUpdateDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotNull()

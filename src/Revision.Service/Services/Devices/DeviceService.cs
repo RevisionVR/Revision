@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
@@ -10,6 +11,8 @@ using Revision.Service.DTOs.Devices;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Devices;
+using Revision.Service.Validations.Addresses;
+using Revision.Service.Validations.Devices;
 
 namespace Revision.Service.Services.Devices;
 
@@ -30,6 +33,11 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceResultDto> CreateAsync(DeviceCreationDto dto)
     {
+        var validation = new DeviceCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existDevice = await _deviceRepository.SelectAsync(device => device.UniqueId.Equals(dto.UniqueId));
         if (existDevice is not null)
             throw new RevisionException(403, "This device already exists");
@@ -50,6 +58,11 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceResultDto> UpdateAsync(long id, DeviceUpdateDto dto)
     {
+        var validation = new DeviceUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
+
         var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id))
             ?? throw new RevisionException(404, "This device is not found");
 

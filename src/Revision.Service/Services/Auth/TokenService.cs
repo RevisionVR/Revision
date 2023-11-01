@@ -11,31 +11,31 @@ namespace Revision.Service.Services.Auth;
 
 public class TokenService : ITokenService
 {
-    private IConfiguration _config;
+    private IConfiguration _configuration;
 
     public TokenService(IConfiguration configuration)
     {
-        _config = configuration;
+        _configuration = configuration;
     }
-    public string GenerateTokenAsync(User userResultDto)
+    public string GenerateTokenAsync(User user)
     {
         var identityClaims = new Claim[]
         {
-            new Claim ("Id", userResultDto.Id.ToString()),
-            new Claim ("FirstName", userResultDto.FirstName),
-            new Claim ("LastName", userResultDto.LastName),
-            new Claim ("Phone", userResultDto.Phone),
-            new Claim ("Email", userResultDto.Email),
-            new Claim (ClaimTypes.Role, userResultDto.Role.ToString())
+            new Claim ("Id", user.Id.ToString()),
+            new Claim ("FirstName", user.FirstName),
+            new Claim ("LastName", user.LastName),
+            new Claim ("Phone", user.Phone),
+            new Claim ("Email", user.Email),
+            new Claim (ClaimTypes.Role, user.Role.ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["SecurityKey"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"]));
         var keyCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         int expiresHours = 24;
 
         var token = new JwtSecurityToken(
-            issuer: _config["Issuer"],
-            audience: _config["Audience"],
+            issuer: _configuration["Issuer"],
+            audience: _configuration["Audience"],
             claims: identityClaims,
             expires: TimeHelper.GetDateTime().AddHours(expiresHours),
             signingCredentials: keyCredentials);

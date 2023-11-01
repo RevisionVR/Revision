@@ -9,30 +9,36 @@ using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Auth;
 using Revision.Service.Interfaces.Notifications;
+using Revision.Service.Validations.Users;
 
 namespace Revision.Service.Services.Auth;
 
 public class AuthService : IAuthService
 {
     private IMapper _mapper;
-    private IRepository<User> _userRepository;
-    private ISmsSender _smsSender;
     private ITokenService _token;
+    private ISmsSender _smsSender;
+    private IRepository<User> _userRepository;
 
     public AuthService(
-        IRepository<User> repository,
         IMapper mapper,
         ISmsSender smsSender,
-        ITokenService tokenService)
+        ITokenService tokenService,
+        IRepository<User> userRepository)
     {
-        this._mapper = mapper;
-        this._userRepository = repository;
-        this._smsSender = smsSender;
-        this._token = tokenService;
+        _mapper = mapper;
+        _token = tokenService;
+        _smsSender = smsSender;
+        _userRepository = userRepository;
     }
 
     public async Task<bool> RegisterAsync(UserCreationDto dto)
     {
+        var validation = new UserCreationDtoValidator();
+        var isValidUser = validation.Validate(dto);
+        if (!isValidUser.IsValid)
+            throw new RevisionException(400, isValidUser.Errors.FirstOrDefault().ToString());
+
         var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
         if (existUser is not null)
             throw new RevisionException(403, $"This user already exists this phone = {dto.Phone}");
@@ -57,19 +63,16 @@ public class AuthService : IAuthService
 
     public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
     {
-        var dbResult = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone) 
-            || user.Email.Equals(dto.Email));
+        var existUser = await _userRepository.SelectAsync(user => 
+        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email));
+        if (existUser is null)
+            throw new RevisionException(404, "This user is not found");
 
-        if (dbResult is null)
-            throw new RevisionException(404, "User NotFound");
+        var hasherResult = PasswordHasher.Verify(dto.password, existUser.PasswordHash, existUser.Salt);
+        if (!hasherResult)
+            throw new RevisionException(400, "Phone or password is invalid");
 
-        var hasherResult = PasswordHasher.Verify(dto.password, dbResult.PasswordHash, dbResult.Salt);
-
-        if (hasherResult == false)
-            throw new RevisionException(403, "Password Is wrong ");
-
-        var token = _token.GenerateTokenAsync(dbResult);
-
+        var token = _token.GenerateTokenAsync(existUser);
         return (Result: true, token);
     }
 
@@ -78,7 +81,7 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
-    public Task<(bool Result, string Token)> VerifyResetPasswordAsync(string phoneNumber, int code)
+    public Task<(bool Result, string Token)> VerifyResetPasswordAsync(string phone, int code)
     {
         throw new NotImplementedException();
     }

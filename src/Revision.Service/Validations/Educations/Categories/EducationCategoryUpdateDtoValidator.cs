@@ -3,9 +3,9 @@ using Revision.Service.DTOs.EducationCategories;
 
 namespace Revision.Service.Validations.Educations.Categories;
 
-public class EducationCategoryUpdateDtoValidation : AbstractValidator<EducationCategoryUpdateDto>
+public class EducationCategoryUpdateDtoValidator : AbstractValidator<EducationCategoryUpdateDto>
 {
-    public EducationCategoryUpdateDtoValidation()
+    public EducationCategoryUpdateDtoValidator()
     {
         RuleFor(dto => dto.Name)
             .NotEmpty()
