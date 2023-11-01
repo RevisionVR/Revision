@@ -15,7 +15,7 @@ public class AdminSubjectCategoriesController : AdminBaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(SubjectCategoryCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] SubjectCategoryCreationDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -25,7 +25,7 @@ public class AdminSubjectCategoriesController : AdminBaseController
 
 
     [HttpPut("update/{id:long}")]
-    public async Task<IActionResult> PutAsync(long id, SubjectCategoryUpdateDto dto)
+    public async Task<IActionResult> PutAsync(long id, [FromForm] SubjectCategoryUpdateDto dto)
         => Ok(new Response
         {
             StatusCode = 200,

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
@@ -9,6 +10,7 @@ using Revision.Service.DTOs.Topics;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Topics;
+using Revision.Service.Validations.Subjects.Categories;
 using Revision.Service.Validations.Topics;
 
 namespace Revision.Service.Services.Topics;
