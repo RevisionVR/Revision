@@ -133,7 +133,9 @@ public class DeviceService : IDeviceService
 
     public async Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var devices = await _deviceRepository.SelectAll().ToPaginate(pagination).ToListAsync();
+        var devices = await _deviceRepository.SelectAll()
+            .ToPaginate(pagination)
+            .ToListAsync();
 
         return _mapper.Map<IEnumerable<DeviceResultDto>>(devices);
     }

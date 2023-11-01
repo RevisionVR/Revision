@@ -110,7 +110,8 @@ public class SubjectService : ISubjectService
     public async Task<IEnumerable<SubjectResultDto>> GetBySubjectCategoryIdAsync(long subjectCategoryId)
     {
         var subjects = await _subjectRepository.SelectAll(subject => subject.SubjectCategoryId.Equals(subjectCategoryId),
-        includes: new[] { "SubjectCategory", "Topics" }).ToListAsync();
+            includes: new[] { "SubjectCategory", "Topics" })
+            .ToListAsync();
 
         if (!subjects.Any())
             throw new RevisionException(404, "This subject category is not found");

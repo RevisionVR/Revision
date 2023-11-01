@@ -6,6 +6,7 @@ using Revision.Domain.Entities.Payments;
 using Revision.Domain.Entities.Subjects;
 using Revision.Domain.Entities.Topics;
 using Revision.Domain.Entities.Users;
+using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Addresses;
 using Revision.Service.DTOs.Countries;
 using Revision.Service.DTOs.DevicePayments;
@@ -37,6 +38,7 @@ public class MappingProfile : Profile
         CreateMap<Address, AddressCreationDto>().ReverseMap();
 
         //Countries
+        CreateMap<Country, CountryModel>().ReverseMap();
         CreateMap<Country, CountryResultDto>().ReverseMap();
         CreateMap<Country, CountryCreationDto>().ReverseMap();
 
@@ -50,6 +52,7 @@ public class MappingProfile : Profile
         CreateMap<Device, DeviceCreationDto>().ReverseMap();
 
         //Districts
+        CreateMap<District, DistrictModel>().ReverseMap();
         CreateMap<District, DistrictResultDto>().ReverseMap();
         CreateMap<District, DistrictCreationDto>().ReverseMap();
 
@@ -63,19 +66,10 @@ public class MappingProfile : Profile
         CreateMap<Education, EducationUpdateDto>().ReverseMap();
         CreateMap<Education, EducationCreationDto>().ReverseMap();
 
-        //Messages
-        //CreateMap<Message, MessageResultDto>().ReverseMap();
-        //CreateMap<Message, MessageUpdateDto>().ReverseMap();
-        //CreateMap<Message, MessageCreationDto>().ReverseMap();
-
         //Regions
+        CreateMap<Region, RegionModel>().ReverseMap();
         CreateMap<Region, RegionResultDto>().ReverseMap();
         CreateMap<Region, RegionCreationDto>().ReverseMap();
-
-        //Rooms
-        //CreateMap<Room, RoomResultDto>().ReverseMap();
-        //CreateMap<Room, RoomUpdateDto>().ReverseMap();
-        //CreateMap<Room, RoomCreationDto>().ReverseMap();
 
         //SubjectCategories
         CreateMap<SubjectCategory, SubjectCategoryResultDto>().ReverseMap();

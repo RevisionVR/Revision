@@ -4,6 +4,7 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
+using Revision.Domain.Entities.Subjects;
 using Revision.Domain.Entities.Topics;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.TopicPayments;
@@ -71,8 +72,12 @@ public class TopicPaymentService : ITopicPaymentService
 
     public async Task<IEnumerable<TopicPaymentResultDto>> GetByEducationIdAsync(long educationId)
     {
-        var existPayments = await _paymentRepository.SelectAll(payment => payment.EducationId.Equals(educationId)).ToListAsync()
-            ?? throw new RevisionException(404, "This education is not found");
+        var existPayments = await _paymentRepository.SelectAll(payment => payment.EducationId.Equals(educationId))
+            .ToListAsync();
+
+        if (!existPayments.Any())
+            throw new RevisionException(404, "This education is not found");
+
 
         return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(existPayments);
     }

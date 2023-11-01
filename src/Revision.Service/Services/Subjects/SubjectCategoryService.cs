@@ -52,7 +52,8 @@ public class SubjectCategoryService : ISubjectCategoryService
         if (!result.IsValid)
             throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
 
-        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id), includes: new[] { "Subjects" })
+        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id), 
+            includes: new[] { "Subjects" })
             ?? throw new RevisionException(404, "This subject category is not found");
 
         var mappedCategory = _mapper.Map(dto, existCategory);
@@ -87,7 +88,8 @@ public class SubjectCategoryService : ISubjectCategoryService
 
     public async Task<SubjectCategoryResultDto> GetByIdAsync(long id)
     {
-        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id), includes: new[] { "Subjects" })
+        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id), 
+            includes: new[] { "Subjects" })
             ?? throw new RevisionException(404, "This subject category is not found");
 
         return _mapper.Map<SubjectCategoryResultDto>(existCategory);
@@ -95,7 +97,9 @@ public class SubjectCategoryService : ISubjectCategoryService
 
     public async Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var categories = await _repository.SelectAll(includes: new[] { "Subjects" }).ToPaginate(pagination).ToListAsync();
+        var categories = await _repository.SelectAll(includes: new[] { "Subjects" })
+            .ToPaginate(pagination)
+            .ToListAsync();
         return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(categories);
     }
 }
