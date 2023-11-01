@@ -3,7 +3,7 @@
 namespace Revision.WebApi.Controllers.Common;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 //[Authorize(Roles = "User")]
 public class BaseController : ControllerBase
 { }
