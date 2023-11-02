@@ -7,8 +7,8 @@ public class Address : Auditable
 {
     public string Home { get; set; } = string.Empty;
     public string Description { get; set; }
-    public float Longitude { get; set; }
-    public float Latitude { get; set; }
+    public float? Longitude { get; set; }
+    public float? Latitude { get; set; }
 
     public long CountryId { get; set; }
     public Country Country { get; set; }
