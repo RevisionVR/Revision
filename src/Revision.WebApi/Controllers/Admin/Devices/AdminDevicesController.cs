@@ -1,8 +1,8 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using Revision.Service.DTOs.Devices;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
+using Revision.Service.DTOs.Devices;
 using Revision.Service.Interfaces.Devices;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Devices;
 
@@ -26,11 +26,11 @@ public class AdminDevicesController : AdminBaseController
 
     [HttpPut("update/{id:long}")]
     public async Task<IActionResult> PutAsync(long id, DeviceUpdateDto dto)
-        =>Ok(new Response 
-        { 
-            StatusCode = 200, 
-            Message ="Success",
-            Data = await _deviceService.UpdateAsync(id, dto) 
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _deviceService.UpdateAsync(id, dto)
         });
 
 

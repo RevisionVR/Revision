@@ -8,8 +8,6 @@ using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Subjects;
-using Revision.Service.Validations.Payments.Devices;
-using Revision.Service.Validations.Subjects;
 using Revision.Service.Validations.Subjects.Categories;
 
 namespace Revision.Service.Services.Subjects;
@@ -52,7 +50,7 @@ public class SubjectCategoryService : ISubjectCategoryService
         if (!result.IsValid)
             throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
 
-        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id), 
+        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id),
             includes: new[] { "Subjects" })
             ?? throw new RevisionException(404, "This subject category is not found");
 
@@ -88,7 +86,7 @@ public class SubjectCategoryService : ISubjectCategoryService
 
     public async Task<SubjectCategoryResultDto> GetByIdAsync(long id)
     {
-        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id), 
+        var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id),
             includes: new[] { "Subjects" })
             ?? throw new RevisionException(404, "This subject category is not found");
 

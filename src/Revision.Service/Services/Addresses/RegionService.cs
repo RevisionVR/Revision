@@ -8,7 +8,6 @@ using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Regions;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
-using Revision.Service.Validations.Addresses.Districts;
 using Revision.Service.Validations.Addresses.Regions;
 using Revision.Shared.Helpers;
 

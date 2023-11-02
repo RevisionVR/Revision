@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Revision.Domain.Configurations;
 using Revision.Service.DTOs.Subjects;
 using Revision.Service.Interfaces.Subjects;
 using Revision.WebApi.Models;

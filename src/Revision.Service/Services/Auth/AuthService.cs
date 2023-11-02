@@ -32,7 +32,7 @@ public class AuthService : IAuthService
         _userRepository = userRepository;
     }
 
-    public async Task<bool> RegisterAsync(UserCreationDto dto)
+    public async Task<(bool Result, string token)> RegisterAsync(UserCreationDto dto)
     {
         var validation = new UserCreationDtoValidator();
         var isValidUser = validation.Validate(dto);
@@ -50,15 +50,17 @@ public class AuthService : IAuthService
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
 
-        await _userRepository.AddAsync(mappedUser);
-        await _userRepository.SaveAsync();
+        var a = await _userRepository.AddAsync(mappedUser);
+        var b = await _userRepository.SaveAsync();
 
         SmsSenderDto smsSender = new SmsSenderDto();
         smsSender.Title = "RevisionVr";
         smsSender.Content = "Your login: " + dto.Phone + "\n" + "and password: " + dto.Password;
-        var resultSms = await _smsSender.SendAsync(smsSender);
+        //var resultSms = await _smsSender.SendAsync(smsSender);
 
-        return true;
+        var token = _token.GenerateTokenAsync(mappedUser);
+
+        return (Result: true, token:token);
     }
 
     public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)

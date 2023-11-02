@@ -18,6 +18,7 @@ builder.Services.AddDbContext<RevisionDbContext>(options =>
 
 //Services
 builder.Services.AddCustomServices();
+//builder.ConfigureServiceLayer();
 
 var app = builder.Build();
 
