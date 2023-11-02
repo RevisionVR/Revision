@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Revision.DataAccess.Contexts;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Commons;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Revision.DataAccess.Repositories;
 

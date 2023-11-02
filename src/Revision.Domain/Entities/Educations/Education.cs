@@ -2,7 +2,6 @@
 using Revision.Domain.Entities.Addresses;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Payments;
-using Revision.Domain.Entities.Users;
 
 namespace Revision.Domain.Entities.Educations;
 
@@ -13,9 +12,6 @@ public class Education : Auditable
     public string Email { get; set; } = string.Empty;
     public string Description { get; set; }
     public Address Address { get; set; }
-
-    public long UserId { get; set; }
-    public User User { get; set; }
 
     public long EducationCategoryId { get; set; }
     public EducationCategory EducationCategory { get; set; }
