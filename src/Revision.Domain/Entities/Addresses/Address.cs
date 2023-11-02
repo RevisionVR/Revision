@@ -6,7 +6,7 @@ namespace Revision.Domain.Entities.Addresses;
 public class Address : Auditable
 {
     public string Home { get; set; } = string.Empty;
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
     public float? Longitude { get; set; }
     public float? Latitude { get; set; }
 
