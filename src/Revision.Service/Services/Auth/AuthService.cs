@@ -50,17 +50,17 @@ public class AuthService : IAuthService
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
 
-        var a = await _userRepository.AddAsync(mappedUser);
-        var b = await _userRepository.SaveAsync();
+        var dbResult = await _userRepository.AddAsync(mappedUser);
+        var resultDb = await _userRepository.SaveAsync();
 
         SmsSenderDto smsSender = new SmsSenderDto();
         smsSender.Title = "RevisionVr";
         smsSender.Content = "Your login: " + dto.Phone + "\n" + "and password: " + dto.Password;
         //var resultSms = await _smsSender.SendAsync(smsSender);
 
-        var token = _token.GenerateTokenAsync(mappedUser);
+        var token = _token.GenerateTokenAsync(dbResult);
 
-        return (Result: true, token:token);
+        return (Result: resultDb, token:token);
     }
 
     public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
