@@ -15,7 +15,6 @@ public class EducationResultDto
     public string Phone { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string Description { get; set; }
-    public UserResultDto User { get; set; }
     public EducationCategoryResultDto EducationCategory { get; set; }
     public AddressResultDto AddressResultDto { get; set; }
 
