@@ -71,6 +71,7 @@ public class AuthService : IAuthService
             throw new RevisionException(404, "This user is not found");
 
         var hasherResult = PasswordHasher.Verify(dto.password, existUser.PasswordHash, existUser.Salt);
+
         if (!hasherResult)
             throw new RevisionException(400, "Phone or password is invalid");
 

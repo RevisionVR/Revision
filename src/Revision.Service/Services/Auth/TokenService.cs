@@ -29,13 +29,13 @@ public class TokenService : ITokenService
             new Claim (ClaimTypes.Role, user.Role.ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["23f926fb-dcd2-49f4-8fe2-992aac18f08f"]));
         var keyCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         int expiresHours = 24;
 
         var token = new JwtSecurityToken(
-            issuer: _configuration["Issuer"],
-            audience: _configuration["Audience"],
+            issuer: _configuration["http://RevisionVr.uz"],
+            audience: _configuration["Revision"],
             claims: identityClaims,
             expires: TimeHelper.GetDateTime().AddHours(expiresHours),
             signingCredentials: keyCredentials);
