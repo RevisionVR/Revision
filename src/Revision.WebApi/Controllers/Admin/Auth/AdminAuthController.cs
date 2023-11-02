@@ -2,6 +2,7 @@
 using Revision.Service.DTOs.Users;
 using Revision.Service.Interfaces.Auth;
 using Revision.Service.Validations.Users;
+using System.IO.Compression;
 
 namespace Revision.WebApi.Controllers.Admin.Auth
 {
@@ -26,6 +27,14 @@ namespace Revision.WebApi.Controllers.Admin.Auth
                 return Ok(await _authServise.RegisterAsync(dto));
 
             return BadRequest(validation.Errors);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync([FromForm] UserLoginDto dto)
+        {
+            var result = await _authServise.LoginAsync(dto); 
+            
+            return Ok(result);
         }
     }
 }

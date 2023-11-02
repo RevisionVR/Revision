@@ -40,10 +40,12 @@ public class AuthService : IAuthService
             throw new RevisionException(400, isValidUser.Errors.FirstOrDefault().ToString());
 
         var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
+
         if (existUser is not null)
             throw new RevisionException(403, $"This user already exists this phone = {dto.Phone}");
 
-        var result = PasswordHasher.Hash(dto.Password);
+        var password = PasswordGenerate.Password();
+        var result = PasswordHasher.Hash(password);
         var mappedUser = _mapper.Map<User>(dto);
         mappedUser.Role = Role.User;
         mappedUser.Salt = result.Salt;
@@ -54,9 +56,13 @@ public class AuthService : IAuthService
         var resultDb = await _userRepository.SaveAsync();
 
         SmsSenderDto smsSender = new SmsSenderDto();
-        smsSender.Title = "RevisionVr";
-        smsSender.Content = "Your login: " + dto.Phone + "\n" + "and password: " + dto.Password;
-        //var resultSms = await _smsSender.SendAsync(smsSender);
+        smsSender.Title = "RevisionVr\n";
+        smsSender.Content = "login: " + dto.Phone + "\npassword: " + password;
+        smsSender.Recipient = dto.Phone.Substring(1);
+        var resultSms = await _smsSender.SendAsync(smsSender);
+
+        if (resultSms != true)
+            return (false, "");
 
         var token = _token.GenerateTokenAsync(dbResult);
 
