@@ -13,7 +13,7 @@ namespace Revision.WebApi.Controllers.Admin.Auth
 
         public AdminAuthController(IAuthService authService)
         {
-            this._authServise = authService;
+            _authServise = authService;
         }
 
         [HttpPost]
