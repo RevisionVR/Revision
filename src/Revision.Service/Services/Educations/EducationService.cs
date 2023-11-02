@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
-using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Educations;
 using Revision.Service.Exceptions;
@@ -18,18 +17,15 @@ public class EducationService : IEducationService
 {
     private readonly IMapper _mapper;
     private readonly IAddressService _addressService;
-    private readonly IRepository<User> _userRepository;
     private readonly IRepository<Education> _educationRepository;
     private readonly IRepository<EducationCategory> _categoryRepository;
     public EducationService(
         IAddressService addressService,
-        IRepository<User> userRepository,
         IRepository<EducationCategory> categoryRepository,
         IMapper mapper, IRepository<Education> educationRepository)
     {
         _mapper = mapper;
         _addressService = addressService;
-        _userRepository = userRepository;
         _categoryRepository = categoryRepository;
         _educationRepository = educationRepository;
     }
@@ -46,16 +42,12 @@ public class EducationService : IEducationService
         if (existEducation is not null)
             throw new RevisionException(403, "This education already exists");
 
-        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
-            ?? throw new RevisionException(404, "This user is not found");
-
         var existCategory = await _categoryRepository.SelectAsync(
             category => category.Id.Equals(dto.EducationCategoryId))
             ?? throw new RevisionException(404, "This education category is not found");
 
         var mappedEducation = _mapper.Map<Education>(dto);
         mappedEducation.CreatedAt = TimeHelper.GetDateTime();
-        mappedEducation.User = existUser;
         mappedEducation.EducationCategory = existCategory;
 
         if (dto.AddressCreationDto is not null)
@@ -78,9 +70,6 @@ public class EducationService : IEducationService
             includes: new[] { "Address", "TopicPayments", "DevicePayments", "Devices" })
             ?? throw new RevisionException(404, "This education is not found");
 
-        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
-           ?? throw new RevisionException(404, "This user is not found");
-
         var existCategory = await _categoryRepository.SelectAsync(
             category => category.Id.Equals(dto.EducationCategoryId))
             ?? throw new RevisionException(404, "This education category is not found");
@@ -90,7 +79,6 @@ public class EducationService : IEducationService
 
         var mappedEducation = _mapper.Map(dto, existEducation);
         mappedEducation.UpdatedAt = TimeHelper.GetDateTime();
-        mappedEducation.User = existUser;
         mappedEducation.EducationCategory = existCategory;
 
         _educationRepository.Update(mappedEducation);
@@ -116,7 +104,6 @@ public class EducationService : IEducationService
             education => education.Id.Equals(id),
             includes: new[]
             {
-                "User",
                 "Address",
                 "Devices",
                 "TopicPayments",
@@ -133,7 +120,6 @@ public class EducationService : IEducationService
         var educations = await _educationRepository.SelectAll(
             includes: new[]
             {
-                "User",
                 "Address",
                 "Devices",
                 "TopicPayments",

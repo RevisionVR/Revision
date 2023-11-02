@@ -29,10 +29,6 @@ public class EducationCreationDtoValidator : AbstractValidator<EducationCreation
             .MaximumLength(100)
             .WithMessage("Description maximums length 100 characters");
 
-        RuleFor(dto => dto.UserId)
-            .NotNull()
-            .NotEmpty();
-
         RuleFor(dto => dto.EducationCategoryId)
             .NotNull()
             .NotEmpty();
