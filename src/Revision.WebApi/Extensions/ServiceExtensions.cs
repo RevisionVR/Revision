@@ -3,13 +3,16 @@ using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.DataAccess.Repositories;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Interfaces.Auth;
 using Revision.Service.Interfaces.Devices;
 using Revision.Service.Interfaces.Educations;
+using Revision.Service.Interfaces.Notifications;
 using Revision.Service.Interfaces.Payments;
 using Revision.Service.Interfaces.Subjects;
 using Revision.Service.Interfaces.Topics;
 using Revision.Service.Mappers;
 using Revision.Service.Services.Addresses;
+using Revision.Service.Services.Auth;
 using Revision.Service.Services.Devices;
 using Revision.Service.Services.Educations;
 using Revision.Service.Services.Payments;
@@ -41,6 +44,13 @@ public static class ServiceExtensions
         //Generic repository
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+        #region Services
+
+        //Auth
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<ISmsSender, SmsSender>();
+
         //Addresses
         services.AddScoped<IAddressService, AddressService>();
         services.AddScoped<ICountryService, CountryService>();
@@ -61,5 +71,6 @@ public static class ServiceExtensions
         //Payment
         services.AddScoped<ITopicPaymentService, TopicPaymentService>();
         services.AddScoped<IDeviceService, DeviceService>();
+        #endregion
     }
 }

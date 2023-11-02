@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
@@ -9,7 +8,6 @@ using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Educations;
-using Revision.Service.Validations.Devices;
 using Revision.Service.Validations.Educations.Categories;
 
 namespace Revision.Service.Services.Educations;

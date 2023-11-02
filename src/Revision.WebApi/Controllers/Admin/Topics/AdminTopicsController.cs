@@ -1,7 +1,7 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.DTOs.Topics;
 using Revision.Service.Interfaces.Topics;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Topics;
 

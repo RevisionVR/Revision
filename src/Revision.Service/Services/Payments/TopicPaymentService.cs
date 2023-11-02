@@ -4,14 +4,12 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
-using Revision.Domain.Entities.Subjects;
 using Revision.Domain.Entities.Topics;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.TopicPayments;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Payments;
-using Revision.Service.Validations.Payments.Devices;
 using Revision.Service.Validations.Payments.Topics;
 
 namespace Revision.Service.Services.Payments;

@@ -25,7 +25,7 @@ namespace Revision.WebApi.Controllers.Admin.Auth
             if (validation.IsValid)
                 return Ok(await _authServise.RegisterAsync(dto));
 
-            return BadRequest();
+            return BadRequest(validation.Errors);
         }
     }
 }

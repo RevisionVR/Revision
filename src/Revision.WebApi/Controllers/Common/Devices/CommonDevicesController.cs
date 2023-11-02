@@ -1,6 +1,6 @@
-﻿using Revision.WebApi.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.Interfaces.Devices;
+using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Common.Devices;
 

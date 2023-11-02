@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
@@ -11,7 +10,6 @@ using Revision.Service.DTOs.Devices;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Devices;
-using Revision.Service.Validations.Addresses;
 using Revision.Service.Validations.Devices;
 
 namespace Revision.Service.Services.Devices;

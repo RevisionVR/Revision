@@ -65,7 +65,7 @@ public class DevicePaymentService : IDevicePaymentService
         var existPayments = await _paymentRepository.SelectAll(payment => payment.EducationId.Equals(educationId),
         includes: new[] { "Education" })
             .ToListAsync();
-           if (!existPayments.Any())
+        if (!existPayments.Any())
             throw new RevisionException(404, "This education is not found");
 
         return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(existPayments);

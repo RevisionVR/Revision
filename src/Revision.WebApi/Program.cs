@@ -16,8 +16,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<RevisionDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//AuthSwagger
+builder.ConfigureSwaggerAuth();
+builder.ConfigureJwtAuth();
+
 //Services
 builder.Services.AddCustomServices();
+//builder.ConfigureServiceLayer();
 
 var app = builder.Build();
 

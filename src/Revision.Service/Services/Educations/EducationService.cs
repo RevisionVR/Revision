@@ -11,7 +11,6 @@ using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Addresses;
 using Revision.Service.Interfaces.Educations;
 using Revision.Service.Validations.Educations;
-using Revision.Service.Validations.Educations.Categories;
 
 namespace Revision.Service.Services.Educations;
 
