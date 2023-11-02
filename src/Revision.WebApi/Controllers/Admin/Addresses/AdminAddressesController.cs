@@ -34,22 +34,22 @@ public class AdminAddressesController : AdminBaseController
 
     [HttpPatch("country/set")]
     public async Task<IActionResult> SetContryAsync()
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _countryService.SetAsync()
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _countryService.SetAsync()
+        });
 
 
     [HttpPost("region/create")]
     public async Task<IActionResult> PostRegionAsync([FromForm] RegionCreationDto dto)
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _regionService.CreateAsync(dto)
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _regionService.CreateAsync(dto)
+        });
 
 
     [HttpPatch("region/set")]
