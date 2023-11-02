@@ -48,10 +48,10 @@ namespace Revision.DataAccess.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<float>("Latitude")
+                    b.Property<float?>("Latitude")
                         .HasColumnType("real");
 
-                    b.Property<float>("Longitude")
+                    b.Property<float?>("Longitude")
                         .HasColumnType("real");
 
                     b.Property<long>("RegionId")
@@ -159,7 +159,7 @@ namespace Revision.DataAccess.Migrations
                     b.ToTable("Regions");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.EducationCategory", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Assets.Asset", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,46 +170,24 @@ namespace Revision.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("FileName")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EducationCategories");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.SubjectCategory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("FilePath")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubjectCategories");
+                    b.ToTable("Assets");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Conversations.Conversation", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Chats.Chat", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,104 +195,34 @@ namespace Revision.DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AdminId")
+                    b.Property<long?>("AssetId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("EducationId")
+                    b.Property<long>("ChatRoomId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("RoomId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EducationId");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Conversations");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Messages.Message", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("RoomId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Text")
+                    b.Property<string>("Context")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Rooms.AdminRoom", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AdminId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<long>("RoomId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("AssetId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ChatRoomId");
 
-                    b.ToTable("AdminRooms");
+                    b.ToTable("Chats");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Rooms.EducationRoom", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Chats.ChatRoom", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -331,39 +239,22 @@ namespace Revision.DataAccess.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EducationId");
-
-                    b.ToTable("EducationRooms");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Rooms.Room", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.HasIndex("EducationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatRooms");
                 });
 
             modelBuilder.Entity("Revision.Domain.Entities.Devices.Device", b =>
@@ -443,18 +334,70 @@ namespace Revision.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("EducationCategoryId");
 
+                    b.ToTable("Educations");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Educations.EducationCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EducationCategories");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Educations.UserEducation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("EducationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Educations");
+                    b.ToTable("UserEducations");
                 });
 
             modelBuilder.Entity("Revision.Domain.Entities.Payments.DevicePayment", b =>
@@ -568,6 +511,31 @@ namespace Revision.DataAccess.Migrations
                     b.HasIndex("SubjectCategoryId");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Subjects.SubjectCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubjectCategories");
                 });
 
             modelBuilder.Entity("Revision.Domain.Entities.Topics.Topic", b =>
@@ -698,7 +666,24 @@ namespace Revision.DataAccess.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Conversations.Conversation", b =>
+            modelBuilder.Entity("Revision.Domain.Entities.Chats.Chat", b =>
+                {
+                    b.HasOne("Revision.Domain.Entities.Assets.Asset", "Asset")
+                        .WithMany()
+                        .HasForeignKey("AssetId");
+
+                    b.HasOne("Revision.Domain.Entities.Chats.ChatRoom", "ChatRoom")
+                        .WithMany()
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+
+                    b.Navigation("ChatRoom");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Chats.ChatRoom", b =>
                 {
                     b.HasOne("Revision.Domain.Entities.Educations.Education", "Education")
                         .WithMany()
@@ -706,60 +691,15 @@ namespace Revision.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Revision.Domain.Entities.Chats.Rooms.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Revision.Domain.Entities.Users.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Education");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Messages.Message", b =>
-                {
-                    b.HasOne("Revision.Domain.Entities.Chats.Rooms.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Rooms.AdminRoom", b =>
-                {
-                    b.HasOne("Revision.Domain.Entities.Chats.Rooms.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Revision.Domain.Entities.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Chats.Rooms.EducationRoom", b =>
-                {
-                    b.HasOne("Revision.Domain.Entities.Educations.Education", "Education")
-                        .WithMany()
-                        .HasForeignKey("EducationId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Education");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Revision.Domain.Entities.Devices.Device", b =>
@@ -779,9 +719,22 @@ namespace Revision.DataAccess.Migrations
                         .WithMany("Educations")
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("Revision.Domain.Entities.Categories.EducationCategory", "EducationCategory")
+                    b.HasOne("Revision.Domain.Entities.Educations.EducationCategory", "EducationCategory")
                         .WithMany("Educations")
                         .HasForeignKey("EducationCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("EducationCategory");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Educations.UserEducation", b =>
+                {
+                    b.HasOne("Revision.Domain.Entities.Educations.Education", "Education")
+                        .WithMany()
+                        .HasForeignKey("EducationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -791,9 +744,7 @@ namespace Revision.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Address");
-
-                    b.Navigation("EducationCategory");
+                    b.Navigation("Education");
 
                     b.Navigation("User");
                 });
@@ -830,7 +781,7 @@ namespace Revision.DataAccess.Migrations
 
             modelBuilder.Entity("Revision.Domain.Entities.Subjects.Subject", b =>
                 {
-                    b.HasOne("Revision.Domain.Entities.Categories.SubjectCategory", "SubjectCategory")
+                    b.HasOne("Revision.Domain.Entities.Subjects.SubjectCategory", "SubjectCategory")
                         .WithMany("Subjects")
                         .HasForeignKey("SubjectCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -855,16 +806,6 @@ namespace Revision.DataAccess.Migrations
                     b.Navigation("Educations");
                 });
 
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.EducationCategory", b =>
-                {
-                    b.Navigation("Educations");
-                });
-
-            modelBuilder.Entity("Revision.Domain.Entities.Categories.SubjectCategory", b =>
-                {
-                    b.Navigation("Subjects");
-                });
-
             modelBuilder.Entity("Revision.Domain.Entities.Educations.Education", b =>
                 {
                     b.Navigation("DevicePayments");
@@ -874,9 +815,19 @@ namespace Revision.DataAccess.Migrations
                     b.Navigation("TopicPayments");
                 });
 
+            modelBuilder.Entity("Revision.Domain.Entities.Educations.EducationCategory", b =>
+                {
+                    b.Navigation("Educations");
+                });
+
             modelBuilder.Entity("Revision.Domain.Entities.Subjects.Subject", b =>
                 {
                     b.Navigation("Topics");
+                });
+
+            modelBuilder.Entity("Revision.Domain.Entities.Subjects.SubjectCategory", b =>
+                {
+                    b.Navigation("Subjects");
                 });
 
             modelBuilder.Entity("Revision.Domain.Entities.Topics.Topic", b =>

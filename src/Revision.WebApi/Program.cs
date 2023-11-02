@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.Contexts;
+using Revision.Service.Commons.Helpers;
 using Revision.Shared.Helpers;
 using Revision.WebApi.Extensions;
 using Revision.WebApi.Middlewares;
@@ -26,6 +27,7 @@ builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
+PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 EnvironmentHelper.CountryPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:CountriesFilePath")));
 EnvironmentHelper.RegionPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:RegionsFilePath")));
 EnvironmentHelper.DistrictPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:DistrictsFilePath")));
