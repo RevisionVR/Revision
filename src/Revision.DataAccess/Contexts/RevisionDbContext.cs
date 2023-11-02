@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Revision.Domain.Entities.Addresses;
+using Revision.Domain.Entities.Assets;
 using Revision.Domain.Entities.Chats;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
@@ -17,6 +18,7 @@ public class RevisionDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Region> Regions { get; set; }
+    public DbSet<Asset> Assets { get; set; }
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Device> Devices { get; set; }
     public DbSet<Topic> Topics { get; set; }
