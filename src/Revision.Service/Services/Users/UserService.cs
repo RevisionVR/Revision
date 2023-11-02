@@ -30,8 +30,8 @@ public class UserService : IUserService
         var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
         if (existUser is not null)
             throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
-
-        var result = PasswordHasher.Hash(dto.Password);
+        var password = PasswordGenerate.Password();
+        var result = PasswordHasher.Hash(password);
         var mappedUser = _mapper.Map<User>(dto);
         mappedUser.Role = Role.User;
         mappedUser.Salt = result.Salt;

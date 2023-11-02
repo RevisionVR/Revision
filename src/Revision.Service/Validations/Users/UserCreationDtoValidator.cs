@@ -19,10 +19,6 @@ public class UserCreationDtoValidator : AbstractValidator<UserCreationDto>
             .MaximumLength(30)
             .WithMessage("LastName must be less than 30 characters");
 
-        RuleFor(dto => dto.Password)
-            .Must(password => PasswordValidation.IsStrongPassword(password).IsValid)
-            .WithMessage("Password not stronger");
-
         RuleFor(dto => dto.Phone)
             .Must(phone => PhoneValidation.IsValid(phone))
             .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");
