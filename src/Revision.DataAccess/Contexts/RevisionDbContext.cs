@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Revision.Domain.Entities.Addresses;
-using Revision.Domain.Entities.Chats.Conversations;
-using Revision.Domain.Entities.Chats.Messages;
-using Revision.Domain.Entities.Chats.Rooms;
+using Revision.Domain.Entities.Chats;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
@@ -22,13 +20,11 @@ public class RevisionDbContext : DbContext
     public DbSet<District> Districts { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Address> Addresses { get; set; }
-    public DbSet<Message> Messages { get; set; }
-    public DbSet<Room> Rooms { get; set; }
-    public DbSet<Conversation> Conversations { get; set; }
-    public DbSet<AdminRoom> AdminRooms { get; set; }
-    public DbSet<EducationRoom> EducationRooms { get; set; }
+    public DbSet<ChatRoom> ChatRooms { get; set; }
+    public DbSet<Chat> Chats { get; set; }
     public DbSet<Education> Educations { get; set; }
     public DbSet<EducationCategory> EducationCategories { get; set; }
+    public DbSet<UserEducation> UserEducations { get; set; }
     public DbSet<Device> Devices { get; set; }
     public DbSet<DevicePayment> DevicePayments { get; set; }
     public DbSet<TopicPayment> TopicPayments { get; set; }
@@ -44,11 +40,9 @@ public class RevisionDbContext : DbContext
         modelBuilder.Entity<District>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Country>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Address>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<Message>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<Room>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<Conversation>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<AdminRoom>().HasQueryFilter(e => !e.IsDeleted);
-        modelBuilder.Entity<EducationRoom>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ChatRoom>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Chat>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<UserEducation>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Education>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<EducationCategory>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<Device>().HasQueryFilter(e => !e.IsDeleted);
