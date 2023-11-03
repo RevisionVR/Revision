@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Service", "src\Rev
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.DataAccess", "src\Revision.DataAccess\Revision.DataAccess.csproj", "{AE027893-9DD9-4C40-A1F3-11EBF3D1C89D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Wep", "src\Revision.Wep\Revision.Wep.csproj", "{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Revision.Shared", "src\Revision.Shared\Revision.Shared.csproj", "{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}"
 EndProject
 Global
@@ -43,10 +41,6 @@ Global
 		{AE027893-9DD9-4C40-A1F3-11EBF3D1C89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE027893-9DD9-4C40-A1F3-11EBF3D1C89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE027893-9DD9-4C40-A1F3-11EBF3D1C89D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{263EC83C-43D9-45F2-B4DF-0BDF2E5B85D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDCD3383-6FDD-474E-A9BE-29B3D84DB83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
