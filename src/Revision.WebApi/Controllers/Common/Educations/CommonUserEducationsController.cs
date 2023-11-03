@@ -4,15 +4,15 @@ using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Common.Educations;
 
-public class CommonUserEducationController : BaseController
+public class CommonUserEducationsController : BaseController
 {
     private readonly IUserEducationService _userEducationService;
-    public CommonUserEducationController(IUserEducationService userEducationService)
+    public CommonUserEducationsController(IUserEducationService userEducationService)
     {
         _userEducationService = userEducationService;
     }
 
-    [HttpGet("get-by-education/{educationId:{long}")]
+    [HttpGet("get-by-education/{educationId:long}")]
     public async Task<IActionResult> GetByEducationIdAsync(long educationId)
         => Ok(new Response
         {
