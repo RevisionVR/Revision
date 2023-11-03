@@ -22,20 +22,20 @@ public class RegionService : IRegionService
         _regionRepository = regionRepository;
     }
 
-    public async Task<RegionResultDto> CreateAsync(RegionCreationDto dto)
-    {
-        var existRegion = await _regionRepository.SelectAsync(region => 
-        region.Name.ToLower().Equals(dto.Name.ToLower()) && region.CountryId.Equals(dto.CountryId));
-        if (existRegion is not null)
-            throw new RevisionException(403, "This region already exists");
+    //public async Task<RegionResultDto> CreateAsync(RegionCreationDto dto)
+    //{
+    //    var existRegion = await _regionRepository.SelectAsync(region => 
+    //    region.Name.ToLower().Equals(dto.Name.ToLower()) && region.CountryId.Equals(dto.CountryId));
+    //    if (existRegion is not null)
+    //        throw new RevisionException(403, "This region already exists");
 
-        var mappedRegion = _mapper.Map<Region>(dto);
-        mappedRegion.CreatedAt = TimeHelper.GetDateTime();
-        await _regionRepository.AddAsync(mappedRegion);
-        await _regionRepository.SaveAsync();
+    //    var mappedRegion = _mapper.Map<Region>(dto);
+    //    mappedRegion.CreatedAt = TimeHelper.GetDateTime();
+    //    await _regionRepository.AddAsync(mappedRegion);
+    //    await _regionRepository.SaveAsync();
 
-        return _mapper.Map<RegionResultDto>(mappedRegion);
-    }
+    //    return _mapper.Map<RegionResultDto>(mappedRegion);
+    //}
 
     public async Task<bool> SetAsync()
     {

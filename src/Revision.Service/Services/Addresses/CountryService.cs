@@ -22,20 +22,21 @@ public class CountryService : ICountryService
         _countryRepository = countryRepository;
     }
 
-    public async Task<CountryResultDto> CreateAsync(CountryCreationDto dto)
-    {
-        var existCountry = await _countryRepository.SelectAsync(country =>
-        country.Name.ToLower().Equals(dto.Name.ToLower()) || country.CountryCode.Equals(dto.CountryCode));
-        if (existCountry is not null)
-            throw new RevisionException(403, "This country already exists");
+    //public async Task<CountryResultDto> CreateAsync(CountryCreationDto dto)
+    //{
+    //    var existCountry = await _countryRepository.SelectAsync(country =>
+    //    country.Name.ToLower().Equals(dto.Name.ToLower()) || 
+    //    country.CountryCode.ToLower().Equals(dto.CountryCode.ToLower()));
+    //    if (existCountry is not null)
+    //        throw new RevisionException(403, "This country already exists");
 
-        var mappedCountry = _mapper.Map<Country>(dto);
-        mappedCountry.CreatedAt = TimeHelper.GetDateTime();
-        await _countryRepository.AddAsync(mappedCountry);
-        await _countryRepository.SaveAsync();
+    //    var mappedCountry = _mapper.Map<Country>(dto);
+    //    mappedCountry.CreatedAt = TimeHelper.GetDateTime();
+    //    await _countryRepository.AddAsync(mappedCountry);
+    //    await _countryRepository.SaveAsync();
 
-        return _mapper.Map<CountryResultDto>(mappedCountry);
-    }
+    //    return _mapper.Map<CountryResultDto>(mappedCountry);
+    //}
 
     public async Task<bool> SetAsync()
     {

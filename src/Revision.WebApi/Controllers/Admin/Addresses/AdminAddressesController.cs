@@ -25,25 +25,25 @@ public class AdminAddressesController : AdminBaseController
         _districtService = districtService;
     }
 
-    [HttpPost("country/create")]
-    public async Task<IActionResult> PostContryAsync([FromForm] CountryCreationDto dto)
-    {
-        var validation = new CountryCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (result.IsValid)
-            return Ok(new Response
-            {
-                StatusCode = 200,
-                Message = "Success",
-                Data = await _countryService.CreateAsync(dto)
-            });
+    //[HttpPost("country/create")]
+    //public async Task<IActionResult> PostContryAsync([FromForm] CountryCreationDto dto)
+    //{
+    //    var validation = new CountryCreationDtoValidator();
+    //    var result = validation.Validate(dto);
+    //    if (result.IsValid)
+    //        return Ok(new Response
+    //        {
+    //            StatusCode = 200,
+    //            Message = "Success",
+    //            Data = await _countryService.CreateAsync(dto)
+    //        });
 
-        return BadRequest(new Response
-        {
-            StatusCode = 400,
-            Message = result.Errors.FirstOrDefault().ToString()
-        });
-    }
+    //    return BadRequest(new Response
+    //    {
+    //        StatusCode = 400,
+    //        Message = result.Errors.FirstOrDefault().ToString()
+    //    });
+    //}
 
 
     [HttpPatch("country/set")]
@@ -56,25 +56,25 @@ public class AdminAddressesController : AdminBaseController
         });
 
 
-    [HttpPost("region/create")]
-    public async Task<IActionResult> PostRegionAsync([FromForm] RegionCreationDto dto)
-    {
-        var validation = new RegionCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (result.IsValid)
-            return Ok(new Response
-            {
-                StatusCode = 200,
-                Message = "Success",
-                Data = await _regionService.CreateAsync(dto)
-            });
+    //[HttpPost("region/create")]
+    //public async Task<IActionResult> PostRegionAsync([FromForm] RegionCreationDto dto)
+    //{
+    //    var validation = new RegionCreationDtoValidator();
+    //    var result = validation.Validate(dto);
+    //    if (result.IsValid)
+    //        return Ok(new Response
+    //        {
+    //            StatusCode = 200,
+    //            Message = "Success",
+    //            Data = await _regionService.CreateAsync(dto)
+    //        });
 
-        return BadRequest(new Response
-        {
-            StatusCode = 400,
-            Message = result.Errors.FirstOrDefault().ToString()
-        });
-    }
+    //    return BadRequest(new Response
+    //    {
+    //        StatusCode = 400,
+    //        Message = result.Errors.FirstOrDefault().ToString()
+    //    });
+    //}
 
 
     [HttpPatch("region/set")]
@@ -87,25 +87,25 @@ public class AdminAddressesController : AdminBaseController
         });
 
 
-    [HttpPost("district/create")]
-    public async Task<IActionResult> PostDistrictAsync([FromForm] DistrictCreationDto dto)
-    {
-        var validation = new DistrictCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (result.IsValid)
-            return Ok(new Response
-            {
-                StatusCode = 200,
-                Message = "Success",
-                Data = await _districtService.CreateAsync(dto)
-            });
+    //[HttpPost("district/create")]
+    //public async Task<IActionResult> PostDistrictAsync([FromForm] DistrictCreationDto dto)
+    //{
+    //    var validation = new DistrictCreationDtoValidator();
+    //    var result = validation.Validate(dto);
+    //    if (result.IsValid)
+    //        return Ok(new Response
+    //        {
+    //            StatusCode = 200,
+    //            Message = "Success",
+    //            Data = await _districtService.CreateAsync(dto)
+    //        });
 
-        return BadRequest(new Response
-        {
-            StatusCode = 400,
-            Message = result.Errors.FirstOrDefault().ToString()
-        });
-    }
+    //    return BadRequest(new Response
+    //    {
+    //        StatusCode = 400,
+    //        Message = result.Errors.FirstOrDefault().ToString()
+    //    });
+    //}
 
 
     [HttpPatch("district/set")]
