@@ -22,20 +22,20 @@ public class DistrictService : IDistrictService
         _districtRepository = districtRepository;
     }
 
-    public async Task<DistrictResultDto> CreateAsync(DistrictCreationDto dto)
-    {
-        var existDistrict = await _districtRepository.SelectAsync(district => 
-        district.Name.ToLower().Equals(dto.Name.ToLower()) && district.RegionId.Equals(dto.RegionId));
-        if (existDistrict is not null)
-            throw new RevisionException(403, "This district already exists");
+    //public async Task<DistrictResultDto> CreateAsync(DistrictCreationDto dto)
+    //{
+    //    var existDistrict = await _districtRepository.SelectAsync(district => 
+    //    district.Name.ToLower().Equals(dto.Name.ToLower()) && district.RegionId.Equals(dto.RegionId));
+    //    if (existDistrict is not null)
+    //        throw new RevisionException(403, "This district already exists");
 
-        var mappedDistrict = _mapper.Map<District>(dto);
-        mappedDistrict.CreatedAt = TimeHelper.GetDateTime();
-        await _districtRepository.AddAsync(mappedDistrict);
-        await _districtRepository.SaveAsync();
+    //    var mappedDistrict = _mapper.Map<District>(dto);
+    //    mappedDistrict.CreatedAt = TimeHelper.GetDateTime();
+    //    await _districtRepository.AddAsync(mappedDistrict);
+    //    await _districtRepository.SaveAsync();
 
-        return _mapper.Map<DistrictResultDto>(mappedDistrict);
-    }
+    //    return _mapper.Map<DistrictResultDto>(mappedDistrict);
+    //}
 
     public async Task<bool> SetAsync()
     {

@@ -4,7 +4,7 @@ namespace Revision.Service.Interfaces.Addresses;
 
 public interface IDistrictService
 {
-    Task<DistrictResultDto> CreateAsync(DistrictCreationDto dto);
+    //Task<DistrictResultDto> CreateAsync(DistrictCreationDto dto);
     Task<bool> SetAsync();
     Task<DistrictResultDto> GetByIdAsync(long id);
     Task<IEnumerable<DistrictResultDto>> GetAllAsync();
