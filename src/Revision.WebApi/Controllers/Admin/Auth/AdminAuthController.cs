@@ -15,7 +15,7 @@ public class AdminAuthController : AdminBaseController
         _authServise = authService;
     }
 
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<IActionResult> CreateAsync([FromForm] UserCreationDto dto)
     {
         var validation = new UserCreationDtoValidator();

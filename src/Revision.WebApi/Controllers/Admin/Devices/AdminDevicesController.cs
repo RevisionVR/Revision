@@ -17,7 +17,7 @@ public class AdminDevicesController : AdminBaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(DeviceCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] DeviceCreationDto dto)
     {
         var validation = new DeviceCreationDtoValidator();
         var result = validation.Validate(dto);
@@ -38,7 +38,7 @@ public class AdminDevicesController : AdminBaseController
 
 
     [HttpPut("update/{id:long}")]
-    public async Task<IActionResult> PutAsync(long id, DeviceUpdateDto dto)
+    public async Task<IActionResult> PutAsync(long id, [FromForm] DeviceUpdateDto dto)
     {
         var validation = new DeviceUpdateDtoValidator();
         var result = validation.Validate(dto);
@@ -58,13 +58,13 @@ public class AdminDevicesController : AdminBaseController
     }
 
 
-    [HttpPut("update/{uniqueId:string}")]
+    [HttpPut("update/{uniqueId}")]
     public async Task<IActionResult> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _deviceService.UpdateIsActiveAsync(uniqueId, status)
+            Data = await _deviceService.UpdateIsActiveAsync(uniqueId.ToString(), status)
         });
 
 
