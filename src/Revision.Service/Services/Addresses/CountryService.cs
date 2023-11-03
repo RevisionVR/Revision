@@ -25,7 +25,7 @@ public class CountryService : ICountryService
     public async Task<CountryResultDto> CreateAsync(CountryCreationDto dto)
     {
         var existCountry = await _countryRepository.SelectAsync(country =>
-        country.Name.Equals(dto.Name) || country.CountryCode.Equals(dto.CountryCode));
+        country.Name.ToLower().Equals(dto.Name.ToLower()) || country.CountryCode.Equals(dto.CountryCode));
         if (existCountry is not null)
             throw new RevisionException(403, "This country already exists");
 

@@ -6,12 +6,11 @@ namespace Revision.Service.Interfaces.Notifications;
 
 public class SmsSender : ISmsSender
 {
-    private string TOKEN = "";
-    private readonly string BASE_URL = "";
-    private readonly string API_KEY = "";
-    private readonly string SENDER = "";
-    private readonly string EMAIL = "";
-    private readonly string PASSWORD = "";
+    private string TOKEN = string.Empty;
+    private readonly string BASE_URL = string.Empty;
+    private readonly string SENDER = string.Empty;
+    private readonly string EMAIL = string.Empty;
+    private readonly string PASSWORD = string.Empty;
     public SmsSender(IConfiguration config)
     {
         BASE_URL = config["Sms:BaseURL"]!;

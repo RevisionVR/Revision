@@ -83,8 +83,7 @@ public class AuthService : IAuthService
 
     public async Task<(bool Result, string Token)> LoginAsync(UserLoginDto dto)
     {
-        var existUser = await _userRepository.SelectAsync(user =>
-        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email))
+        var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone))
             ?? throw new RevisionException(404, "This user is not found");
 
         var hasherResult = PasswordHasher.Verify(dto.Password, existUser.PasswordHash, existUser.Salt);
@@ -99,31 +98,30 @@ public class AuthService : IAuthService
 
     public async Task<(bool Result, int CachedMinutes)> ResetPasswordAsync(UserResetPasswordDto dto)
     {
-        var existUser = await _userRepository.SelectAsync(user =>
-        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email))
+        var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone))
             ?? throw new RevisionException(404, "This user is not found");
 
-        var userCreateDto = _mapper.Map<User>(existUser);
+        var mappedUser = _mapper.Map<User>(existUser);
         var resultPassword = PasswordHasher.Hash(dto.NewPassword);
-        userCreateDto.PasswordHash = resultPassword.Hash;
-        userCreateDto.Salt = resultPassword.Salt;
+        mappedUser.PasswordHash = resultPassword.Hash;
+        mappedUser.Salt = resultPassword.Salt;
 
-        if (_memoryCache.TryGetValue(Reset_CACHE_KEY + dto.Phone, out User userCreationDto))
+        if (_memoryCache.TryGetValue(Reset_CACHE_KEY + dto.Phone, out User user))
         {
             _memoryCache.Remove(dto.Phone);
         }
         else
         {
-            _memoryCache.Set(Reset_CACHE_KEY + dto.Phone, userCreateDto,
+            _memoryCache.Set(Reset_CACHE_KEY + dto.Phone, mappedUser,
                 TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
         }
 
-        if (_memoryCache.TryGetValue(Reset_CACHE_KEY + dto.Phone, out User userDto))
+        if (_memoryCache.TryGetValue(Reset_CACHE_KEY + dto.Phone, out User userEntity))
         {
             VerificationDto verificationDto = new VerificationDto();
             verificationDto.Attempt = 0;
             verificationDto.CreatedAt = TimeHelper.GetDateTime();
-            verificationDto.Code = CodeGenerator.CodeGeneratorPhoneNumber();
+            verificationDto.Code = 12345;// CodeGenerator.RandomCodeGenerator();
             _memoryCache.Set(dto.Phone, verificationDto, TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
 
             if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + dto.Phone, out VerificationDto oldVerificationDto))

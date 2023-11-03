@@ -20,8 +20,8 @@ public class AdminEducationCategoriesController : AdminBaseController
     {
         var validation = new EducationCategoryCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -41,8 +41,8 @@ public class AdminEducationCategoriesController : AdminBaseController
     {
         var validation = new EducationCategoryUpdateDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",

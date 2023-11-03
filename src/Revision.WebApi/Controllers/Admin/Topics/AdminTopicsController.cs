@@ -20,7 +20,7 @@ public class AdminTopicsController : AdminBaseController
         var validation = new TopicCreationDtoValidator();
         var result = validation.Validate(dto);
         if (!result.IsValid)
-            Ok(new Response
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -41,7 +41,7 @@ public class AdminTopicsController : AdminBaseController
         var validation = new TopicUpdateDtoValidator();
         var result = validation.Validate(dto);
         if (!result.IsValid)
-            Ok(new Response
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",

@@ -20,8 +20,8 @@ public class AdminTopicPaymentsController : AdminBaseController
     {
         var validation = new TopicPaymentCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
