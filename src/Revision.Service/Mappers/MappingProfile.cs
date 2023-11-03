@@ -83,7 +83,6 @@ public class MappingProfile : Profile
 
         //UserEducations
         CreateMap<UserEducation, UserEducationResultDto>().ReverseMap();
-        CreateMap<UserEducation, UserEducationUpdateDto>().ReverseMap();
         CreateMap<UserEducation, UserEducationCreationDto>().ReverseMap();
 
         //Educations
