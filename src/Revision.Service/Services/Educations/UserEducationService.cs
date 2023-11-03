@@ -10,6 +10,11 @@ public class UserEducationService : IUserEducationService
 {
     private readonly IMapper _mapper;
     private readonly IRepository<UserEducation> _repository;
+    public UserEducationService(IMapper mapper, IRepository<UserEducation> repository)
+    {
+        _mapper = mapper;
+        _repository = repository;
+    }
 
     public Task<UserEducationResultDto> CreateAsync(UserEducationCreationDto dto)
     {

@@ -12,11 +12,11 @@ namespace Revision.Service.Services.Auth;
 public class TokenService : ITokenService
 {
     private IConfiguration _configuration;
-
     public TokenService(IConfiguration configuration)
     {
         _configuration = configuration.GetSection("Jwt");
     }
+
     public string GenerateTokenAsync(User user)
     {
         var identityClaims = new Claim[]

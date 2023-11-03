@@ -10,6 +10,11 @@ public class ChatRoomService : IChatRoomService
 {
     private readonly IMapper _mapper;
     private readonly IRepository<ChatRoom> _chatRoomRepository;
+    public ChatRoomService(IMapper mapper, IRepository<ChatRoom> chatRoomRepository)
+    {
+        _mapper = mapper;
+        _chatRoomRepository = chatRoomRepository;
+    }
 
     public Task<ChatRoomResultDto> CreateAsync(ChatRoomCreationDto dto)
     {
