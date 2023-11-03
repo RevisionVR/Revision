@@ -24,8 +24,8 @@ public class RegionService : IRegionService
 
     public async Task<RegionResultDto> CreateAsync(RegionCreationDto dto)
     {
-        var existRegion = await _regionRepository.SelectAsync(region => region.Name.Equals(dto.Name)
-        && region.CountryId.Equals(dto.CountryId));
+        var existRegion = await _regionRepository.SelectAsync(region => 
+        region.Name.ToLower().Equals(dto.Name.ToLower()) && region.CountryId.Equals(dto.CountryId));
         if (existRegion is not null)
             throw new RevisionException(403, "This region already exists");
 

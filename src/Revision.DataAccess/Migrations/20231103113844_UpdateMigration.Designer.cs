@@ -12,8 +12,8 @@ using Revision.DataAccess.Contexts;
 namespace Revision.DataAccess.Migrations
 {
     [DbContext(typeof(RevisionDbContext))]
-    [Migration("20231102123542_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231103113844_UpdateMigration")]
+    partial class UpdateMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

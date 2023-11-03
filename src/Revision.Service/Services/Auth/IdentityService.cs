@@ -32,12 +32,12 @@ public class IdentityService : IIdentityService
         get
         {
             if (_accessor.HttpContext is null)
-                return "";
+                return string.Empty;
 
             string type = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role";
             var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == type);
             if (claim is null)
-                return "";
+                return string.Empty;
             else
                 return claim.Value;
         }
@@ -48,12 +48,12 @@ public class IdentityService : IIdentityService
         get
         {
             if (_accessor.HttpContext is null)
-                return "";
+                return string.Empty;
 
             var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == "FirstName");
 
             if (claim is null)
-                return "";
+                return string.Empty;
             else
                 return claim.Value;
         }
@@ -64,12 +64,12 @@ public class IdentityService : IIdentityService
         get
         {
             if (_accessor.HttpContext is null)
-                return "";
+                return string.Empty;
 
             var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == "LastName");
 
             if (claim is null)
-                return "";
+                return string.Empty;
             else
                 return claim.Value;
         }
@@ -80,12 +80,12 @@ public class IdentityService : IIdentityService
         get
         {
             if (_accessor.HttpContext is null)
-                return "";
+                return string.Empty;
 
             var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == "Phone");
 
             if (claim is null)
-                return "";
+                return string.Empty;
             else
                 return claim.Value;
         }
@@ -96,12 +96,12 @@ public class IdentityService : IIdentityService
         get
         {
             if (_accessor.HttpContext is null)
-                return "";
+                return string.Empty;
 
             var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == "Email");
 
             if (claim is null)
-                return "";
+                return string.Empty;
             else
                 return claim.Value;
         }

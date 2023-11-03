@@ -24,8 +24,8 @@ public class DistrictService : IDistrictService
 
     public async Task<DistrictResultDto> CreateAsync(DistrictCreationDto dto)
     {
-        var existDistrict = await _districtRepository.SelectAsync(district => district.Name.Equals(dto.Name)
-        && district.RegionId.Equals(dto.RegionId));
+        var existDistrict = await _districtRepository.SelectAsync(district => 
+        district.Name.ToLower().Equals(dto.Name.ToLower()) && district.RegionId.Equals(dto.RegionId));
         if (existDistrict is not null)
             throw new RevisionException(403, "This district already exists");
 

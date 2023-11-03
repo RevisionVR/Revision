@@ -30,8 +30,8 @@ public class AdminAddressesController : AdminBaseController
     {
         var validation = new CountryCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -61,8 +61,8 @@ public class AdminAddressesController : AdminBaseController
     {
         var validation = new RegionCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -92,8 +92,8 @@ public class AdminAddressesController : AdminBaseController
     {
         var validation = new DistrictCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",

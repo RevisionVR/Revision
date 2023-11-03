@@ -21,8 +21,8 @@ public class AdminDevicesController : AdminBaseController
     {
         var validation = new DeviceCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -42,8 +42,8 @@ public class AdminDevicesController : AdminBaseController
     {
         var validation = new DeviceUpdateDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",

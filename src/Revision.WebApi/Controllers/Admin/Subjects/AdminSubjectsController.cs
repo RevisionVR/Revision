@@ -19,8 +19,8 @@ public class AdminSubjectsController : AdminBaseController
     {
         var validation = new SubjectCreationDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -40,8 +40,8 @@ public class AdminSubjectsController : AdminBaseController
     {
         var validation = new SubjectUpdateDtoValidator();
         var result = validation.Validate(dto);
-        if (!result.IsValid)
-            Ok(new Response
+        if (result.IsValid)
+            return Ok(new Response
             {
                 StatusCode = 200,
                 Message = "Success",
