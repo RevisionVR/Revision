@@ -9,7 +9,6 @@ using Revision.Service.DTOs.Topics;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Topics;
-using Revision.Service.Validations.Topics;
 
 namespace Revision.Service.Services.Topics;
 
@@ -30,11 +29,6 @@ public class TopicService : ITopicService
 
     public async Task<TopicResultDto> CreateAsync(TopicCreationDto dto)
     {
-        var validation = new TopicCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existSubject = await _subjectRepository.SelectAsync(subject => subject.Id.Equals(dto.SubjectId))
             ?? throw new RevisionException(404, "This subject is not found");
 
@@ -50,11 +44,6 @@ public class TopicService : ITopicService
 
     public async Task<TopicResultDto> UpdateAsync(long id, TopicUpdateDto dto)
     {
-        var validation = new TopicUpdateDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existTopic = await _topicRepository.SelectAsync(topic => topic.Id.Equals(id))
             ?? throw new RevisionException(404, "This topic is not found");
 

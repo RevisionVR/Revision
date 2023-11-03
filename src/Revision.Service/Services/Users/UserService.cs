@@ -72,7 +72,6 @@ public class UserService : IUserService
 
         _userRepository.Delete(existUser);
         await _userRepository.SaveAsync();
-
         return true;
     }
 

@@ -2,6 +2,7 @@
 using Revision.Domain.Configurations;
 using Revision.Service.DTOs.TopicPayments;
 using Revision.Service.Interfaces.Payments;
+using Revision.Service.Validations.Payments.Topics;
 using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Payments;
@@ -16,12 +17,23 @@ public class AdminTopicPaymentsController : AdminBaseController
 
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync([FromForm] TopicPaymentCreationDto dto)
-    => Ok(new Response
     {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _paymentService.CreateAsync(dto)
-    });
+        var validation = new TopicPaymentCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _paymentService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
+        {
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
+        });
+    }
 
 
     [HttpGet("get/{id:long}")]

@@ -4,5 +4,5 @@ namespace Revision.Service.Interfaces.Notifications;
 
 public interface ISmsSender
 {
-    public Task<bool> SendAsync(SmsSenderDto message);
+    Task<bool> SendAsync(SmsSenderDto message);
 }

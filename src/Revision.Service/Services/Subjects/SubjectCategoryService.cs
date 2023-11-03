@@ -8,7 +8,6 @@ using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Subjects;
-using Revision.Service.Validations.Subjects.Categories;
 
 namespace Revision.Service.Services.Subjects;
 
@@ -24,11 +23,6 @@ public class SubjectCategoryService : ISubjectCategoryService
 
     public async Task<SubjectCategoryResultDto> CreateAsync(SubjectCategoryCreationDto dto)
     {
-        var validation = new SubjectCategoryCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existCategory = await _repository.SelectAsync(
             category => category.Name.ToLower().Equals(dto.Name.ToLower()));
         if (existCategory is not null)
@@ -45,11 +39,6 @@ public class SubjectCategoryService : ISubjectCategoryService
 
     public async Task<SubjectCategoryResultDto> UpdateAsync(long id, SubjectCategoryUpdateDto dto)
     {
-        var validation = new SubjectCategoryUpdateDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id),
             includes: new[] { "Subjects" })
             ?? throw new RevisionException(404, "This subject category is not found");
@@ -98,6 +87,7 @@ public class SubjectCategoryService : ISubjectCategoryService
         var categories = await _repository.SelectAll(includes: new[] { "Subjects" })
             .ToPaginate(pagination)
             .ToListAsync();
+
         return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(categories);
     }
 }

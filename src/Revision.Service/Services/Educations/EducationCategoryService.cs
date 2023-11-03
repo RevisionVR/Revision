@@ -8,7 +8,6 @@ using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Educations;
-using Revision.Service.Validations.Educations.Categories;
 
 namespace Revision.Service.Services.Educations;
 
@@ -24,11 +23,6 @@ public class EducationCategoryService : IEducationCategoryService
 
     public async Task<EducationCategoryResultDto> CreateAsync(EducationCategoryCreationDto dto)
     {
-        var validation = new EducationCategoryCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existCategory = await _repository.SelectAsync(
             category => category.Name.ToLower().Equals(dto.Name.ToLower()));
         if (existCategory is not null)
@@ -45,11 +39,6 @@ public class EducationCategoryService : IEducationCategoryService
 
     public async Task<EducationCategoryResultDto> UpdateAsync(long id, EducationCategoryUpdateDto dto)
     {
-        var validation = new EducationCategoryUpdateDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existCategory = await _repository.SelectAsync(category => category.Id.Equals(id),
             includes: new[] { "Educations" })
             ?? throw new RevisionException(403, "This education category is not found");

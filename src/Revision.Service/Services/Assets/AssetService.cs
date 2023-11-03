@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Revision.DataAccess.IRepositories;
+﻿using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Assets;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Assets;

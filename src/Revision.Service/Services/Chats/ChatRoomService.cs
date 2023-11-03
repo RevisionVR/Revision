@@ -18,9 +18,9 @@ public class ChatRoomService : IChatRoomService
     private readonly IRepository<ChatRoom> _chatRoomRepository;
     private readonly IRepository<Education> _educationRepository;
     public ChatRoomService(
-        IMapper mapper, 
-        IRepository<User> userRepository, 
-        IRepository<ChatRoom> chatRoomRepository, 
+        IMapper mapper,
+        IRepository<User> userRepository,
+        IRepository<ChatRoom> chatRoomRepository,
         IRepository<Education> educationRepository)
     {
         _mapper = mapper;
@@ -61,7 +61,7 @@ public class ChatRoomService : IChatRoomService
     public async Task<IEnumerable<ChatRoomResultDto>> GetByUserIdAsync(long userId)
     {
         var existRoom = await _chatRoomRepository.SelectAll(room => room.UserId.Equals(userId),
-            includes : new[] {"User", "Education"}).ToListAsync();
+            includes: new[] { "User", "Education" }).ToListAsync();
 
         if (!existRoom.Any())
             throw new RevisionException(404, "This room is not found");

@@ -2,6 +2,7 @@
 using Revision.Domain.Configurations;
 using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Interfaces.Educations;
+using Revision.Service.Validations.Educations.Categories;
 using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Educations;
@@ -16,22 +17,44 @@ public class AdminEducationCategoriesController : AdminBaseController
 
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync([FromForm] EducationCategoryCreationDto dto)
-    => Ok(new Response
     {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _educationCategoryService.CreateAsync(dto)
-    });
+        var validation = new EducationCategoryCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _educationCategoryService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
+        {
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
+        });
+    }
 
 
     [HttpPut("update/{id:long}")]
     public async Task<IActionResult> PutAsync(long id, [FromForm] EducationCategoryUpdateDto dto)
-        => Ok(new Response
+    {
+        var validation = new EducationCategoryUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _educationCategoryService.UpdateAsync(id, dto)
+            });
+
+        return BadRequest(new Response
         {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _educationCategoryService.UpdateAsync(id, dto)
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
         });
+    }
 
 
     [HttpDelete("delete/{id:long}")]

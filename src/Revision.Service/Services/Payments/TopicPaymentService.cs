@@ -10,7 +10,6 @@ using Revision.Service.DTOs.TopicPayments;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Payments;
-using Revision.Service.Validations.Payments.Topics;
 
 namespace Revision.Service.Services.Payments;
 
@@ -34,11 +33,6 @@ public class TopicPaymentService : ITopicPaymentService
 
     public async Task<TopicPaymentResultDto> CreateAsync(TopicPaymentCreationDto dto)
     {
-        var validation = new TopicPaymentCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existTopic = await _topicRepository.SelectAsync(topic => topic.Id.Equals(dto.TopicId))
             ?? throw new RevisionException(404, "This topic is not found");
 
