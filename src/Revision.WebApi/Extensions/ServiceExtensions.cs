@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using Revision.DataAccess.IRepositories;
 using Revision.DataAccess.Repositories;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Interfaces.Assets;
 using Revision.Service.Interfaces.Auth;
+using Revision.Service.Interfaces.Chats;
 using Revision.Service.Interfaces.Devices;
 using Revision.Service.Interfaces.Educations;
 using Revision.Service.Interfaces.Notifications;
@@ -12,7 +14,9 @@ using Revision.Service.Interfaces.Subjects;
 using Revision.Service.Interfaces.Topics;
 using Revision.Service.Mappers;
 using Revision.Service.Services.Addresses;
+using Revision.Service.Services.Assets;
 using Revision.Service.Services.Auth;
+using Revision.Service.Services.Chats;
 using Revision.Service.Services.Devices;
 using Revision.Service.Services.Educations;
 using Revision.Service.Services.Payments;
@@ -63,13 +67,24 @@ public static class ServiceExtensions
 
         //Education category
         services.AddScoped<IEducationCategoryService, EducationCategoryService>();
+        services.AddScoped<IUserEducationService, UserEducationService>();
         services.AddScoped<IEducationService, EducationService>();
 
-        //Topics
+        //Topic
         services.AddScoped<ITopicService, TopicService>();
 
         //Payment
         services.AddScoped<ITopicPaymentService, TopicPaymentService>();
+        services.AddScoped<IDeviceService, DeviceService>();
+
+        //Chat
+        services.AddScoped<IChatService, ChatService>();
+        services.AddScoped<IChatRoomService, ChatRoomService>();
+
+        //Asset
+        services.AddScoped<IAssetService, AssetService>();
+
+        //Device
         services.AddScoped<IDeviceService, DeviceService>();
         #endregion
     }
