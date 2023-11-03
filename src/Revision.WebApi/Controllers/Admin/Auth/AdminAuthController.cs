@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Revision.Service.DTOs.Logins;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Interfaces.Auth;
 using Revision.Service.Validations.Users;
+using Revision.Service.DTOs.ResetVerification;
 
 namespace Revision.WebApi.Controllers.Admin.Auth;
 
