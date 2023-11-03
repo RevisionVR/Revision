@@ -1,4 +1,4 @@
-﻿namespace Revision.Service.DTOs;
+﻿namespace Revision.Service.DTOs.ResetVerification;
 
 public class VerificationDto
 {

@@ -1,18 +1,19 @@
-﻿using AutoMapper;
-using Revision.DataAccess.IRepositories;
+﻿using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Assets;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Assets;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Assets;
-using System.Net.Mail;
 
 namespace Revision.Service.Services.Assets;
 
 public class AssetService : IAssetService
 {
-    private readonly IMapper _mapper;
     private readonly IRepository<Asset> _repository;
+    public AssetService(IRepository<Asset> repository)
+    {
+        _repository = repository;
+    }
 
     public async Task<Asset> UploadAsync(AssetCreationDto dto)
     {

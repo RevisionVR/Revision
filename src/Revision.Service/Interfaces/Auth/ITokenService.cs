@@ -4,5 +4,5 @@ namespace Revision.Service.Interfaces.Auth;
 
 public interface ITokenService
 {
-    string GenerateTokenAsync(User user);
+    Task<string> GenerateTokenAsync(User user);
 }

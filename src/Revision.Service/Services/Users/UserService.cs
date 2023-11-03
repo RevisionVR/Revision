@@ -17,9 +17,7 @@ public class UserService : IUserService
 {
     private readonly IMapper _mapper;
     private readonly IRepository<User> _userRepository;
-    public UserService(
-        IMapper mapper,
-        IRepository<User> userRepository)
+    public UserService(IMapper mapper, IRepository<User> userRepository)
     {
         _mapper = mapper;
         _userRepository = userRepository;
@@ -74,7 +72,6 @@ public class UserService : IUserService
 
         _userRepository.Delete(existUser);
         await _userRepository.SaveAsync();
-
         return true;
     }
 

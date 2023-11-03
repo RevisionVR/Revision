@@ -5,8 +5,8 @@ using Revision.Domain.Entities.Users;
 using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.Commons.Security;
-using Revision.Service.DTOs;
 using Revision.Service.DTOs.Notifications;
+using Revision.Service.DTOs.ResetVerification;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Auth;
@@ -20,32 +20,31 @@ public class AuthService : IAuthService
 
     private const int CACHED_FOR_MINUTS_VEFICATION = 5;
     private const int VERIFICATION_MAXIMUM_ATTEMPTS = 3;
-    private const string VERIFY_REGISTER_CACHE_KEY = "verify_reset_password_";
-
     private const string Reset_CACHE_KEY = "reset_";
+    private const string VERIFY_REGISTER_CACHE_KEY = "verify_reset_password_";
 
     private IMapper _mapper;
     private ITokenService _token;
     private ISmsSender _smsSender;
-    private IRepository<User> _userRepository;
     private IMemoryCache _memoryCache;
+    private IRepository<User> _userRepository;
 
 
     public AuthService(
         IMapper mapper,
         ISmsSender smsSender,
+        IMemoryCache memoryCache,
         ITokenService tokenService,
-        IRepository<User> userRepository,
-        IMemoryCache memoryCache)
+        IRepository<User> userRepository)
     {
         _mapper = mapper;
         _token = tokenService;
         _smsSender = smsSender;
-        _userRepository = userRepository;
         _memoryCache = memoryCache;
+        _userRepository = userRepository;
     }
 
-    public async Task<(bool Result, string token)> RegisterAsync(UserCreationDto dto)
+    public async Task<(bool Result, string Token)> RegisterAsync(UserCreationDto dto)
     {
         var validation = new UserCreationDtoValidator();
         var isValidUser = validation.Validate(dto);
@@ -65,7 +64,7 @@ public class AuthService : IAuthService
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
 
-        var dbResult = await _userRepository.AddAsync(mappedUser);
+        var user = await _userRepository.AddAsync(mappedUser);
         var resultDb = await _userRepository.SaveAsync();
 
         SmsSenderDto smsSender = new SmsSenderDto();
@@ -77,35 +76,32 @@ public class AuthService : IAuthService
         if (resultSms != true)
             return (false, "");
 
-        var token = _token.GenerateTokenAsync(dbResult);
+        var token = await _token.GenerateTokenAsync(user);
 
-        return (Result: resultDb, token: token);
+        return (Result: resultDb, Token: token);
     }
 
-    public async Task<(bool Result, string token)> LoginAsync(UserLoginDto dto)
+    public async Task<(bool Result, string Token)> LoginAsync(UserLoginDto dto)
     {
         var existUser = await _userRepository.SelectAsync(user =>
-        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email));
-        if (existUser is null)
-            throw new RevisionException(404, "This user is not found");
+        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email))
+            ?? throw new RevisionException(404, "This user is not found");
 
-        var hasherResult = PasswordHasher.Verify(dto.password, existUser.PasswordHash, existUser.Salt);
+        var hasherResult = PasswordHasher.Verify(dto.Password, existUser.PasswordHash, existUser.Salt);
 
         if (!hasherResult)
             throw new RevisionException(400, "Phone or password is invalid");
 
-        var token = _token.GenerateTokenAsync(existUser);
+        var token = await _token.GenerateTokenAsync(existUser);
 
-        return (Result: true, token);
+        return (Result: true, Token: token);
     }
 
     public async Task<(bool Result, int CachedMinutes)> ResetPasswordAsync(UserResetPasswordDto dto)
     {
         var existUser = await _userRepository.SelectAsync(user =>
-        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email));
-
-        if (existUser is null)
-            throw new RevisionException(404, "This user is not found");
+        user.Phone.Equals(dto.Phone) || user.Email.Equals(dto.Email))
+            ?? throw new RevisionException(404, "This user is not found");
 
         var userCreateDto = _mapper.Map<User>(existUser);
         var resultPassword = PasswordHasher.Hash(dto.NewPassword);
@@ -171,7 +167,7 @@ public class AuthService : IAuthService
                     var dResult = _userRepository.Update(user);
                     var result = await _userRepository.SaveAsync();
 
-                    var token = _token.GenerateTokenAsync(dResult);
+                    var token =await _token.GenerateTokenAsync(dResult);
 
                     return (Result: result, Token: token);
                 }
@@ -185,6 +181,7 @@ public class AuthService : IAuthService
                     return (Result: false, Token: "");
                 }
             }
+
             else throw new RevisionException(400, "Expired time");
         }
         else throw new RevisionException(400, "Expired time");

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
+using Revision.Domain.Enums;
 using Revision.Service.DTOs.Devices;
 using Revision.Service.Interfaces.Devices;
+using Revision.Service.Validations.Devices;
 using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Devices;
@@ -15,22 +17,54 @@ public class AdminDevicesController : AdminBaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(DeviceCreationDto dto)
-        => Ok(new Response
+    public async Task<IActionResult> PostAsync([FromForm] DeviceCreationDto dto)
+    {
+        var validation = new DeviceCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _deviceService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
         {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _deviceService.CreateAsync(dto)
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
         });
+    }
 
 
     [HttpPut("update/{id:long}")]
-    public async Task<IActionResult> PutAsync(long id, DeviceUpdateDto dto)
+    public async Task<IActionResult> PutAsync(long id, [FromForm] DeviceUpdateDto dto)
+    {
+        var validation = new DeviceUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _deviceService.UpdateAsync(id, dto)
+            });
+
+        return BadRequest(new Response
+        {
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
+        });
+    }
+
+
+    [HttpPut("update/{uniqueId}")]
+    public async Task<IActionResult> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _deviceService.UpdateAsync(id, dto)
+            Data = await _deviceService.UpdateIsActiveAsync(uniqueId.ToString(), status)
         });
 
 

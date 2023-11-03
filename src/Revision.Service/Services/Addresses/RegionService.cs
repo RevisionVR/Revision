@@ -8,7 +8,6 @@ using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Regions;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
-using Revision.Service.Validations.Addresses.Regions;
 using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
@@ -25,12 +24,8 @@ public class RegionService : IRegionService
 
     public async Task<RegionResultDto> CreateAsync(RegionCreationDto dto)
     {
-        var validation = new RegionCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
-        var existRegion = await _regionRepository.SelectAsync(region => region.Name.Equals(dto.Name) && region.CountryId.Equals(dto.CountryId));
+        var existRegion = await _regionRepository.SelectAsync(region => region.Name.Equals(dto.Name)
+        && region.CountryId.Equals(dto.CountryId));
         if (existRegion is not null)
             throw new RevisionException(403, "This region already exists");
 

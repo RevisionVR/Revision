@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,13 +14,18 @@ namespace Revision.Service.Services.Auth;
 public class TokenService : ITokenService
 {
     private IConfiguration _configuration;
-
-    public TokenService(IConfiguration configuration)
+    private readonly IRepository<User> _userRepository;
+    public TokenService(IConfiguration configuration, IRepository<User> userRepository)
     {
         _configuration = configuration.GetSection("Jwt");
+        _userRepository = userRepository;
     }
-    public string GenerateTokenAsync(User user)
+
+    public async Task<string> GenerateTokenAsync(User user)
     {
+        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(user.Id))
+            ?? throw new RevisionException(404, "This user is not found");
+
         var identityClaims = new Claim[]
         {
             new Claim ("Id", user.Id.ToString()),

@@ -1,18 +1,17 @@
-﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 using Revision.Service.DTOs.Notifications;
 
 namespace Revision.Service.Interfaces.Notifications;
 
 public class SmsSender : ISmsSender
 {
+    private string TOKEN = "";
     private readonly string BASE_URL = "";
     private readonly string API_KEY = "";
     private readonly string SENDER = "";
     private readonly string EMAIL = "";
     private readonly string PASSWORD = "";
-    private string TOKEN = "";
-
     public SmsSender(IConfiguration config)
     {
         BASE_URL = config["Sms:BaseURL"]!;
@@ -72,7 +71,6 @@ public class SmsSender : ISmsSender
     public class EskizLoginDto
     {
         public string Message { get; set; } = string.Empty;
-
         public EskizToken Data { get; set; }
 
         public EskizLoginDto()

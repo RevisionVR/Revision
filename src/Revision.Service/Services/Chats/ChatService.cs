@@ -37,10 +37,10 @@ public class ChatService : IChatService
         var mappedChat = _mapper.Map<Chat>(dto);
         if (dto.FormFile is not null)
         {
-            var asset = await _assetService.UploadAsync(new AssetCreationDto{ FormFile = dto.FormFile });
+            var asset = await _assetService.UploadAsync(new AssetCreationDto { FormFile = dto.FormFile });
             mappedChat.AssetId = asset.Id;
             mappedChat.Asset = asset;
-        } 
+        }
 
         mappedChat.ChatRoom = existRoom;
         mappedChat.CreatedAt = TimeHelper.GetDateTime();
@@ -74,6 +74,6 @@ public class ChatService : IChatService
         if (chats.Any())
             throw new RevisionException(404, "This chat room is not found");
 
-        return _mapper.Map<IEnumerable<ChatResultDto>>(chats);  
+        return _mapper.Map<IEnumerable<ChatResultDto>>(chats);
     }
 }

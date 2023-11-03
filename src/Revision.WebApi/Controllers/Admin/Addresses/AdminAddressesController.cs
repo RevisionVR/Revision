@@ -3,6 +3,9 @@ using Revision.Service.DTOs.Countries;
 using Revision.Service.DTOs.Districts;
 using Revision.Service.DTOs.Regions;
 using Revision.Service.Interfaces.Addresses;
+using Revision.Service.Validations.Addresses.Countries;
+using Revision.Service.Validations.Addresses.Districts;
+using Revision.Service.Validations.Addresses.Regions;
 using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Addresses;
@@ -24,12 +27,23 @@ public class AdminAddressesController : AdminBaseController
 
     [HttpPost("country/create")]
     public async Task<IActionResult> PostContryAsync([FromForm] CountryCreationDto dto)
-        => Ok(new Response
+    {
+        var validation = new CountryCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _countryService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
         {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _countryService.CreateAsync(dto)
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
         });
+    }
 
 
     [HttpPatch("country/set")]
@@ -44,12 +58,23 @@ public class AdminAddressesController : AdminBaseController
 
     [HttpPost("region/create")]
     public async Task<IActionResult> PostRegionAsync([FromForm] RegionCreationDto dto)
-        => Ok(new Response
+    {
+        var validation = new RegionCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _regionService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
         {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _regionService.CreateAsync(dto)
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
         });
+    }
 
 
     [HttpPatch("region/set")]
@@ -64,12 +89,23 @@ public class AdminAddressesController : AdminBaseController
 
     [HttpPost("district/create")]
     public async Task<IActionResult> PostDistrictAsync([FromForm] DistrictCreationDto dto)
-    => Ok(new Response
     {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _districtService.CreateAsync(dto)
-    });
+        var validation = new DistrictCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _districtService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
+        {
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
+        });
+    }
 
 
     [HttpPatch("district/set")]
