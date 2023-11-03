@@ -11,7 +11,30 @@ services:
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+
+    depends_on:
+      - database
     ports:
       - 8080:80
       - 4343:443
+    networks:
+      - db_bridge
+
+  database:
+    build: 
+      context: .
+      dockerfile: ./apps/postgres/Dockerfile
+    container_name: revision-database-container
+    hostname: revision-database-host
+    image: revision-database-image
+    restart: always
+    ports:
+      - 5433:5432
+    networks:
+      - db_bridge
     
+networks:
+  db_bridge:
+    driver: bridge
+
+  
