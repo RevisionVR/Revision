@@ -2,6 +2,7 @@
 using Revision.Domain.Configurations;
 using Revision.Service.DTOs.Educations;
 using Revision.Service.Interfaces.Educations;
+using Revision.Service.Validations.Educations;
 using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Educations;
@@ -16,12 +17,23 @@ public class AdminEducationsController : AdminBaseController
 
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync([FromForm] EducationCreationDto dto)
-    => Ok(new Response
     {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _educationService.CreateAsync(dto)
-    });
+        var validation = new EducationCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _educationService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
+        {
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
+        });
+    }
 
 
     [HttpDelete("delete/{id:long}")]

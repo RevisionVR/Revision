@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.DTOs.Topics;
 using Revision.Service.Interfaces.Topics;
+using Revision.Service.Validations.Topics;
 using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Topics;
@@ -15,22 +16,44 @@ public class AdminTopicsController : AdminBaseController
 
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync([FromForm] TopicCreationDto dto)
-        => Ok(new Response
+    {
+        var validation = new TopicCreationDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _topicService.CreateAsync(dto)
+            });
+
+        return BadRequest(new Response
         {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _topicService.CreateAsync(dto)
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
         });
+    }
 
 
     [HttpPut("update/{id:long}")]
     public async Task<IActionResult> PutAsync(long id, [FromForm] TopicUpdateDto dto)
-        => Ok(new Response
+    {
+        var validation = new TopicUpdateDtoValidator();
+        var result = validation.Validate(dto);
+        if (!result.IsValid)
+            Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _topicService.UpdateAsync(id, dto)
+            });
+
+        return BadRequest(new Response
         {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _topicService.UpdateAsync(id, dto)
+            StatusCode = 400,
+            Message = result.Errors.FirstOrDefault().ToString()
         });
+    }
 
 
     [HttpDelete("delete/{id:long}")]

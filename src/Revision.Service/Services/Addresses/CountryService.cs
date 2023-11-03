@@ -8,7 +8,6 @@ using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Countries;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Addresses;
-using Revision.Service.Validations.Addresses.Countries;
 using Revision.Shared.Helpers;
 
 namespace Revision.Service.Services.Addresses;
@@ -25,11 +24,6 @@ public class CountryService : ICountryService
 
     public async Task<CountryResultDto> CreateAsync(CountryCreationDto dto)
     {
-        var validation = new CountryCreationDtoValidator();
-        var result = validation.Validate(dto);
-        if (!result.IsValid)
-            throw new RevisionException(400, result.Errors.FirstOrDefault().ToString());
-
         var existCountry = await _countryRepository.SelectAsync(country =>
         country.Name.Equals(dto.Name) || country.CountryCode.Equals(dto.CountryCode));
         if (existCountry is not null)

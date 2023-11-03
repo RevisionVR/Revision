@@ -17,9 +17,9 @@ public class UserEducationService : IUserEducationService
     private readonly IRepository<UserEducation> _repository;
     private readonly IRepository<Education> _educationRepository;
     public UserEducationService(
-        IMapper mapper, 
-        IRepository<User> userRepository, 
-        IRepository<UserEducation> repository, 
+        IMapper mapper,
+        IRepository<User> userRepository,
+        IRepository<UserEducation> repository,
         IRepository<Education> educationRepository)
     {
         _mapper = mapper;
@@ -54,14 +54,13 @@ public class UserEducationService : IUserEducationService
 
         _repository.Delete(existUserEducation);
         await _repository.SaveAsync();
-
         return true;
     }
 
     public async Task<UserEducationResultDto> GetByUserIdAsync(long userId)
     {
         var existUserEducation = await _repository.SelectAsync(ue => ue.UserId.Equals(userId),
-            includes: new[] {"User", "Education"})
+            includes: new[] { "User", "Education" })
             ?? throw new RevisionException(404, "This user education is not found");
 
         return _mapper.Map<UserEducationResultDto>(existUserEducation);
