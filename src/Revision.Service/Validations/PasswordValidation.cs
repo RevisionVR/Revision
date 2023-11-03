@@ -2,7 +2,7 @@
 
 public class PasswordValidation
 {
-    public static string Symbols { get; } = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
+    //public static string Symbols { get; } = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
 
     public static (bool IsValid, string Message) IsStrongPassword(string password)
     {
@@ -12,7 +12,7 @@ public class PasswordValidation
         bool isUpperCaseExists = false;
         bool isLowerCaseExists = false;
         bool isNumberExists = false;
-        bool isCharacterExists = false;
+        //bool isCharacterExists = false;
 
         foreach (var item in password)
         {
@@ -25,8 +25,8 @@ public class PasswordValidation
             if (char.IsDigit(item))
                 isNumberExists = true;
 
-            if (Symbols.Contains(item))
-                isCharacterExists = true;
+            /*if (Symbols.Contains(item))
+                isCharacterExists = true;*/
         }
 
         if (!isNumberExists)
@@ -38,8 +38,8 @@ public class PasswordValidation
         if (!isLowerCaseExists)
             return (IsValid: false, Message: "Password should contain at least one Lower case!");
 
-        if (!isCharacterExists)
-            return (IsValid: false, Message: "Password should contain at least one Symbol like (#@$%.!)!");
+        /*if (!isCharacterExists)
+            return (IsValid: false, Message: "Password should contain at least one Symbol like (#@$%.!)!");*/
 
         return (IsValid: true, "");
     }
