@@ -4,4 +4,5 @@ public class UserResetPasswordDto
 {
     public string NewPassword { get; set; }
     public string Phone { get; set; }
+    public string Email { get; set; }
 }

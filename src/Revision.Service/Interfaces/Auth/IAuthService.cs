@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Revision.Service.DTOs.Users;
+﻿using Revision.Service.DTOs.Users;
 
 namespace Revision.Service.Interfaces.Auth;
 

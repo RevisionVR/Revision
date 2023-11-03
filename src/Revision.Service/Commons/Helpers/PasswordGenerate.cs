@@ -7,7 +7,7 @@ public static class PasswordGenerate
     private const string UppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private const string LowercaseChars = "abcdefghijklmnopqrstuvwxyz";
     private const string DigitChars = "0123456789";
-   
+
     public static string Password()
     {
         int length = 8;
