@@ -1,11 +1,11 @@
-﻿using Revision.Service.DTOs.Educations;
+﻿using Revision.Domain.Commons;
+using Revision.Service.DTOs.Educations;
 using Revision.Service.DTOs.Topics;
 
 namespace Revision.Service.DTOs.TopicPayments;
 
-public class TopicPaymentResultDto
+public class TopicPaymentResultDto : Auditable
 {
-    public long Id { get; set; }
     public decimal Price { get; set; }
     public DateTime LastDay { get; set; }
     public DateTime NextDay { get; set; }
