@@ -37,6 +37,8 @@ public class ChatRoomService : IChatRoomService
             ?? throw new RevisionException(404, "This education is not found");
 
         var mappedRoom = _mapper.Map<ChatRoom>(dto);
+
+        mappedRoom.Name = existEducation.Name;
         mappedRoom.CreatedAt = TimeHelper.GetDateTime();
         mappedRoom.User = existUser;
         mappedRoom.Education = existEducation;

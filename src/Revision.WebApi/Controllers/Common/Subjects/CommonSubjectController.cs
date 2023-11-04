@@ -15,12 +15,12 @@ public class CommonSubjectController : BaseController
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _subjectService.GetByIdAsync(id)
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _subjectService.GetByIdAsync(id)
+        });
 
 
     [HttpGet("get-by-category/{subjectCategoryId:long}")]

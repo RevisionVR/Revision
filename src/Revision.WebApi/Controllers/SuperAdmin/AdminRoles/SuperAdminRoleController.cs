@@ -5,37 +5,40 @@ using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.SuperAdmin.AdminRoles;
 
-[Route("api/[controller]")]
-[ApiController]
 public class SuperAdminRoleController : SuperAdminBaseController
 {
-    private IUserService _servise;
-
-    public SuperAdminRoleController(IUserService service)
+    private IUserService _userService;
+    public SuperAdminRoleController(IUserService userService)
     {
-        this._servise = service;
+        _userService = userService;
     }
 
-    [HttpGet("get-by/role")]
+    [HttpGet("get-by/{role}")]
     public async Task<IActionResult> GetAllAsync([FromForm] Role role)
-    {
-        return Ok(new Response
+         => Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Success",
+                Data = await _userService.GetByRoleAsync(role)
+            });
+
+
+    [HttpGet("get/{id:long}")]
+    public async Task<IActionResult> GetByIdAsync(long id)
+        => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _servise.GetByRoleAsync(role)
+            Data = await _userService.GetByIdAsync(id)
         });
-    }
 
-    [HttpGet("get-by/{id}")]
-    public async Task<IActionResult> GetByIdAsync(long id)
-    {
-        return Ok();
-    }
 
-    [HttpPut("role/{Id}")]
-    public async Task<IActionResult> UpdateAsync(long Id)
-    {
-        return Ok();
-    }
+    [HttpPut("update/{id:long}")]
+    public async Task<IActionResult> UpdateAsync(long id, Role role)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.UpgradeRoleAsync(id, role)
+        });
 }

@@ -39,30 +39,30 @@ public class AdminAuthController : AdminBaseController
 
     [HttpPost("login")]
     public async Task<IActionResult> LoginAsync([FromForm] UserLoginDto dto)
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _authServise.LoginAsync(dto)
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _authServise.LoginAsync(dto)
+        });
 
 
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPasswordAsync([FromQuery] UserResetPasswordDto dto)
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _authServise.ResetPasswordAsync(dto)
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _authServise.ResetPasswordAsync(dto)
+        });
 
 
     [HttpPost("verify-code")]
     public async Task<IActionResult> VerifyResetPasswordAsync([FromQuery] ResetPassword dto)
-    => Ok(new Response
-    {
-        StatusCode = 200,
-        Message = "Success",
-        Data = await _authServise.VerifyResetPasswordAsync(dto.Phone, dto.Code)
-    });
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _authServise.VerifyResetPasswordAsync(dto.Phone, dto.Code)
+        });
 }

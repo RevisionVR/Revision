@@ -107,13 +107,12 @@ public class UserService : IUserService
         return _mapper.Map<UserResultDto>(existUser);
     }
 
-    public async Task<UserResultDto> GetByRoleAsync(Role role)
+    public async Task<IEnumerable<UserResultDto>> GetByRoleAsync(Role role)
     {
-        var dbResult = _userRepository.SelectAll(user => user.Role.Equals(role)).ToList();
-
-        if (dbResult == null)
+        var users = await _userRepository.SelectAll(user => user.Role.Equals(role)).ToListAsync();
+        if (!users.Any())
             throw new RevisionException(404, "This users role are not found");
 
-        return _mapper.Map<UserResultDto>(dbResult);
+        return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 }
