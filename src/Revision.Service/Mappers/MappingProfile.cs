@@ -43,7 +43,6 @@ public class MappingProfile : Profile
         CreateMap<Asset, AssetCreationDto>().ReverseMap();
 
         //ChatRooms
-        CreateMap<ChatRoom, ChatRoomUpdateDto>().ReverseMap();
         CreateMap<ChatRoom, ChatRoomResultDto>().ReverseMap();
         CreateMap<ChatRoom, ChatRoomCreationDto>().ReverseMap();
 

@@ -32,7 +32,7 @@ public class TopicService : ITopicService
         var existSubject = await _subjectRepository.SelectAsync(subject => subject.Id.Equals(dto.SubjectId))
             ?? throw new RevisionException(404, "This subject is not found");
 
-        var mappedTopic = _mapper.Map<Topic>(existSubject);
+        var mappedTopic = _mapper.Map<Topic>(dto);
         mappedTopic.Subject = existSubject;
         mappedTopic.CreatedAt = TimeHelper.GetDateTime();
 

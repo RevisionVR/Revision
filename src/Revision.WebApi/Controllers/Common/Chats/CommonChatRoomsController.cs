@@ -14,7 +14,7 @@ public class CommonChatRoomsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(ChatRoomCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] ChatRoomCreationDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -23,7 +23,7 @@ public class CommonChatRoomsController : BaseController
         });
 
 
-    [HttpPost("destroy/{id:long}")]
+    [HttpDelete("destroy/{id:long}")]
     public async Task<IActionResult> DestroyAsync(long id)
         => Ok(new Response
         {

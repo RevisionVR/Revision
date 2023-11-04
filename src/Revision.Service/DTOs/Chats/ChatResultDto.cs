@@ -6,7 +6,7 @@ namespace Revision.Service.DTOs.Chats;
 
 public class ChatResultDto : Auditable
 {
-    public string Message { get; set; }
+    public string Context { get; set; }
     public AssetResultDto Asset { get; set; } = default;
     public ChatRoomResultDto ChatRoom { get; set; }
 }
