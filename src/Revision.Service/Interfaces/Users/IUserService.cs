@@ -10,7 +10,7 @@ public interface IUserService
     Task<UserResultDto> UpdateAsync(long id, UserUpdateDto dto);
     Task<bool> DeleteAsync(long id);
     Task<UserResultDto> GetByIdAsync(long id);
-    Task<UserResultDto> GetByRoleAsync(Role role);
+    Task<IEnumerable<UserResultDto>> GetByRoleAsync(Role role);
     Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination);
     Task<UserResultDto> UpgradeRoleAsync(long id, Role role);
 }
