@@ -116,4 +116,27 @@ public class UserService : IUserService
 
         return _mapper.Map<UserResultDto>(dbResult);
     }
+
+    public async Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security)
+    {
+        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(id));
+
+        if (existUser == null)
+            throw new RevisionException(404, "This is User Not Found");
+
+        if (security.NewPassword == security.ReturnNewPassword)
+        {
+            var passwords = PasswordHasher.Hash(security.NewPassword);
+            existUser.PasswordHash = passwords.Hash;
+            existUser.Salt = passwords.Salt;
+            existUser.UpdatedAt = TimeHelper.GetDateTime();
+        }
+        else
+            throw new RevisionException(400, "New password not equal returnPassword");
+
+        _userRepository.Update(existUser);
+        await _userRepository.SaveAsync();
+
+        return _mapper.Map<UserResultDto>(existUser);
+    }
 }

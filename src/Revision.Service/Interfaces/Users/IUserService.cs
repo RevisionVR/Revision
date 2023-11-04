@@ -13,4 +13,5 @@ public interface IUserService
     Task<UserResultDto> GetByRoleAsync(Role role);
     Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination);
     Task<UserResultDto> UpgradeRoleAsync(long id, Role role);
+    Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security);
 }
