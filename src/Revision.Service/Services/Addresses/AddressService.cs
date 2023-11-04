@@ -104,18 +104,9 @@ public class AddressService : IAddressService
 
     public async Task<AddressResultDto> GetByIdAsync(long id)
     {
-        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id),
-            includes: new[] { "Educations" })
+        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id))
             ?? throw new RevisionException(404, "This address is not found");
 
         return _mapper.Map<AddressResultDto>(existAddress);
-    }
-
-    public async Task<IEnumerable<AddressResultDto>> GetAllAsync()
-    {
-        var addesses = await _addressRepository.SelectAll(includes: new[] { "Educations" })
-            .ToListAsync();
-
-        return _mapper.Map<IEnumerable<AddressResultDto>>(addesses);
     }
 }

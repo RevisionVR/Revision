@@ -4,6 +4,7 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.Addresses;
 using Revision.Service.DTOs.Educations;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -44,13 +45,19 @@ public class EducationService : IEducationService
         mappedEducation.CreatedAt = TimeHelper.GetDateTime();
         mappedEducation.EducationCategory = existCategory;
 
-        if (dto.AddressCreationDto is not null)
-            mappedEducation.Address = await _addressService.CreateAsync(dto.AddressCreationDto);
+        if (dto.Address is not null)
+        {
+            var address = await _addressService.CreateAsync(dto.Address);
+            mappedEducation.AddressId = address.Id;
+            mappedEducation.Address = address;
+        }
 
         await _educationRepository.AddAsync(mappedEducation);
         await _educationRepository.SaveAsync();
 
-        return _mapper.Map<EducationResultDto>(mappedEducation);
+        var result = _mapper.Map<EducationResultDto>(mappedEducation);
+
+        return result;
     }
 
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
@@ -64,7 +71,11 @@ public class EducationService : IEducationService
             ?? throw new RevisionException(404, "This education category is not found");
 
         if (existEducation.Address is not null)
-            existEducation.Address = await _addressService.UpdateAsync(existEducation.Address.Id, dto.AddressUpdateDto);
+        {
+            var address = await _addressService.UpdateAsync(existEducation.Address.Id, dto.Address);
+            existEducation.Address = address;
+            existEducation.Id = address.Id;
+        }
 
         var mappedEducation = _mapper.Map(dto, existEducation);
         mappedEducation.UpdatedAt = TimeHelper.GetDateTime();
@@ -73,7 +84,9 @@ public class EducationService : IEducationService
         _educationRepository.Update(mappedEducation);
         await _educationRepository.SaveAsync();
 
-        return _mapper.Map<EducationResultDto>(mappedEducation);
+        var result = _mapper.Map<EducationResultDto>(mappedEducation);
+
+        return result;
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -81,6 +94,8 @@ public class EducationService : IEducationService
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
             includes: new[] { "Address" })
            ?? throw new RevisionException(404, "This education is not found");
+
+        await _addressService.DeleteAsync(existEducation.Address.Id);
 
         _educationRepository.Delete(existEducation);
         await _educationRepository.SaveAsync();

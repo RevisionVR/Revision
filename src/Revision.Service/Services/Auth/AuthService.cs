@@ -71,10 +71,11 @@ public class AuthService : IAuthService
         smsSender.Title = "RevisionVr\n";
         smsSender.Content = "login: " + dto.Phone + "\npassword: " + password;
         smsSender.Recipient = dto.Phone.Substring(1);
-        var resultSms = await _smsSender.SendAsync(smsSender);
+        Console.WriteLine(dto.Phone +" # "+ password);
+        var resultSms = true;// await _smsSender.SendAsync(smsSender);
 
         if (resultSms != true)
-            return (false, "");
+            return (false, string.Empty);
 
         var token = await _token.GenerateTokenAsync(user);
 
@@ -87,7 +88,6 @@ public class AuthService : IAuthService
             ?? throw new RevisionException(404, "This user is not found");
 
         var hasherResult = PasswordHasher.Verify(dto.Password, existUser.PasswordHash, existUser.Salt);
-
         if (!hasherResult)
             throw new RevisionException(400, "Phone or password is invalid");
 

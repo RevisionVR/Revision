@@ -10,10 +10,10 @@ public class AddressUpdateDtoValidator : AbstractValidator<AddressUpdateDto>
         RuleFor(dto => dto.Home)
             .NotNull()
             .NotEmpty()
-            .MinimumLength(10)
-            .WithMessage("Home Minimum characters 10 ")
+            .MinimumLength(3)
+            .WithMessage("Home minimum characters 3")
             .MaximumLength(200)
-            .WithMessage("Home maximums characters 10");
+            .WithMessage("Home maximums characters 200");
 
         RuleFor(dto => dto.Description)
             .NotNull()
