@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Users;
 using Revision.Domain.Enums;
@@ -64,7 +63,7 @@ public class AuthService : IAuthService
         if (_identityservice.RoleName.ToString() == Role.Admin.ToString())
         {
             if ((dto.Role == Role.SuperAdmin || dto.Role == Role.Admin))
-                    throw new RevisionException(403, $"You are not create {dto.Role}");
+                throw new RevisionException(403, $"You are not create {dto.Role}");
         }
 
         var password = PasswordGenerate.Password();
@@ -81,7 +80,7 @@ public class AuthService : IAuthService
         smsSender.Title = "RevisionVr\n";
         smsSender.Content = "login: " + dto.Phone + "\npassword: " + password;
         smsSender.Recipient = dto.Phone.Substring(1);
-        Console.WriteLine(dto.Phone +" # "+ password);
+        Console.WriteLine(dto.Phone + " # " + password);
         var resultSms = true;// await _smsSender.SendAsync(smsSender);
 
         AuthResult authResult = new AuthResult()
@@ -91,7 +90,7 @@ public class AuthService : IAuthService
         };
 
         if (resultSms != true)
-            return authResult; 
+            return authResult;
 
         var token = await _token.GenerateTokenAsync(user);
         authResult.Token = token;

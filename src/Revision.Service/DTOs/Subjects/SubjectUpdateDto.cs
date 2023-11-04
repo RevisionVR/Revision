@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Revision.Service.DTOs.Subjects;
+﻿namespace Revision.Service.DTOs.Subjects;
 
 public class SubjectUpdateDto
 {

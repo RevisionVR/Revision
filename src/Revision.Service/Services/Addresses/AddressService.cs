@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Addresses;
 using Revision.Service.Commons.Helpers;

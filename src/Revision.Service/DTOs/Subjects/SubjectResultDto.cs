@@ -1,5 +1,4 @@
 ﻿using Revision.Domain.Commons;
-using Revision.Service.DTOs.Assets;
 using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.DTOs.Topics;
 

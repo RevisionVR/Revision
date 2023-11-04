@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Interfaces.Auth;
 using Revision.Service.Interfaces.Users;
-using Revision.Service.Services.Auth;
 using Revision.Service.Validations.Users;
 using Revision.WebApi.Models;
 
@@ -26,7 +24,7 @@ public class AccountController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetUserAsync()
-        => Ok( await _userService.GetByIdAsync(_identityService.Id));
+        => Ok(await _userService.GetByIdAsync(_identityService.Id));
 
     [HttpPut("information")]
     public async Task<IActionResult> UpdateAsync([FromForm] UserUpdateDto dto)

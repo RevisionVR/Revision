@@ -16,11 +16,11 @@ public class SuperAdminRoleController : SuperAdminBaseController
     [HttpGet("get-by/{role}")]
     public async Task<IActionResult> GetAllAsync([FromForm] Role role)
          => Ok(new Response
-            {
-                StatusCode = 200,
-                Message = "Success",
-                Data = await _userService.GetByRoleAsync(role)
-            });
+         {
+             StatusCode = 200,
+             Message = "Success",
+             Data = await _userService.GetByRoleAsync(role)
+         });
 
 
     [HttpGet("get/{id:long}")]
