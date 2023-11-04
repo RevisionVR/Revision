@@ -23,24 +23,24 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<UserResultDto> CreateAsync(UserCreationDto dto)
-    {
-        var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
-        if (existUser is not null)
-            throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
-        var password = PasswordGenerate.Password();
-        var result = PasswordHasher.Hash(password);
-        var mappedUser = _mapper.Map<User>(dto);
-        mappedUser.Role = Role.User;
-        mappedUser.Salt = result.Salt;
-        mappedUser.PasswordHash = result.Hash;
-        mappedUser.CreatedAt = TimeHelper.GetDateTime();
+    //public async Task<UserResultDto> CreateAsync(UserCreationDto dto)
+    //{
+    //    var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone));
+    //    if (existUser is not null)
+    //        throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
+    //    var password = PasswordGenerate.Password();
+    //    var result = PasswordHasher.Hash(password);
+    //    var mappedUser = _mapper.Map<User>(dto);
+    //    mappedUser.Role = Role.User;
+    //    mappedUser.Salt = result.Salt;
+    //    mappedUser.PasswordHash = result.Hash;
+    //    mappedUser.CreatedAt = TimeHelper.GetDateTime();
 
-        await _userRepository.AddAsync(mappedUser);
-        await _userRepository.SaveAsync();
+    //    await _userRepository.AddAsync(mappedUser);
+    //    await _userRepository.SaveAsync();
 
-        return _mapper.Map<UserResultDto>(mappedUser);
-    }
+    //    return _mapper.Map<UserResultDto>(mappedUser);
+    //}
 
     public async Task<UserResultDto> UpdateAsync(long id, UserUpdateDto dto)
     {
@@ -65,6 +65,40 @@ public class UserService : IUserService
 
     }
 
+    public async Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security)
+    {
+        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(id))
+            ?? throw new RevisionException(404, "This user is not found");
+
+        if (security.NewPassword != security.ConfirmPassword)
+            throw new RevisionException(400, "New password is not equals to confirm assword");
+
+        var passwords = PasswordHasher.Hash(security.NewPassword);
+        existUser.PasswordHash = passwords.Hash;
+        existUser.Salt = passwords.Salt;
+        existUser.UpdatedAt = TimeHelper.GetDateTime();
+
+        _userRepository.Update(existUser);
+        await _userRepository.SaveAsync();
+
+        return _mapper.Map<UserResultDto>(existUser);
+    }
+
+    public async Task<UserResultDto> UpgradeRoleAsync(long id, Role role)
+    {
+        var existUser = await _userRepository.SelectAsync(u => u.Id.Equals(id))
+             ?? throw new RevisionException(404, "This user is not found");
+
+        existUser.Id = id;
+        existUser.Role = role;
+        existUser.UpdatedAt = TimeHelper.GetDateTime();
+
+        _userRepository.Update(existUser);
+        await _userRepository.SaveAsync();
+
+        return _mapper.Map<UserResultDto>(existUser);
+    }
+
     public async Task<bool> DeleteAsync(long id)
     {
         var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(id))
@@ -83,30 +117,6 @@ public class UserService : IUserService
         return _mapper.Map<UserResultDto>(existUser);
     }
 
-    public async Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination)
-    {
-        var users = await _userRepository.SelectAll()
-            .ToPaginate(pagination)
-            .ToListAsync();
-
-        return _mapper.Map<IEnumerable<UserResultDto>>(users);
-    }
-
-    public async Task<UserResultDto> UpgradeRoleAsync(long id, Role role)
-    {
-        var existUser = await _userRepository.SelectAsync(u => u.Id.Equals(id))
-             ?? throw new RevisionException(404, "This user is not found");
-
-        existUser.Id = id;
-        existUser.Role = role;
-        existUser.UpdatedAt = TimeHelper.GetDateTime();
-
-        _userRepository.Update(existUser);
-        await _userRepository.SaveAsync();
-
-        return _mapper.Map<UserResultDto>(existUser);
-    }
-
     public async Task<IEnumerable<UserResultDto>> GetByRoleAsync(Role role)
     {
         var users = await _userRepository.SelectAll(user => user.Role.Equals(role)).ToListAsync();
@@ -116,26 +126,12 @@ public class UserService : IUserService
         return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 
-    public async Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security)
+    public async Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination)
     {
-        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(id));
+        var users = await _userRepository.SelectAll()
+            .ToPaginate(pagination)
+            .ToListAsync();
 
-        if (existUser == null)
-            throw new RevisionException(404, "This is User Not Found");
-
-        if (security.NewPassword == security.ConfirmPassword)
-        {
-            var passwords = PasswordHasher.Hash(security.NewPassword);
-            existUser.PasswordHash = passwords.Hash;
-            existUser.Salt = passwords.Salt;
-            existUser.UpdatedAt = TimeHelper.GetDateTime();
-        }
-        else
-            throw new RevisionException(400, "New password not equal returnPassword");
-
-        _userRepository.Update(existUser);
-        await _userRepository.SaveAsync();
-
-        return _mapper.Map<UserResultDto>(existUser);
+        return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 }
