@@ -83,7 +83,7 @@ public static class ServiceExtensions
 
         //Payment
         services.AddScoped<ITopicPaymentService, TopicPaymentService>();
-        services.AddScoped<IDeviceService, DeviceService>();
+        services.AddScoped<IDevicePaymentService, DevicePaymentService>();
 
         //Chat
         services.AddScoped<IChatService, ChatService>();

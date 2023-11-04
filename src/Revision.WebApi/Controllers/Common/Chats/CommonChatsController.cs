@@ -14,7 +14,7 @@ public class CommonChatsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(ChatCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] ChatCreationDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -23,7 +23,17 @@ public class CommonChatsController : BaseController
         });
 
 
-    [HttpPost("delete/{id:long}")]
+    [HttpPut("update/{id:long}")]
+    public async Task<IActionResult> PutAsync(long id, [FromForm] ChatUpdateDto dto)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _chatService.UpdateAsync(id, dto)
+        });
+
+
+    [HttpDelete("delete/{id:long}")]
     public async Task<IActionResult> DeleteAsync(long id)
         => Ok(new Response
         {

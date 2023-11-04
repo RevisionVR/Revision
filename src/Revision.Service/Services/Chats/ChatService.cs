@@ -50,6 +50,31 @@ public class ChatService : IChatService
         return _mapper.Map<ChatResultDto>(mappedChat);
     }
 
+    public async Task<ChatResultDto> UpdateAsync(long id , ChatUpdateDto dto)
+    {
+        var existChat = await _chatRepository.SelectAsync(chat => chat.Id.Equals(id))
+            ?? throw new RevisionException(404, "This chat is not found");
+
+        var existRoom = await _chatRoomRepository.SelectAsync(room => room.Id.Equals(dto.ChatRoomId))
+            ?? throw new RevisionException(404, "This chat room is not found");
+
+        var mappedChat = _mapper.Map(dto, existChat);
+        mappedChat.Id = id;
+        if (dto.FormFile is not null)
+        {
+            var asset = await _assetService.UploadAsync(new AssetCreationDto { FormFile = dto.FormFile });
+            mappedChat.AssetId = asset.Id;
+            mappedChat.Asset = asset;
+        }
+
+        mappedChat.ChatRoom = existRoom;
+        mappedChat.UpdatedAt = TimeHelper.GetDateTime();
+        _chatRepository.Update(mappedChat);
+        await _chatRepository.SaveAsync();
+
+        return _mapper.Map<ChatResultDto>(mappedChat);
+    }
+
     public async Task<bool> DeleteAsync(long id)
     {
         var existChat = await _chatRepository.SelectAsync(chat => chat.Id.Equals(id))

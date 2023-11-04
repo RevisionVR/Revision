@@ -14,7 +14,7 @@ public class AdminUserEducationsController : AdminBaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(UserEducationCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] UserEducationCreationDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -23,14 +23,15 @@ public class AdminUserEducationsController : AdminBaseController
         });
 
 
-    [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _userEducationService.DeleteAsync(id)
-        });
+    //[HttpDelete("delete/{id:long}")]
+    //public async Task<IActionResult> DeleteAsync(long id)
+    //    => Ok(new Response
+    //    {
+    //        StatusCode = 200,
+    //        Message = "Success",
+    //        Data = await _userEducationService.DeleteAsync(id)
+    //    });
+
 
     [HttpGet("get-by-user/{userId:long}")]
     public async Task<IActionResult> GetByUserIdAsync(long userId)
