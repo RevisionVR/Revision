@@ -91,7 +91,7 @@ public class EducationService : IEducationService
     public async Task<bool> DeleteAsync(long id)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] { "Address" })
+            includes: new[] { "Address","UserEducation" })
            ?? throw new RevisionException(404, "This education is not found");
 
         await _addressService.DeleteAsync(existEducation.Address.Id);
@@ -107,10 +107,9 @@ public class EducationService : IEducationService
             education => education.Id.Equals(id),
             includes: new[]
             {
-                "Address",
-                "Devices",
-                "TopicPayments",
-                "DevicePayments",
+                "Address.Country",
+                "Address.District",
+                "Address.Region",
                 "EducationCategory"
             })
            ?? throw new RevisionException(404, "This education is not found");
@@ -123,10 +122,9 @@ public class EducationService : IEducationService
         var educations = await _educationRepository.SelectAll(
             includes: new[]
             {
-                "Address",
-                "Devices",
-                "TopicPayments",
-                "DevicePayments",
+                "Address.Country",
+                "Address.District",
+                "Address.Region",
                 "EducationCategory"
             })
             .ToPaginate(pagination)
