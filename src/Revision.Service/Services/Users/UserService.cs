@@ -123,7 +123,7 @@ public class UserService : IUserService
         if (existUser == null)
             throw new RevisionException(404, "This is User Not Found");
 
-        if (security.NewPassword == security.ReturnNewPassword)
+        if (security.NewPassword == security.ConfirmPassword)
         {
             var passwords = PasswordHasher.Hash(security.NewPassword);
             existUser.PasswordHash = passwords.Hash;
