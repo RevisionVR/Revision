@@ -1,8 +1,5 @@
 ﻿using Revision.Service.DTOs.Addresses;
-using Revision.Service.DTOs.DevicePayments;
-using Revision.Service.DTOs.Devices;
 using Revision.Service.DTOs.EducationCategories;
-using Revision.Service.DTOs.TopicPayments;
 
 namespace Revision.Service.DTOs.Educations;
 
@@ -16,7 +13,7 @@ public class EducationResultDto
     public EducationCategoryResultDto EducationCategory { get; set; }
     public AddressResultDto Address { get; set; }
 
-    public IEnumerable<DeviceResultDto> Devices { get; set; }
-    public IEnumerable<TopicPaymentResultDto> TopicPayments { get; set; }
-    public IEnumerable<DevicePaymentResultDto> DevicePayments { get; set; }
+    //public IEnumerable<DeviceResultDto> Devices { get; set; }
+    //public IEnumerable<TopicPaymentResultDto> TopicPayments { get; set; }
+    //public IEnumerable<DevicePaymentResultDto> DevicePayments { get; set; }
 }
