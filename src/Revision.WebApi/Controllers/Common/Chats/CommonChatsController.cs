@@ -23,6 +23,16 @@ public class CommonChatsController : BaseController
         });
 
 
+    [HttpPost("delete/{id:long}")]
+    public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _chatService.DeleteAsync(id)
+        });
+
+
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
         => Ok(new Response
@@ -41,14 +51,4 @@ public class CommonChatsController : BaseController
            Message = "Success",
            Data = await _chatService.GetByRoomIdAsync(roomId)
        });
-
-
-    [HttpPost("delete/{id:long}")]
-    public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _chatService.DeleteAsync(id)
-        });
 }

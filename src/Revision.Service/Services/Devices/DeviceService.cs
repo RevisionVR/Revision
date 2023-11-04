@@ -30,7 +30,7 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceResultDto> CreateAsync(DeviceCreationDto dto)
     {
-        var existDevice = await _deviceRepository.SelectAsync(device => 
+        var existDevice = await _deviceRepository.SelectAsync(device =>
         device.UniqueId.ToLower().Equals(dto.UniqueId.ToLower()));
         if (existDevice is not null)
             throw new RevisionException(403, "This device already exists");
@@ -71,7 +71,7 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceResultDto> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
     {
-        var existDevice = await _deviceRepository.SelectAsync(device => 
+        var existDevice = await _deviceRepository.SelectAsync(device =>
         device.UniqueId.ToLower().Equals(uniqueId.ToLower()))
            ?? throw new RevisionException(404, "This device is not found");
 
@@ -103,7 +103,7 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceResultDto> GetByUniqueIdAsync(string uniqueId)
     {
-        var existDevice = await _deviceRepository.SelectAsync(device => 
+        var existDevice = await _deviceRepository.SelectAsync(device =>
         device.UniqueId.ToLower().Equals(uniqueId.ToLower()), includes: new[] { "Education" })
            ?? throw new RevisionException(404, "This device is not found");
 

@@ -165,7 +165,7 @@ public class AuthService : IAuthService
                     var dResult = _userRepository.Update(user);
                     var result = await _userRepository.SaveAsync();
 
-                    var token =await _token.GenerateTokenAsync(dResult);
+                    var token = await _token.GenerateTokenAsync(dResult);
 
                     return (Result: result, Token: token);
                 }

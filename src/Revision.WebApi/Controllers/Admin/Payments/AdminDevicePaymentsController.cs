@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
 using Revision.Service.DTOs.DevicePayments;
-using Revision.Service.DTOs.TopicPayments;
 using Revision.Service.Interfaces.Payments;
 using Revision.Service.Validations.Payments.Devices;
 using Revision.WebApi.Models;
