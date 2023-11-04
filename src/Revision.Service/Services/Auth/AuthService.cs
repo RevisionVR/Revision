@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json.Linq;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Users;
 using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.Commons.Security;
+using Revision.Service.DTOs.Auth;
 using Revision.Service.DTOs.Notifications;
 using Revision.Service.DTOs.ResetVerification;
 using Revision.Service.DTOs.Users;
@@ -44,7 +46,7 @@ public class AuthService : IAuthService
         _userRepository = userRepository;
     }
 
-    public async Task<(bool Result, string Token)> RegisterAsync(UserCreationDto dto)
+    public async Task<AuthResult> RegisterAsync(UserCreationDto dto)
     {
         var validation = new UserCreationDtoValidator();
         var isValidUser = validation.Validate(dto);
@@ -72,17 +74,24 @@ public class AuthService : IAuthService
         smsSender.Content = "login: " + dto.Phone + "\npassword: " + password;
         smsSender.Recipient = dto.Phone.Substring(1);
         Console.WriteLine(dto.Phone +" # "+ password);
-        var resultSms = true;// await _smsSender.SendAsync(smsSender);
+        var resultSms = await _smsSender.SendAsync(smsSender);
+
+        AuthResult authResult = new AuthResult()
+        {
+            Result = resultSms,
+            Token = string.Empty
+        };
 
         if (resultSms != true)
-            return (false, string.Empty);
+            return authResult; 
 
         var token = await _token.GenerateTokenAsync(user);
+        authResult.Token = token;
 
-        return (Result: resultDb, Token: token);
+        return authResult;
     }
 
-    public async Task<(bool Result, string Token)> LoginAsync(UserLoginDto dto)
+    public async Task<AuthResult> LoginAsync(UserLoginDto dto)
     {
         var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone))
             ?? throw new RevisionException(404, "This user is not found");
@@ -92,11 +101,16 @@ public class AuthService : IAuthService
             throw new RevisionException(400, "Phone or password is invalid");
 
         var token = await _token.GenerateTokenAsync(existUser);
+        AuthResult authResult = new AuthResult()
+        {
+            Result = true,
+            Token = token
+        };
 
-        return (Result: true, Token: token);
+        return authResult;
     }
 
-    public async Task<(bool Result, int CachedMinutes)> ResetPasswordAsync(UserResetPasswordDto dto)
+    public async Task<AuthResetPassword> ResetPasswordAsync(UserResetPasswordDto dto)
     {
         var existUser = await _userRepository.SelectAsync(user => user.Phone.Equals(dto.Phone))
             ?? throw new RevisionException(404, "This user is not found");
@@ -110,18 +124,16 @@ public class AuthService : IAuthService
         {
             _memoryCache.Remove(dto.Phone);
         }
-        else
-        {
-            _memoryCache.Set(Reset_CACHE_KEY + dto.Phone, mappedUser,
+
+        _memoryCache.Set(Reset_CACHE_KEY + dto.Phone, mappedUser,
                 TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
-        }
 
         if (_memoryCache.TryGetValue(Reset_CACHE_KEY + dto.Phone, out User userEntity))
         {
             VerificationDto verificationDto = new VerificationDto();
             verificationDto.Attempt = 0;
             verificationDto.CreatedAt = TimeHelper.GetDateTime();
-            verificationDto.Code = 12345;// CodeGenerator.RandomCodeGenerator();
+            verificationDto.Code =  CodeGenerator.RandomCodeGenerator();
             _memoryCache.Set(dto.Phone, verificationDto, TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
 
             if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + dto.Phone, out VerificationDto oldVerificationDto))
@@ -136,12 +148,21 @@ public class AuthService : IAuthService
             smsSender.Title = "RevisionVr\n";
             smsSender.Content = "Your verification code : " + verificationDto.Code;
             smsSender.Recipient = dto.Phone.Substring(1);
-            var resultSms = true;// await _smsSender.SendAsync(smsSender);
+            var resultSms =  await _smsSender.SendAsync(smsSender);
+
+            AuthResetPassword authResetPassword = new AuthResetPassword()
+            {
+                Result = resultSms,
+                CachedMinutes = CACHED_FOR_MINUTS_VEFICATION
+            };
 
             if (resultSms is true)
-                return (Result: true, CachedVerificationMinutes: CACHED_FOR_MINUTS_VEFICATION);
+                return authResetPassword;
             else
-                return (Result: false, CACHED_FOR_MINUTS_VEFICATION: 0);
+            {
+                authResetPassword.CachedMinutes = 0;
+                return authResetPassword;
+            }
         }
         else
         {
@@ -149,7 +170,7 @@ public class AuthService : IAuthService
         }
     }
 
-    public async Task<(bool Result, string Token)> VerifyResetPasswordAsync(string phone, int code)
+    public async Task<AuthResult> VerifyResetPasswordAsync(string phone, int code)
     {
         if (_memoryCache.TryGetValue(Reset_CACHE_KEY + phone, out User userRegisterDto))
         {
@@ -167,7 +188,13 @@ public class AuthService : IAuthService
 
                     var token = await _token.GenerateTokenAsync(dResult);
 
-                    return (Result: result, Token: token);
+                    AuthResult authResult = new AuthResult()
+                    {
+                        Result = true,
+                        Token = token
+                    };
+
+                    return authResult;
                 }
                 else
                 {
@@ -176,7 +203,13 @@ public class AuthService : IAuthService
                     _memoryCache.Set(VERIFY_REGISTER_CACHE_KEY + phone, verificationDto,
                         TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
 
-                    return (Result: false, Token: "");
+                    AuthResult authResult = new AuthResult()
+                    {
+                        Result = false,
+                        Token = string.Empty
+                    };
+
+                    return authResult;
                 }
             }
 
