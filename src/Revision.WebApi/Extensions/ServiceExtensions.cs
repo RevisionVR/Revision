@@ -12,6 +12,7 @@ using Revision.Service.Interfaces.Notifications;
 using Revision.Service.Interfaces.Payments;
 using Revision.Service.Interfaces.Subjects;
 using Revision.Service.Interfaces.Topics;
+using Revision.Service.Interfaces.Users;
 using Revision.Service.Mappers;
 using Revision.Service.Services.Addresses;
 using Revision.Service.Services.Assets;
@@ -22,6 +23,7 @@ using Revision.Service.Services.Educations;
 using Revision.Service.Services.Payments;
 using Revision.Service.Services.Subjects;
 using Revision.Service.Services.Topics;
+using Revision.Service.Services.Users;
 using Revision.WebApi.Middlewares;
 
 namespace Revision.WebApi.Extensions;
@@ -48,12 +50,18 @@ public static class ServiceExtensions
         //Generic repository
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+        services.AddHttpContextAccessor();
+
         #region Services
 
         //Auth
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<ISmsSender, SmsSender>();
+
+        //User
+        services.AddScoped<IUserService, UserService>();   
 
         //Addresses
         services.AddScoped<IAddressService, AddressService>();
