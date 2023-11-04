@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Revision.Service.Interfaces.Auth;
+using System.Security.Claims;
 
 namespace Revision.Service.Services.Auth;
 
@@ -34,8 +35,7 @@ public class IdentityService : IIdentityService
             if (_accessor.HttpContext is null)
                 return string.Empty;
 
-            string type = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role";
-            var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == type);
+            var claim = _accessor.HttpContext.User.Claims.FirstOrDefault(op => op.Type == ClaimTypes.Role);
             if (claim is null)
                 return string.Empty;
             else
