@@ -1,10 +1,10 @@
-﻿using Revision.Service.DTOs.Educations;
+﻿using Revision.Domain.Commons;
+using Revision.Service.DTOs.Educations;
 
 namespace Revision.Service.DTOs.DevicePayments;
 
-public class DevicePaymentResultDto
+public class DevicePaymentResultDto : Auditable
 {
-    public long Id { get; set; }
     public decimal Price { get; set; }
     public decimal TotalPrice { get; set; }
     public int DeviceCount { get; set; }
