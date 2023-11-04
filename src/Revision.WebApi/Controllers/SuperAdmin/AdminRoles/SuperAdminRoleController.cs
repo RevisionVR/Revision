@@ -13,8 +13,8 @@ public class SuperAdminRoleController : SuperAdminBaseController
         _userService = userService;
     }
 
-    [HttpGet("get-by/{role}")]
-    public async Task<IActionResult> GetAllAsync([FromForm] Role role)
+    [HttpGet("get-by")]
+    public async Task<IActionResult> GetAllAsync([FromQuery] Role role)
          => Ok(new Response
          {
              StatusCode = 200,

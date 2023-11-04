@@ -24,7 +24,7 @@ public class AdminUsersController : AdminBaseController
 
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromBody] PaginationParams pagination)
+    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination)
         => Ok(new Response
         {
             StatusCode = 200,
