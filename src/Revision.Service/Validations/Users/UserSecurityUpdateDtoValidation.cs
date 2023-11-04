@@ -13,7 +13,7 @@ public class UserSecurityUpdateDtoValidation : AbstractValidator<UserSecurityUpd
             .Must(newPassword => PasswordValidation.IsStrongPassword(newPassword).IsValid)
                 .WithMessage("Password  not stronger");
 
-        RuleFor(dto => dto.ReturnNewPassword).NotEmpty().WithMessage("It is require")
+        RuleFor(dto => dto.ConfirmPassword).NotEmpty().WithMessage("It is require")
            .Must(newPassword => PasswordValidation.IsStrongPassword(newPassword).IsValid)
                .WithMessage("Password  not stronger");
     }
