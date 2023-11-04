@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Revision.Service.DTOs.Notifications;
 
 namespace Revision.Service.Interfaces.Notifications;
