@@ -14,7 +14,7 @@ public class EducationResultDto
     public string Email { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public EducationCategoryResultDto EducationCategory { get; set; }
-    public AddressResultDto AddressResultDto { get; set; }
+    public AddressResultDto Address { get; set; }
 
     public IEnumerable<DeviceResultDto> Devices { get; set; }
     public IEnumerable<TopicPaymentResultDto> TopicPayments { get; set; }

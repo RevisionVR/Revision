@@ -9,5 +9,4 @@ public interface IAddressService
     Task<Address> UpdateAsync(long id, AddressUpdateDto dto);
     Task<bool> DeleteAsync(long id);
     Task<AddressResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<AddressResultDto>> GetAllAsync();
 }

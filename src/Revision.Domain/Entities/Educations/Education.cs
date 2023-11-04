@@ -12,8 +12,9 @@ public class Education : Auditable
     public string Email { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 
+    public long AddressId { get; set; }
     public Address Address { get; set; }
-
+    
     public long EducationCategoryId { get; set; }
     public EducationCategory EducationCategory { get; set; }
 

@@ -6,5 +6,5 @@ public class DistrictResultDto
 {
     public long Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public RegionResultDto Region { get; set; }
+   // public RegionResultDto Region { get; set; }
 }
