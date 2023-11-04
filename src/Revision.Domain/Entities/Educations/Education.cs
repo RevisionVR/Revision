@@ -14,7 +14,7 @@ public class Education : Auditable
 
     public long AddressId { get; set; }
     public Address Address { get; set; }
-    
+
     public long EducationCategoryId { get; set; }
     public EducationCategory EducationCategory { get; set; }
 

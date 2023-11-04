@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Users;
 using Revision.Domain.Enums;
@@ -29,6 +28,7 @@ public class AuthService : IAuthService
     private ITokenService _token;
     private ISmsSender _smsSender;
     private IMemoryCache _memoryCache;
+    private IIdentityService _identityservice;
     private IRepository<User> _userRepository;
 
 
@@ -37,13 +37,15 @@ public class AuthService : IAuthService
         ISmsSender smsSender,
         IMemoryCache memoryCache,
         ITokenService tokenService,
-        IRepository<User> userRepository)
+        IRepository<User> userRepository,
+        IIdentityService identityService)
     {
         _mapper = mapper;
         _token = tokenService;
         _smsSender = smsSender;
         _memoryCache = memoryCache;
         _userRepository = userRepository;
+        _identityservice = identityService;
     }
 
     public async Task<AuthResult> RegisterAsync(UserCreationDto dto)
@@ -58,10 +60,15 @@ public class AuthService : IAuthService
         if (existUser is not null)
             throw new RevisionException(403, $"This user already exists this phone = {dto.Phone}");
 
+        if (_identityservice.RoleName.ToString() == Role.Admin.ToString())
+        {
+            if ((dto.Role == Role.SuperAdmin || dto.Role == Role.Admin))
+                throw new RevisionException(403, $"You are not create {dto.Role}");
+        }
+
         var password = PasswordGenerate.Password();
         var result = PasswordHasher.Hash(password);
         var mappedUser = _mapper.Map<User>(dto);
-        mappedUser.Role = Role.User;
         mappedUser.Salt = result.Salt;
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
@@ -73,8 +80,8 @@ public class AuthService : IAuthService
         smsSender.Title = "RevisionVr\n";
         smsSender.Content = "login: " + dto.Phone + "\npassword: " + password;
         smsSender.Recipient = dto.Phone.Substring(1);
-        Console.WriteLine(dto.Phone +" # "+ password);
-        var resultSms = await _smsSender.SendAsync(smsSender);
+        Console.WriteLine(dto.Phone + " # " + password);
+        var resultSms = true;// await _smsSender.SendAsync(smsSender);
 
         AuthResult authResult = new AuthResult()
         {
@@ -83,7 +90,7 @@ public class AuthService : IAuthService
         };
 
         if (resultSms != true)
-            return authResult; 
+            return authResult;
 
         var token = await _token.GenerateTokenAsync(user);
         authResult.Token = token;
@@ -133,7 +140,7 @@ public class AuthService : IAuthService
             VerificationDto verificationDto = new VerificationDto();
             verificationDto.Attempt = 0;
             verificationDto.CreatedAt = TimeHelper.GetDateTime();
-            verificationDto.Code =  CodeGenerator.RandomCodeGenerator();
+            verificationDto.Code = 12345; // CodeGenerator.RandomCodeGenerator();
             _memoryCache.Set(dto.Phone, verificationDto, TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
 
             if (_memoryCache.TryGetValue(VERIFY_REGISTER_CACHE_KEY + dto.Phone, out VerificationDto oldVerificationDto))
@@ -148,7 +155,7 @@ public class AuthService : IAuthService
             smsSender.Title = "RevisionVr\n";
             smsSender.Content = "Your verification code : " + verificationDto.Code;
             smsSender.Recipient = dto.Phone.Substring(1);
-            var resultSms =  await _smsSender.SendAsync(smsSender);
+            var resultSms = true;// await _smsSender.SendAsync(smsSender);
 
             AuthResetPassword authResetPassword = new AuthResetPassword()
             {

@@ -61,7 +61,7 @@ public static class ServiceExtensions
         services.AddScoped<ISmsSender, SmsSender>();
 
         //User
-        services.AddScoped<IUserService, UserService>();   
+        services.AddScoped<IUserService, UserService>();
 
         //Addresses
         services.AddScoped<IAddressService, AddressService>();
