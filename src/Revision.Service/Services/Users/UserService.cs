@@ -52,8 +52,8 @@ public class UserService : IUserService
 
         if (checkUser is not null)
             throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
+        
         var mappedUser = _mapper.Map(dto, existUser);
-
         mappedUser.Id = id;
         mappedUser.Role = existUser.Role;
         mappedUser.UpdatedAt = TimeHelper.GetDateTime();
@@ -121,7 +121,7 @@ public class UserService : IUserService
     {
         var users = await _userRepository.SelectAll(user => user.Role.Equals(role)).ToListAsync();
         if (!users.Any())
-            throw new RevisionException(404, "This users role are not found");
+            throw new RevisionException(404, "These users are not found");
 
         return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }

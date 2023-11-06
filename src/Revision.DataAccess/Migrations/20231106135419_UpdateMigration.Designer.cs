@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Revision.DataAccess.Contexts;
@@ -11,9 +12,11 @@ using Revision.DataAccess.Contexts;
 namespace Revision.DataAccess.Migrations
 {
     [DbContext(typeof(RevisionDbContext))]
-    partial class RevisionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106135419_UpdateMigration")]
+    partial class UpdateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
