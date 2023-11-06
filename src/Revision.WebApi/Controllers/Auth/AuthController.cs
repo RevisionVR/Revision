@@ -7,13 +7,12 @@ using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Auth;
 
-[Route("api/[controller]")]
 [ApiController]
 [AllowAnonymous]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private IAuthService _authServise;
-
     public AuthController(IAuthService authService)
     {
         _authServise = authService;
