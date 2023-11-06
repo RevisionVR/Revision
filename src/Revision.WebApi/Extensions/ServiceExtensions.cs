@@ -94,6 +94,7 @@ public static class ServiceExtensions
 
         //Device
         services.AddScoped<IDeviceService, DeviceService>();
+        services.AddScoped<IDeviceCountService, DeviceCountService>();
         #endregion
     }
 }

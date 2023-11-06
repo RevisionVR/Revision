@@ -10,16 +10,16 @@ public class AddressCreationDtoValidator : AbstractValidator<AddressCreationDto>
         RuleFor(dto => dto.Home)
             .NotNull()
             .NotEmpty()
-            .MinimumLength(5)
-            .WithMessage("Home minimum characters 5")
+            .MinimumLength(3)
+            .WithMessage("Home minimum characters 3")
             .MaximumLength(200)
             .WithMessage("Home maximums characters 200");
 
         RuleFor(dto => dto.Description)
             .NotNull()
             .NotEmpty()
-            .MinimumLength(5)
-            .WithMessage("Description minimum length 5 characters")
+            .MinimumLength(3)
+            .WithMessage("Description minimum length 3 characters")
             .MaximumLength(200)
             .WithMessage("Description maximums length 200 characters");
 

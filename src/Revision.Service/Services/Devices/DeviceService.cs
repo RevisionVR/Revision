@@ -7,6 +7,7 @@ using Revision.Domain.Entities.Educations;
 using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Devices;
+using Revision.Service.DTOs.Educations;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Devices;
