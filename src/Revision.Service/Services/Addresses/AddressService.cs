@@ -99,14 +99,7 @@ public class AddressService : IAddressService
 
         _addressRepository.Delete(existAddress);
         await _addressRepository.SaveAsync();
+
         return true;
-    }
-
-    public async Task<AddressResultDto> GetByIdAsync(long id)
-    {
-        var existAddress = await _addressRepository.SelectAsync(address => address.Id.Equals(id))
-            ?? throw new RevisionException(404, "This address is not found");
-
-        return _mapper.Map<AddressResultDto>(existAddress);
     }
 }

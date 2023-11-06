@@ -63,7 +63,7 @@ public class EducationService : IEducationService
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] { "Address", "TopicPayments", "DevicePayments", "Devices" })
+            includes: new[] { "Address", "UserEducation" })
             ?? throw new RevisionException(404, "This education is not found");
 
         var existCategory = await _categoryRepository.SelectAsync(

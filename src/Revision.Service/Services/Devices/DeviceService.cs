@@ -75,7 +75,7 @@ public class DeviceService : IDeviceService
     public async Task<DeviceResultDto> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
     {
         var existDevice = await _deviceRepository.SelectAsync(device =>
-        device.UniqueId.ToLower().Equals(uniqueId.ToLower()))
+        device.UniqueId.ToLower().Equals(uniqueId.ToLower()), includes: new[] { "Education" })
            ?? throw new RevisionException(404, "This device is not found");
 
         existDevice.Status = status;
