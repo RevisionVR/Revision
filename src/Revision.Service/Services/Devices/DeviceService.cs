@@ -40,6 +40,7 @@ public class DeviceService : IDeviceService
             ?? throw new RevisionException(404, "This education is not found");
 
         var mappedDevice = _mapper.Map<Device>(dto);
+        mappedDevice.Status = DeviceStatus.NoActive;
         mappedDevice.Education = existEducation;
         mappedDevice.CreatedAt = TimeHelper.GetDateTime();
 
@@ -61,6 +62,7 @@ public class DeviceService : IDeviceService
         var mappedDevice = _mapper.Map(dto, existDevice);
         mappedDevice.Id = id;
         mappedDevice.Education = existEducation;
+        mappedDevice.Status = DeviceStatus.NoActive;
         mappedDevice.UpdatedAt = TimeHelper.GetDateTime();
 
         _deviceRepository.Update(mappedDevice);
@@ -114,8 +116,9 @@ public class DeviceService : IDeviceService
     {
         var existDevices = await _deviceRepository.SelectAll(device => device.EducationId.Equals(educationId),
             includes: new[] { "Education" })
-            .ToListAsync()
-           ?? throw new RevisionException(404, "This education is not found");
+            .ToListAsync();
+        if (!existDevices.Any())
+            throw new RevisionException(404, "This education is not found");
 
         return _mapper.Map<IEnumerable<DeviceResultDto>>(existDevices);
     }

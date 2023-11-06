@@ -6,6 +6,5 @@ public class DeviceUpdateDto
     public decimal Price { get; set; }
     public bool Glove { get; set; }
     public bool Fragrant { get; set; }
-    public bool IsActive { get; set; }
     public long EducationId { get; set; }
 }
