@@ -45,7 +45,7 @@ public class AccountController : ControllerBase
     }
 
 
-    [HttpPut("change-password")]
+    [HttpPut("change/password")]
     public async Task<IActionResult> UpdateSecurityAsync([FromForm] UserSecurityUpdateDto dto)
     {
         var validation = new UserSecurityUpdateDtoValidation();
@@ -68,7 +68,7 @@ public class AccountController : ControllerBase
     }
 
 
-    [HttpGet("get-by-token")]
+    [HttpGet("get")]
     public async Task<IActionResult> GetUserAsync()
         => Ok(new Response
         {

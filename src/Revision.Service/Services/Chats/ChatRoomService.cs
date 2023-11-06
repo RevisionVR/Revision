@@ -41,6 +41,7 @@ public class ChatRoomService : IChatRoomService
             mappedRoom.Name = existEducation.Name;
 
         mappedRoom.CreatedAt = TimeHelper.GetDateTime();
+        mappedRoom.UpdatedAt = TimeHelper.GetDateTime();
         mappedRoom.User = existUser;
         mappedRoom.Education = existEducation;
 

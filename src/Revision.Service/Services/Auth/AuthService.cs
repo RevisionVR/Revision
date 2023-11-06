@@ -72,6 +72,7 @@ public class AuthService : IAuthService
         mappedUser.Salt = result.Salt;
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
+        mappedUser.UpdatedAt = TimeHelper.GetDateTime();
 
         var user = await _userRepository.AddAsync(mappedUser);
         var resultDb = await _userRepository.SaveAsync();
