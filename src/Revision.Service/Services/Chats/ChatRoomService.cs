@@ -65,7 +65,7 @@ public class ChatRoomService : IChatRoomService
     public async Task<IEnumerable<ChatRoomResultDto>> GetByUserIdAsync(long userId)
     {
         var existRoom = await _chatRoomRepository.SelectAll(room => room.UserId.Equals(userId),
-            includes: new[] { "User", "Education" }).ToListAsync();
+            includes: new[] { "User", "Education", "Chats" }).ToListAsync();
 
         if (!existRoom.Any())
             throw new RevisionException(404, "This room is not found");
@@ -76,7 +76,7 @@ public class ChatRoomService : IChatRoomService
     public async Task<IEnumerable<ChatRoomResultDto>> GetByEducationIdAsync(long educationId)
     {
         var existRoom = await _chatRoomRepository.SelectAll(room => room.EducationId.Equals(educationId),
-            includes: new[] { "User", "Education" }).ToListAsync();
+            includes: new[] { "User", "Education", "Chats" }).ToListAsync();
 
         if (!existRoom.Any())
             throw new RevisionException(404, "This room is not found");

@@ -7,10 +7,6 @@ public class DevicePaymentCreationDtoValidator : AbstractValidator<DevicePayment
 {
     public DevicePaymentCreationDtoValidator()
     {
-        RuleFor(dto => dto.Price)
-            .NotNull()
-            .NotEmpty();
-
         RuleFor(dto => dto.EducationId)
             .NotNull()
             .NotEmpty();

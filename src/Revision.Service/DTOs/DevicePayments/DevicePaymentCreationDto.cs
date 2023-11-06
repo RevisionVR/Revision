@@ -2,7 +2,7 @@
 
 public class DevicePaymentCreationDto
 {
-    public decimal Price { get; set; }
-    public int DeviceCount { get; set; }
+    public decimal ToTalPrice { get; set; }
+    public int Count { get; set; }
     public long EducationId { get; set; }
 }

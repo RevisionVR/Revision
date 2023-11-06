@@ -34,10 +34,9 @@ public class DevicePaymentService : IDevicePaymentService
 
         var mappedPayment = _mapper.Map<DevicePayment>(dto);
 
-        mappedPayment.TotalPrice = dto.Price * dto.DeviceCount;
-
         mappedPayment.LastDay = TimeHelper.GetDateTime();
         mappedPayment.NextDay = mappedPayment.LastDay.AddMonths(1);
+
         mappedPayment.CreatedAt = TimeHelper.GetDateTime();
         mappedPayment.Education = existEducation;
 

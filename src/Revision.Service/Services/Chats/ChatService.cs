@@ -97,7 +97,7 @@ public class ChatService : IChatService
     public async Task<IEnumerable<ChatResultDto>> GetByRoomIdAsync(long roomId)
     {
         var chats = await _chatRepository.SelectAll(chat => chat.ChatRoomId.Equals(roomId)).ToListAsync();
-        if (chats.Any())
+        if (!chats.Any())
             throw new RevisionException(404, "This chat room is not found");
 
         return _mapper.Map<IEnumerable<ChatResultDto>>(chats);
