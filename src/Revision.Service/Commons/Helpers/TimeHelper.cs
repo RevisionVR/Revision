@@ -7,7 +7,6 @@ public class TimeHelper
     public static DateTime GetDateTime()
     {
         var time = DateTime.UtcNow;
-        //var contes = TimeConstant.UTC;
-        return time;
+        return time.AddHours(TimeConstant.UTC);
     }
 }
