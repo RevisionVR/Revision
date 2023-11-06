@@ -6,10 +6,10 @@ namespace Revision.WebApi.Controllers.Common.Payments;
 
 public class CommonTopicPaymentsController : BaseController
 {
-    private readonly ITopicPaymentService _paymentService;
-    public CommonTopicPaymentsController(ITopicPaymentService paymentService)
+    private readonly ITopicPaymentService _topicPaymentService;
+    public CommonTopicPaymentsController(ITopicPaymentService topicPaymentService)
     {
-        _paymentService = paymentService;
+        _topicPaymentService = topicPaymentService;
     }
 
     [HttpGet("get-by-education/{educationId:long}")]
@@ -18,6 +18,6 @@ public class CommonTopicPaymentsController : BaseController
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _paymentService.GetByEducationIdAsync(educationId)
+            Data = await _topicPaymentService.GetByEducationIdAsync(educationId)
         });
 }

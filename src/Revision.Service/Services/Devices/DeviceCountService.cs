@@ -2,6 +2,7 @@
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
+using Revision.Domain.Enums;
 using Revision.Service.DTOs.Devices;
 using Revision.Service.DTOs.Educations;
 using Revision.Service.Exceptions;
@@ -39,6 +40,8 @@ public class DeviceCountService : IDeviceCountService
             Count = existDevices.Count(),
             Glove = existDevices.Where(device => device.Glove).Count(),
             Fragrant = existDevices.Where(device => device.Fragrant).Count(),
+            Active = existDevices.Where(device => device.Status.Equals(DeviceStatus.Active)).Count(),
+            NoActive = existDevices.Where(device => device.Status.Equals(DeviceStatus.NoActive)).Count(),
             Education = _mapper.Map<EducationResultDto>(education)
         };
 
@@ -61,22 +64,15 @@ public class DeviceCountService : IDeviceCountService
                 continue;
 
             var deviceCount = new DeviceCountDto();
-            foreach (var device in educationGroup)
-            {
-                if (device is null)
-                    continue;
 
-                deviceCount.Count += 1;
-
-                if (device.Fragrant)
-                    deviceCount.Fragrant += 1;
-
-                if (device.Glove)
-                    deviceCount.Glove += 1;
-
-            }
-
+            deviceCount.Count = educationGroup.Count();
+            deviceCount.Glove = educationGroup.Where(device => device.Glove).Count();
+            deviceCount.Fragrant = educationGroup.Where(device => device.Fragrant).Count();
+            deviceCount.Active = educationGroup.Where(device => device.Status.Equals(DeviceStatus.Active)).Count();
+            deviceCount.NoActive = educationGroup.Where(device => device.Status.Equals(DeviceStatus.NoActive)).Count();
+            
             deviceCount.Education = _mapper.Map<EducationResultDto>(education);
+            
             result.Add(deviceCount);
         }
 

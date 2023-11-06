@@ -53,16 +53,6 @@ public class UserEducationService : IUserEducationService
         return _mapper.Map<UserEducationResultDto>(mappedResult);
     }
 
-    //public async Task<bool> DeleteAsync(long userEducation)
-    //{
-    //    var existUserEducation = await _repository.SelectAsync(ue => ue.Id.Equals(userEducation))
-    //        ?? throw new RevisionException(404, "This user education is not found");
-
-    //    _repository.Delete(existUserEducation);
-    //    await _repository.SaveAsync();
-    //    return true;
-    //}
-
     public async Task<UserEducationResultDto> GetByUserIdAsync(long userId)
     {
         var existUserEducation = await _repository.SelectAsync(ue => ue.UserId.Equals(userId),
