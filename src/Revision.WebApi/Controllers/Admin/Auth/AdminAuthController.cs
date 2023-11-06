@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Revision.Service.DTOs.ResetVerification;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Interfaces.Auth;
@@ -7,6 +8,7 @@ using Revision.WebApi.Models;
 
 namespace Revision.WebApi.Controllers.Admin.Auth;
 
+[AllowAnonymous]
 public class AdminAuthController : AdminBaseController
 {
     private IAuthService _authServise;

@@ -105,7 +105,7 @@ public class AuthService : IAuthService
 
         var hasherResult = PasswordHasher.Verify(dto.Password, existUser.PasswordHash, existUser.Salt);
         if (!hasherResult)
-            throw new RevisionException(400, "Phone or password is invalid");
+            throw new RevisionException(400, "Password is invalid");
 
         var token = await _token.GenerateTokenAsync(existUser);
         AuthResult authResult = new AuthResult()
