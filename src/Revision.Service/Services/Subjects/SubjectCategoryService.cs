@@ -30,6 +30,7 @@ public class SubjectCategoryService : ISubjectCategoryService
 
         var mappedCategory = _mapper.Map<SubjectCategory>(dto);
         mappedCategory.CreatedAt = TimeHelper.GetDateTime();
+        mappedCategory.UpdatedAt = TimeHelper.GetDateTime();
 
         await _repository.AddAsync(mappedCategory);
         await _repository.SaveAsync();

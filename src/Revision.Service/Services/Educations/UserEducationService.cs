@@ -39,10 +39,11 @@ public class UserEducationService : IUserEducationService
         var userEducation = await _repository.SelectAll(ue => ue.EducationId.Equals(dto.EducationId))
             .FirstOrDefaultAsync(user => user.Id.Equals(dto.UserId));
         if (userEducation is not null)
-                throw new RevisionException(403, "This user already exists in your education");
-        
+            throw new RevisionException(403, "This user already exists in your education");
+
         var mappedResult = _mapper.Map<UserEducation>(dto);
         mappedResult.CreatedAt = TimeHelper.GetDateTime();
+        mappedResult.UpdatedAt = TimeHelper.GetDateTime();
         mappedResult.User = existUser;
         mappedResult.Education = existEducation;
 

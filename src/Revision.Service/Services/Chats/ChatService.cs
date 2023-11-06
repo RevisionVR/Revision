@@ -44,13 +44,14 @@ public class ChatService : IChatService
 
         mappedChat.ChatRoom = existRoom;
         mappedChat.CreatedAt = TimeHelper.GetDateTime();
+        mappedChat.UpdatedAt = TimeHelper.GetDateTime();
         await _chatRepository.AddAsync(mappedChat);
         await _chatRepository.SaveAsync();
 
         return _mapper.Map<ChatResultDto>(mappedChat);
     }
 
-    public async Task<ChatResultDto> UpdateAsync(long id , ChatUpdateDto dto)
+    public async Task<ChatResultDto> UpdateAsync(long id, ChatUpdateDto dto)
     {
         var existChat = await _chatRepository.SelectAsync(chat => chat.Id.Equals(id))
             ?? throw new RevisionException(404, "This chat is not found");

@@ -30,6 +30,7 @@ public class EducationCategoryService : IEducationCategoryService
 
         var mappedCategory = _mapper.Map<EducationCategory>(dto);
         mappedCategory.CreatedAt = TimeHelper.GetDateTime();
+        mappedCategory.UpdatedAt = TimeHelper.GetDateTime();
 
         await _repository.AddAsync(mappedCategory);
         await _repository.SaveAsync();

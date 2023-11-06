@@ -72,6 +72,7 @@ public class AuthService : IAuthService
         mappedUser.Salt = result.Salt;
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
+        mappedUser.UpdatedAt = TimeHelper.GetDateTime();
 
         var user = await _userRepository.AddAsync(mappedUser);
         var resultDb = await _userRepository.SaveAsync();
@@ -105,7 +106,7 @@ public class AuthService : IAuthService
 
         var hasherResult = PasswordHasher.Verify(dto.Password, existUser.PasswordHash, existUser.Salt);
         if (!hasherResult)
-            throw new RevisionException(400, "Phone or password is invalid");
+            throw new RevisionException(400, "Password is invalid");
 
         var token = await _token.GenerateTokenAsync(existUser);
         AuthResult authResult = new AuthResult()

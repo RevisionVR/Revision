@@ -38,6 +38,7 @@ public class SubjectService : ISubjectService
         var mappedSubject = _mapper.Map<Subject>(dto);
         mappedSubject.SubjectCategory = existCategory;
         mappedSubject.CreatedAt = TimeHelper.GetDateTime();
+        mappedSubject.UpdatedAt = TimeHelper.GetDateTime();
 
         await _subjectRepository.AddAsync(mappedSubject);
         await _subjectRepository.SaveAsync();

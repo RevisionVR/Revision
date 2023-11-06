@@ -35,6 +35,7 @@ public class TopicService : ITopicService
         var mappedTopic = _mapper.Map<Topic>(dto);
         mappedTopic.Subject = existSubject;
         mappedTopic.CreatedAt = TimeHelper.GetDateTime();
+        mappedTopic.UpdatedAt = TimeHelper.GetDateTime();
 
         await _topicRepository.AddAsync(mappedTopic);
         await _topicRepository.SaveAsync();

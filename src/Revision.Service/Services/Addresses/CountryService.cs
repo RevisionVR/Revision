@@ -52,6 +52,7 @@ public class CountryService : ICountryService
         {
             var mappedCountry = _mapper.Map<Country>(country);
             mappedCountry.CreatedAt = TimeHelper.GetDateTime();
+            mappedCountry.UpdatedAt = TimeHelper.GetDateTime();
 
             await _countryRepository.AddAsync(mappedCountry);
             await _countryRepository.SaveAsync();
