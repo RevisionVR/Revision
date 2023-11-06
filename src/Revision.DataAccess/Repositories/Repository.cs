@@ -26,7 +26,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : Auditabl
 
     public TEntity Update(TEntity entity)
     {
-        entity.UpdatedAt = DateTime.UtcNow;
         EntityEntry<TEntity> entry = _dbContext.Update(entity);
 
         return entry.Entity;
