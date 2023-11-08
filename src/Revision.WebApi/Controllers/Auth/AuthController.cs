@@ -29,7 +29,7 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("reset-password")]
-    public async Task<IActionResult> ResetPasswordAsync([FromQuery] UserResetPasswordDto dto)
+    public async Task<IActionResult> ResetPasswordAsync([FromForm] UserResetPasswordDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("verify-code")]
-    public async Task<IActionResult> VerifyResetPasswordAsync([FromQuery] ResetPassword dto)
+    public async Task<IActionResult> VerifyResetPasswordAsync([FromForm] ResetPassword dto)
         => Ok(new Response
         {
             StatusCode = 200,
