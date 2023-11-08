@@ -28,8 +28,6 @@ builder.Services.AddCustomServices();
 
 var app = builder.Build();
 
-app.ApplyMigrations();
-
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 EnvironmentHelper.CountryPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:CountriesFilePath")));
 EnvironmentHelper.RegionPath = Path.GetFullPath(builder.Configuration.GetValue<string>(("FilePath:RegionsFilePath")));
@@ -44,6 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+app.ApplyMigrations();
 
 app.UseHttpsRedirection();
 

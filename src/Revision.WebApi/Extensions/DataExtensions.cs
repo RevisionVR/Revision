@@ -7,9 +7,10 @@ public static class DataExtensions
 {
     public static void ApplyMigrations(this WebApplication app)
     {
-        using var scope = app.Services.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<RevisionDbContext>();
-
-        db.Database.Migrate();
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<RevisionDbContext>();
+            db.Database.Migrate();
+        }
     }
 }
