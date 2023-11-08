@@ -186,6 +186,7 @@ public class AuthService : IAuthService
             {
                 if (verificationDto.Attempt >= VERIFICATION_MAXIMUM_ATTEMPTS)
                     throw new RevisionException(500, "Verification Too Many Requests");
+
                 else if (verificationDto.Code == code)
                 {
                     var user = _mapper.Map<User>(userRegisterDto);
@@ -208,16 +209,9 @@ public class AuthService : IAuthService
                 {
                     _memoryCache.Remove(VERIFY_REGISTER_CACHE_KEY + phone);
                     verificationDto.Attempt++;
-                    _memoryCache.Set(VERIFY_REGISTER_CACHE_KEY + phone, verificationDto,
-                        TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
-
-                    AuthResult authResult = new AuthResult()
-                    {
-                        Result = false,
-                        Token = string.Empty
-                    };
-
-                    return authResult;
+                    _memoryCache.Set(VERIFY_REGISTER_CACHE_KEY + phone, verificationDto,TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
+                    
+                    throw new RevisionException(400, "This code is invalid");
                 }
             }
 
