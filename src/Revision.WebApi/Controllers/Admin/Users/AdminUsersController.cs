@@ -13,7 +13,7 @@ public class AdminUsersController : AdminBaseController
         _userService = userService;
     }
 
-    [HttpDelete("get/{id:long}")]
+    [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
         => Ok(new Response
         {
