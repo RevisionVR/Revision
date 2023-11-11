@@ -15,14 +15,6 @@ public class AddressUpdateDtoValidator : AbstractValidator<AddressUpdateDto>
             .MaximumLength(200)
             .WithMessage("Home maximums characters 200");
 
-        RuleFor(dto => dto.Description)
-            .NotNull()
-            .NotEmpty()
-            .MinimumLength(3)
-            .WithMessage("Description minimum length 3 characters")
-            .MaximumLength(200)
-            .WithMessage("Description maximums length 200 characters");
-
         RuleFor(dto => dto.CountryId)
             .NotNull()
             .NotEmpty();
