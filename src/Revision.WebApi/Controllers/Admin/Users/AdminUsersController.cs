@@ -40,4 +40,13 @@ public class AdminUsersController : AdminBaseController
             Message = "Success",
             Data = await _userService.GetAllAsync(pagination)
         });
+
+    [HttpGet("get-by/{id:long}")]
+    public async Task<IActionResult> GetByIdAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.GetByIdAsync(id)
+        });
 }
