@@ -13,6 +13,15 @@ public class AdminUsersController : AdminBaseController
         _userService = userService;
     }
 
+    [HttpDelete("get/{id:long}")]
+    public async Task<IActionResult> GetAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.GetByIdAsync(id)
+        });
+
     [HttpDelete("delete/{id:long}")]
     public async Task<IActionResult> DeleteAsync(long id)
         => Ok(new Response
@@ -30,14 +39,5 @@ public class AdminUsersController : AdminBaseController
             StatusCode = 200,
             Message = "Success",
             Data = await _userService.GetAllAsync(pagination)
-        });
-
-    [HttpGet("get-by/{id:long}")]
-    public async Task<IActionResult> GetByIdAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _userService.GetByIdAsync(id)
         });
 }

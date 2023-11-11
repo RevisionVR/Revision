@@ -12,8 +12,8 @@ using Revision.DataAccess.Contexts;
 namespace Revision.DataAccess.Migrations
 {
     [DbContext(typeof(RevisionDbContext))]
-    [Migration("20231106135419_UpdateMigration")]
-    partial class UpdateMigration
+    [Migration("20231111082309_UpdateDatabaseMigration")]
+    partial class UpdateDatabaseMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,9 +38,6 @@ namespace Revision.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
 
                     b.Property<long>("DistrictId")
                         .HasColumnType("bigint");

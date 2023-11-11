@@ -36,9 +36,6 @@ namespace Revision.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<long>("DistrictId")
                         .HasColumnType("bigint");
 
