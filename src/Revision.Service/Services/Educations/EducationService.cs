@@ -32,7 +32,7 @@ public class EducationService : IEducationService
     public async Task<EducationResultDto> CreateAsync(EducationCreationDto dto)
     {
         var existEducation = await _educationRepository.SelectAsync(
-            education => education.Name.ToLower().Equals(dto.Name.ToLower()));
+            education => education.Phone.Equals(dto.Phone));
         if (existEducation is not null)
             throw new RevisionException(403, "This education already exists");
 
