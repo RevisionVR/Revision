@@ -58,7 +58,7 @@ public class AdminDevicesController : AdminBaseController
     }
 
 
-    [HttpPut("update/{uniqueId}")]
+    [HttpPut("update/status/{uniqueId}")]
     public async Task<IActionResult> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
         => Ok(new Response
         {
@@ -78,13 +78,13 @@ public class AdminDevicesController : AdminBaseController
         });
 
 
-    [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> GetAsync(long id)
+    [HttpGet("get/{UniqId}")]
+    public async Task<IActionResult> GetAsync(string UniqId)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _deviceService.GetByIdAsync(id)
+            Data = await _deviceService.GetByIdAsync(UniqId)
         });
 
 

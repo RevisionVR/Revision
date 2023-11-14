@@ -95,9 +95,9 @@ public class DeviceService : IDeviceService
         return true;
     }
 
-    public async Task<DeviceResultDto> GetByIdAsync(long id)
+    public async Task<DeviceResultDto> GetByIdAsync(string UniqId)
     {
-        var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id),
+        var existDevice = await _deviceRepository.SelectAsync(device => device.UniqueId.Equals(UniqId),
             includes: new[] { "Education" })
            ?? throw new RevisionException(404, "This device is not found");
 
