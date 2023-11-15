@@ -95,9 +95,9 @@ public class DeviceService : IDeviceService
         return true;
     }
 
-    public async Task<DeviceResultDto> GetByIdAsync(string UniqId)
+    public async Task<DeviceResultDto> GetByIdAsync(long id)
     {
-        var existDevice = await _deviceRepository.SelectAsync(device => device.UniqueId.Equals(UniqId),
+        var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id),
             includes: new[] { "Education" })
            ?? throw new RevisionException(404, "This device is not found");
 
@@ -124,10 +124,9 @@ public class DeviceService : IDeviceService
         return _mapper.Map<IEnumerable<DeviceResultDto>>(existDevices);
     }
 
-    public async Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<DeviceResultDto>> GetAllAsync()
     {
-        var devices = await _deviceRepository.SelectAll()
-            .ToPaginate(pagination)
+        var devices = await _deviceRepository.SelectAll(includes: new[] { "Education" })
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<DeviceResultDto>>(devices);

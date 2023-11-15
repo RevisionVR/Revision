@@ -65,10 +65,9 @@ public class DevicePaymentService : IDevicePaymentService
         return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(existPayments);
     }
 
-    public async Task<IEnumerable<DevicePaymentResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<DevicePaymentResultDto>> GetAllAsync()
     {
         var payments = await _paymentRepository.SelectAll(includes: new[] { "Education" })
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(payments);

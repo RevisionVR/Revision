@@ -11,5 +11,5 @@ public interface ISubjectService
     Task<bool> DestroyAsync(long id);
     Task<SubjectResultDto> GetByIdAsync(long id);
     Task<IEnumerable<SubjectResultDto>> GetBySubjectCategoryIdAsync(long subjectCategoryId);
-    Task<IEnumerable<SubjectResultDto>> GetAllAsync(PaginationParams pagination);
+    Task<IEnumerable<SubjectResultDto>> GetAllAsync();
 }

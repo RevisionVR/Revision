@@ -47,11 +47,11 @@ public class AdminDevicePaymentsController : AdminBaseController
 
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination)
+    public async Task<IActionResult> GetAllAsync()
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _devicePaymentService.GetAllAsync(pagination)
+            Data = await _devicePaymentService.GetAllAsync()
         });
 }

@@ -83,10 +83,9 @@ public class SubjectCategoryService : ISubjectCategoryService
         return _mapper.Map<SubjectCategoryResultDto>(existCategory);
     }
 
-    public async Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync()
     {
         var categories = await _repository.SelectAll(includes: new[] { "Subjects" })
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(categories);

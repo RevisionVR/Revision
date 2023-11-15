@@ -126,10 +126,9 @@ public class UserService : IUserService
         return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 
-    public async Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<UserResultDto>> GetAllAsync()
     {
         var users = await _userRepository.SelectAll()
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<UserResultDto>>(users);

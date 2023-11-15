@@ -15,34 +15,6 @@ public class AdminUsersController : AdminBaseController
         _userService = userService;
     }
 
-    [HttpGet("get/{id:long}")]
-    public async Task<IActionResult> GetAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _userService.GetByIdAsync(id)
-        });
-
-    [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _userService.DeleteAsync(id)
-        });
-
-
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _userService.GetAllAsync(pagination)
-        });
-
     [HttpPut("update/{id:long}")]
     public async Task<IActionResult> UpdateAsync(long id, [FromForm] UserUpdateDto dto)
     {
@@ -65,4 +37,32 @@ public class AdminUsersController : AdminBaseController
             Message = result.Errors.FirstOrDefault().ToString()
         });
     }
+
+    [HttpGet("get/{id:long}")]
+    public async Task<IActionResult> GetAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.GetByIdAsync(id)
+        });
+
+    [HttpDelete("delete/{id:long}")]
+    public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.DeleteAsync(id)
+        });
+
+
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetAllAsync()
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.GetAllAsync()
+        });
 }

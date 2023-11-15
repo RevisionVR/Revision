@@ -90,11 +90,10 @@ public class TopicService : ITopicService
         return _mapper.Map<TopicResultDto>(existTopic);
     }
 
-    public async Task<IEnumerable<TopicResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<TopicResultDto>> GetAllAsync()
     {
         var topics = await _topicRepository.SelectAll(
             includes: new[] { "Subjects.SubjectCategory", "TopicPayments" })
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<TopicResultDto>>(topics);

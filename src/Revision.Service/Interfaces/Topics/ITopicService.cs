@@ -10,5 +10,5 @@ public interface ITopicService
     Task<bool> DeleteAsync(long id);
     Task<bool> DestroyAsync(long id);
     Task<TopicResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<TopicResultDto>> GetAllAsync(PaginationParams pagination);
+    Task<IEnumerable<TopicResultDto>> GetAllAsync();
 }
