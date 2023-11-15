@@ -107,10 +107,9 @@ public class SubjectService : ISubjectService
         return _mapper.Map<IEnumerable<SubjectResultDto>>(subjects);
     }
 
-    public async Task<IEnumerable<SubjectResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<SubjectResultDto>> GetAllAsync()
     {
         var subjects = await _subjectRepository.SelectAll(includes: new[] { "SubjectCategory", "Topics" })
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<SubjectResultDto>>(subjects);

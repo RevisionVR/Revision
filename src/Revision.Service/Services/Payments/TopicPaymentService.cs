@@ -72,10 +72,9 @@ public class TopicPaymentService : ITopicPaymentService
         return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(existPayments);
     }
 
-    public async Task<IEnumerable<TopicPaymentResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<TopicPaymentResultDto>> GetAllAsync()
     {
         var topicPayments = await _paymentRepository.SelectAll(includes: new[] { "Topic", "Education" })
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(topicPayments);

@@ -83,15 +83,6 @@ public class EducationCategoryService : IEducationCategoryService
         return _mapper.Map<EducationCategoryResultDto>(existCategory);
     }
 
-    public async Task<IEnumerable<EducationCategoryResultDto>> GetAllAsync(PaginationParams pagination)
-    {
-        var categories = await _repository.SelectAll(includes: new[] { "Educations" })
-            .ToPaginate(pagination)
-            .ToListAsync();
-
-        return _mapper.Map<IEnumerable<EducationCategoryResultDto>>(categories);
-    }
-
     public async Task<IEnumerable<EducationCategoryResultDto>> GetAllAsync()
     {
         var categories = await _repository.SelectAll(includes: new[] { "Educations" }).ToListAsync();

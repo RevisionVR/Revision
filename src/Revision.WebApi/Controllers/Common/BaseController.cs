@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Revision.WebApi.Controllers.Common;
 
 [ApiController]
-[AllowAnonymous]
 [Route("api/[controller]")]
+[Authorize(Roles = "User, Admin, SuperAdmin")]
 public class BaseController : ControllerBase
 { }

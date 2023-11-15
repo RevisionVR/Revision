@@ -9,5 +9,5 @@ public interface IEducationService
     Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto);
     Task<bool> DeleteAsync(long id);
     Task<EducationResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<EducationResultDto>> GetAllAsync(PaginationParams pagination);
+    Task<IEnumerable<EducationResultDto>> GetAllAsync();
 }

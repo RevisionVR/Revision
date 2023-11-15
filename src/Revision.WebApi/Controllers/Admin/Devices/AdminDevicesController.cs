@@ -78,22 +78,32 @@ public class AdminDevicesController : AdminBaseController
         });
 
 
-    [HttpGet("get/{UniqId}")]
-    public async Task<IActionResult> GetAsync(string UniqId)
+    [HttpGet("get/{id:long}")]
+    public async Task<IActionResult> GetAsync(long id)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _deviceService.GetByIdAsync(UniqId)
+            Data = await _deviceService.GetByIdAsync(id)
+        });
+
+
+    [HttpGet("get/{uniqueId}")]
+    public async Task<IActionResult> GetAsync(string uniqueId)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _deviceService.GetByUniqueIdAsync(uniqueId)
         });
 
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination)
+    public async Task<IActionResult> GetAllAsync()
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _deviceService.GetAllAsync(pagination)
+            Data = await _deviceService.GetAllAsync()
         });
 }

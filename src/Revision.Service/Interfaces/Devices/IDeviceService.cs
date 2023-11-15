@@ -10,8 +10,8 @@ public interface IDeviceService
     Task<DeviceResultDto> UpdateAsync(long id, DeviceUpdateDto dto);
     Task<DeviceResultDto> UpdateIsActiveAsync(string uniqueId, DeviceStatus status);
     Task<bool> DeleteAsync(long id);
-    Task<DeviceResultDto> GetByIdAsync(string UniqId);
+    Task<DeviceResultDto> GetByIdAsync(long id);
     Task<DeviceResultDto> GetByUniqueIdAsync(string uniqueId);
     Task<IEnumerable<DeviceResultDto>> GetByEducationIdAsync(long educationId);
-    Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination);
+    Task<IEnumerable<DeviceResultDto>> GetAllAsync();
 }

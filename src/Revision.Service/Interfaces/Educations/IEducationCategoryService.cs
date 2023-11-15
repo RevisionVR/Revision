@@ -10,6 +10,5 @@ public interface IEducationCategoryService
     Task<bool> DeleteAsync(long id);
     Task<bool> DestroyAsync(long id);
     Task<EducationCategoryResultDto> GetByIdAsync(long id);
-    Task<IEnumerable<EducationCategoryResultDto>> GetAllAsync(PaginationParams pagination);
     Task<IEnumerable<EducationCategoryResultDto>> GetAllAsync();
 }

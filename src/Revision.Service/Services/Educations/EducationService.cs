@@ -118,7 +118,7 @@ public class EducationService : IEducationService
         return _mapper.Map<EducationResultDto>(existEducation);
     }
 
-    public async Task<IEnumerable<EducationResultDto>> GetAllAsync(PaginationParams pagination)
+    public async Task<IEnumerable<EducationResultDto>> GetAllAsync()
     {
         var educations = await _educationRepository.SelectAll(
             includes: new[]
@@ -128,7 +128,6 @@ public class EducationService : IEducationService
                 "Address.Region",
                 "EducationCategory"
             })
-            .ToPaginate(pagination)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<EducationResultDto>>(educations);
