@@ -58,20 +58,11 @@ public class AdminUsersController : AdminBaseController
 
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination, [FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _userService.GetAllAsync()
-        });
-
-    [HttpGet("search/item")]
-    public async Task<IActionResult> SearchUserAsync(string Item)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _userService.SearchUsersAsync(Item)
+            Data = await _userService.GetAllAsync(pagination, search)
         });
 }

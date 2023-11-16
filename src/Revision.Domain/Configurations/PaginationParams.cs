@@ -2,7 +2,7 @@
 
 public class PaginationParams
 {
-    private const int maxSize = 20;
+    private const int maxSize = 25;
     private int pageSize;
     public int PageSize
     {
