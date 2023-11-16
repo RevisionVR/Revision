@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Revision.Domain.Configurations;
 using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Interfaces.Educations;
 using Revision.Service.Validations.Educations.Categories;

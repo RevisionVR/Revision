@@ -5,7 +5,6 @@ using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Subjects;
 using Revision.Domain.Entities.Topics;
 using Revision.Service.Commons.Helpers;
-using Revision.Service.DTOs.Subjects;
 using Revision.Service.DTOs.Topics;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -36,7 +35,6 @@ public class TopicService : ITopicService
         var mappedTopic = _mapper.Map<Topic>(dto);
         mappedTopic.Subject = existSubject;
         mappedTopic.CreatedAt = TimeHelper.GetDateTime();
-        mappedTopic.UpdatedAt = TimeHelper.GetDateTime();
 
         await _topicRepository.AddAsync(mappedTopic);
         await _topicRepository.SaveAsync();

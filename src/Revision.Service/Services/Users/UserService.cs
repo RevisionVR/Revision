@@ -52,7 +52,7 @@ public class UserService : IUserService
 
         if (checkUser is not null)
             throw new RevisionException(403, $"This user already exists with = {dto.Phone}");
-        
+
         var mappedUser = _mapper.Map(dto, existUser);
         mappedUser.Id = id;
         mappedUser.Role = existUser.Role;
@@ -129,7 +129,7 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
         var users = _userRepository.SelectAll();
-        if(!string.IsNullOrEmpty(search))
+        if (!string.IsNullOrEmpty(search))
         {
             users = users.Where(user =>
                 user.FirstName.ToLower().Contains(search.ToLower()) ||

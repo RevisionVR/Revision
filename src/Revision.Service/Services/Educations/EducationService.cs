@@ -42,7 +42,6 @@ public class EducationService : IEducationService
 
         var mappedEducation = _mapper.Map<Education>(dto);
         mappedEducation.CreatedAt = TimeHelper.GetDateTime();
-        mappedEducation.UpdatedAt = TimeHelper.GetDateTime();
         mappedEducation.EducationCategory = existCategory;
 
         if (dto.Address is not null)
@@ -63,7 +62,7 @@ public class EducationService : IEducationService
     public async Task<EducationResultDto> UpdateAsync(long id, EducationUpdateDto dto)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] { "Address", "UserEducation" })
+            includes: new[] { "Address" })
             ?? throw new RevisionException(404, "This education is not found");
 
         var existCategory = await _categoryRepository.SelectAsync(
@@ -92,7 +91,7 @@ public class EducationService : IEducationService
     public async Task<bool> DeleteAsync(long id)
     {
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(id),
-            includes: new[] { "Address", "UserEducation" })
+            includes: new[] { "Address" })
            ?? throw new RevisionException(404, "This education is not found");
 
         await _addressService.DeleteAsync(existEducation.Address.Id);

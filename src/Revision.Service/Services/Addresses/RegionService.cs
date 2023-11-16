@@ -51,7 +51,6 @@ public class RegionService : IRegionService
         {
             var mappedRegion = _mapper.Map<Region>(region);
             mappedRegion.CreatedAt = TimeHelper.GetDateTime();
-            mappedRegion.UpdatedAt = TimeHelper.GetDateTime();
 
             await _regionRepository.AddAsync(mappedRegion);
             await _regionRepository.SaveAsync();

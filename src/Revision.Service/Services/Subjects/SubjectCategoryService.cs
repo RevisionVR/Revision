@@ -4,7 +4,6 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Subjects;
 using Revision.Service.Commons.Helpers;
-using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -31,7 +30,6 @@ public class SubjectCategoryService : ISubjectCategoryService
 
         var mappedCategory = _mapper.Map<SubjectCategory>(dto);
         mappedCategory.CreatedAt = TimeHelper.GetDateTime();
-        mappedCategory.UpdatedAt = TimeHelper.GetDateTime();
 
         await _repository.AddAsync(mappedCategory);
         await _repository.SaveAsync();

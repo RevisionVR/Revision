@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
-using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.DevicePayments;
 using Revision.Service.Exceptions;
-using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Payments;
 
 namespace Revision.Service.Services.Payments;

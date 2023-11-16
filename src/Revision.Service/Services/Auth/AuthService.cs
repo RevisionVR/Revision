@@ -72,7 +72,6 @@ public class AuthService : IAuthService
         mappedUser.Salt = result.Salt;
         mappedUser.PasswordHash = result.Hash;
         mappedUser.CreatedAt = TimeHelper.GetDateTime();
-        mappedUser.UpdatedAt = TimeHelper.GetDateTime();
 
         var user = await _userRepository.AddAsync(mappedUser);
         var resultDb = await _userRepository.SaveAsync();
@@ -209,8 +208,8 @@ public class AuthService : IAuthService
                 {
                     _memoryCache.Remove(VERIFY_REGISTER_CACHE_KEY + phone);
                     verificationDto.Attempt++;
-                    _memoryCache.Set(VERIFY_REGISTER_CACHE_KEY + phone, verificationDto,TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
-                    
+                    _memoryCache.Set(VERIFY_REGISTER_CACHE_KEY + phone, verificationDto, TimeSpan.FromMinutes(CACHED_FOR_MINUTS_VEFICATION));
+
                     throw new RevisionException(400, "This code is invalid");
                 }
             }

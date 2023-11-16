@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
-using Revision.DataAccess.Repositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Subjects;
 using Revision.Service.Commons.Helpers;
-using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.DTOs.Subjects;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -40,7 +38,6 @@ public class SubjectService : ISubjectService
         var mappedSubject = _mapper.Map<Subject>(dto);
         mappedSubject.SubjectCategory = existCategory;
         mappedSubject.CreatedAt = TimeHelper.GetDateTime();
-        mappedSubject.UpdatedAt = TimeHelper.GetDateTime();
 
         await _subjectRepository.AddAsync(mappedSubject);
         await _subjectRepository.SaveAsync();

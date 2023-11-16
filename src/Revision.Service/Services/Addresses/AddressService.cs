@@ -51,7 +51,6 @@ public class AddressService : IAddressService
         mappedAddress.Country = existCountry;
         mappedAddress.District = existDistrict;
         mappedAddress.CreatedAt = TimeHelper.GetDateTime();
-        mappedAddress.UpdatedAt = TimeHelper.GetDateTime();
 
         await _addressRepository.AddAsync(mappedAddress);
         await _addressRepository.SaveAsync();

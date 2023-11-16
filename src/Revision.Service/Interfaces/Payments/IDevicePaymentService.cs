@@ -1,5 +1,4 @@
-﻿using Revision.Domain.Configurations;
-using Revision.Service.DTOs.DevicePayments;
+﻿using Revision.Service.DTOs.DevicePayments;
 
 namespace Revision.Service.Interfaces.Payments;
 

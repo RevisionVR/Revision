@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Revision.DataAccess.IRepositories;
-using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Enums;
@@ -18,7 +17,7 @@ public class DeviceCountService : IDeviceCountService
     private readonly IRepository<Education> _educationRepository;
     public DeviceCountService(
         IMapper mapper,
-        IRepository<Device> deviceRepository, 
+        IRepository<Device> deviceRepository,
         IRepository<Education> educationRepository)
     {
         _mapper = mapper;
@@ -71,9 +70,9 @@ public class DeviceCountService : IDeviceCountService
             deviceCount.Fragrant = educationGroup.Where(device => device.Fragrant).Count();
             deviceCount.Active = educationGroup.Where(device => device.Status.Equals(DeviceStatus.Active)).Count();
             deviceCount.NoActive = educationGroup.Where(device => device.Status.Equals(DeviceStatus.NoActive)).Count();
-            
+
             deviceCount.Education = _mapper.Map<EducationResultDto>(education);
-            
+
             result.Add(deviceCount);
         }
 

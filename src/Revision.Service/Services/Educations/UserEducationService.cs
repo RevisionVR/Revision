@@ -43,7 +43,6 @@ public class UserEducationService : IUserEducationService
 
         var mappedResult = _mapper.Map<UserEducation>(dto);
         mappedResult.CreatedAt = TimeHelper.GetDateTime();
-        mappedResult.UpdatedAt = TimeHelper.GetDateTime();
         mappedResult.User = existUser;
         mappedResult.Education = existEducation;
 

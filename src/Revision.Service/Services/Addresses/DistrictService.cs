@@ -51,7 +51,6 @@ public class DistrictService : IDistrictService
         {
             var mappedDistrict = _mapper.Map<District>(district);
             mappedDistrict.CreatedAt = TimeHelper.GetDateTime();
-            mappedDistrict.UpdatedAt = TimeHelper.GetDateTime();
 
             await _districtRepository.AddAsync(mappedDistrict);
             await _districtRepository.SaveAsync();

@@ -44,7 +44,6 @@ public class ChatService : IChatService
 
         mappedChat.ChatRoom = existRoom;
         mappedChat.CreatedAt = TimeHelper.GetDateTime();
-        mappedChat.UpdatedAt = TimeHelper.GetDateTime();
         await _chatRepository.AddAsync(mappedChat);
         await _chatRepository.SaveAsync();
 

@@ -1,5 +1,4 @@
 ﻿using Revision.Domain.Configurations;
-using Revision.Service.DTOs.Educations;
 using Revision.Service.DTOs.SubjectCategories;
 
 namespace Revision.Service.Interfaces.Subjects;
