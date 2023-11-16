@@ -11,8 +11,7 @@ public interface IUserService
     Task<bool> DeleteAsync(long id);
     Task<UserResultDto> GetByIdAsync(long id);
     Task<IEnumerable<UserResultDto>> GetByRoleAsync(Role role);
-    Task<IEnumerable<UserResultDto>> GetAllAsync();
+    Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination, string search = null);
     Task<UserResultDto> UpgradeRoleAsync(long id, Role role);
     Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security);
-    Task<List<UserResultDto>> SearchUsersAsync(string searchItem);
 }

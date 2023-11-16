@@ -45,6 +45,8 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.ApplyMigrations();
 
+app.InitAccessor();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
