@@ -136,9 +136,11 @@ public class UserService : IUserService
 
     public async Task<List<UserResultDto>> SearchUsersAsync(string searchItem)
     {
-        var existUser = await  _userRepository.SelectAll().Where(user => user.FirstName.ToLower().Contains(searchItem) || 
-            user.LastName.ToLower().Contains(searchItem)).ToListAsync()
-           ?? throw new RevisionException(404, "This user is not found");
+        var existUser = await _userRepository.SelectAll().Where(user => user.FirstName.ToLower()
+            .Contains(searchItem.ToLower()) || user.LastName.ToLower().Contains(searchItem.ToLower())).ToListAsync();
+           
+        if (existUser.Count == 0)
+            throw new RevisionException(404, "This user is not found");
 
         return _mapper.Map<List<UserResultDto>>(existUser);
     }
