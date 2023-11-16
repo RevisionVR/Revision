@@ -54,4 +54,13 @@ public class AdminEducationsController : AdminBaseController
             Message = "Success",
             Data = await _educationService.GetAllAsync()
         });
+
+    [HttpGet("search/item")]
+    public async Task<IActionResult> SearchAsync(string Item)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _educationService.SearchAsync(Item)
+        });
 }

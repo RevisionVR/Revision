@@ -132,4 +132,14 @@ public class EducationService : IEducationService
 
         return _mapper.Map<IEnumerable<EducationResultDto>>(educations);
     }
+
+    public async Task<IEnumerable<EducationResultDto>> SearchAsync(string Item)
+    {
+        var resultDb = await _educationRepository.SelectAll().Where(edu => edu.Name.ToLower().Contains(Item)).ToListAsync();
+
+        if (resultDb.Count == 0)
+            throw new RevisionException(404, "This education is not found");
+
+        return _mapper.Map<IEnumerable<EducationResultDto>>(resultDb);
+    }
 }
