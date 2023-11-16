@@ -55,12 +55,15 @@ public class AdminEducationsController : AdminBaseController
             Data = await _educationService.GetAllAsync()
         });
 
-    [HttpGet("search/item")]
-    public async Task<IActionResult> SearchAsync(string Item)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _educationService.SearchAsync(Item)
-        });
+
+    [HttpGet("get-all-by-pagination")]
+    public async Task<IActionResult> GetAllAsync(
+         [FromQuery] PaginationParams pagination,
+         [FromQuery] string search)
+         => Ok(new Response
+         {
+             StatusCode = 200,
+             Message = "Success",
+             Data = await _educationService.GetAllAsync(pagination, search)
+         });
 }

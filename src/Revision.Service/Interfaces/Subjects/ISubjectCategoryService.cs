@@ -1,4 +1,5 @@
 ﻿using Revision.Domain.Configurations;
+using Revision.Service.DTOs.Educations;
 using Revision.Service.DTOs.SubjectCategories;
 
 namespace Revision.Service.Interfaces.Subjects;
@@ -11,4 +12,5 @@ public interface ISubjectCategoryService
     Task<bool> DestroyAsync(long id);
     Task<SubjectCategoryResultDto> GetByIdAsync(long id);
     Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync();
+    Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync(PaginationParams pagination, string search = null);
 }

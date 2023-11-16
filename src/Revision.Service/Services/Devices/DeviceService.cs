@@ -7,8 +7,6 @@ using Revision.Domain.Entities.Educations;
 using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Devices;
-using Revision.Service.DTOs.Educations;
-using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Devices;
@@ -133,14 +131,15 @@ public class DeviceService : IDeviceService
         return _mapper.Map<IEnumerable<DeviceResultDto>>(devices);
     }
 
-    public async Task<List<DeviceResultDto>> SearchAsync(string searchItem)
+    public async Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var existDevice = await _deviceRepository.SelectAll().Where(device => device.UniqueId.ToLower()
-            .Contains(searchItem.ToLower())).ToListAsync();
-
-        if (existDevice.Count == 0)
-            throw new RevisionException(404, "This user is not found");
-
-        return _mapper.Map<List<DeviceResultDto>>(existDevice);
+        var devices = _deviceRepository.SelectAll(includes: new[] { "Education" });
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            devices = devices.Where(device =>
+            device.UniqueId.ToLower().Equals(search.ToLower()));
+        }
+        var result = devices.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<DeviceResultDto>>(result);
     }
 }

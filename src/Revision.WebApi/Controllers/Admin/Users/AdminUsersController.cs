@@ -58,7 +58,9 @@ public class AdminUsersController : AdminBaseController
 
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams pagination, [FromQuery] string search)
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination, 
+        [FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,

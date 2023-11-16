@@ -33,12 +33,14 @@ public class CommonTopicsController : BaseController
         });
 
 
-    [HttpGet("search/item")]
-    public async Task<IActionResult> SearchAsync(string Item)
+    [HttpGet("get-all-by-pagination")]
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination,
+        [FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _topicService.SearchAsync(Item)
+            Data = await _topicService.GetAllAsync(pagination, search)
         });
 }
