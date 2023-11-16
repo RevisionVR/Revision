@@ -31,4 +31,14 @@ public class CommonTopicsController : BaseController
             Message = "Success",
             Data = await _topicService.GetAllAsync()
         });
+
+
+    [HttpGet("search/item")]
+    public async Task<IActionResult> SearchAsync(string Item)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _topicService.SearchAsync(Item)
+        });
 }

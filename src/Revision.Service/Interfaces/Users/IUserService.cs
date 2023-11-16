@@ -14,4 +14,5 @@ public interface IUserService
     Task<IEnumerable<UserResultDto>> GetAllAsync();
     Task<UserResultDto> UpgradeRoleAsync(long id, Role role);
     Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security);
+    Task<List<UserResultDto>> SearchUsersAsync(string searchItem);
 }

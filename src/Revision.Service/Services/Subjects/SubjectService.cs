@@ -114,4 +114,15 @@ public class SubjectService : ISubjectService
 
         return _mapper.Map<IEnumerable<SubjectResultDto>>(subjects);
     }
+
+    public async Task<IEnumerable<SubjectResultDto>> SearchAsync(string Item)
+    {
+        var resultDb = await _subjectRepository.SelectAll().Where(subject => subject.Name.ToLower().Contains(Item.ToLower()))
+            .ToListAsync();
+
+        if (resultDb.Count == 0)
+            throw new RevisionException(404, "This subject is not found");
+
+        return _mapper.Map<IEnumerable<SubjectResultDto>>(resultDb);
+    }
 }

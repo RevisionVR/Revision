@@ -106,4 +106,13 @@ public class AdminDevicesController : AdminBaseController
             Message = "Success",
             Data = await _deviceService.GetAllAsync()
         });
+
+    [HttpGet("search/uniqueId")]
+    public async Task<IActionResult> SearchAsync(string uniqueId)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _deviceService.SearchAsync(uniqueId)
+        });
 }

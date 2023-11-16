@@ -12,4 +12,5 @@ public interface ISubjectService
     Task<SubjectResultDto> GetByIdAsync(long id);
     Task<IEnumerable<SubjectResultDto>> GetBySubjectCategoryIdAsync(long subjectCategoryId);
     Task<IEnumerable<SubjectResultDto>> GetAllAsync();
+    Task<IEnumerable<SubjectResultDto>> SearchAsync(string Item);
 }

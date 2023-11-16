@@ -10,4 +10,5 @@ public interface IEducationService
     Task<bool> DeleteAsync(long id);
     Task<EducationResultDto> GetByIdAsync(long id);
     Task<IEnumerable<EducationResultDto>> GetAllAsync();
+    Task<IEnumerable<EducationResultDto>> SearchAsync(string Item);
 }

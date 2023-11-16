@@ -8,6 +8,7 @@ using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Devices;
 using Revision.Service.DTOs.Educations;
+using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Devices;
@@ -130,5 +131,16 @@ public class DeviceService : IDeviceService
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<DeviceResultDto>>(devices);
+    }
+
+    public async Task<List<DeviceResultDto>> SearchAsync(string searchItem)
+    {
+        var existDevice = await _deviceRepository.SelectAll().Where(device => device.UniqueId.ToLower()
+            .Contains(searchItem.ToLower())).ToListAsync();
+
+        if (existDevice.Count == 0)
+            throw new RevisionException(404, "This user is not found");
+
+        return _mapper.Map<List<DeviceResultDto>>(existDevice);
     }
 }

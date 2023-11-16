@@ -11,4 +11,5 @@ public interface ITopicService
     Task<bool> DestroyAsync(long id);
     Task<TopicResultDto> GetByIdAsync(long id);
     Task<IEnumerable<TopicResultDto>> GetAllAsync();
+    Task<IEnumerable<TopicResultDto>> SearchAsync(string Item);
 }

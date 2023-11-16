@@ -98,4 +98,15 @@ public class TopicService : ITopicService
 
         return _mapper.Map<IEnumerable<TopicResultDto>>(topics);
     }
+
+    public async Task<IEnumerable<TopicResultDto>> SearchAsync(string Item)
+    {
+        var resultDb = await _topicRepository.SelectAll().Where(topic => topic.Name.ToLower().Contains(Item.ToLower()))
+            .ToListAsync();
+
+        if (resultDb.Count == 0)
+            throw new RevisionException(404, "This topic is not found");
+
+        return _mapper.Map<IEnumerable<TopicResultDto>>(resultDb);
+    }
 }

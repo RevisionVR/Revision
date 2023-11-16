@@ -65,4 +65,13 @@ public class AdminUsersController : AdminBaseController
             Message = "Success",
             Data = await _userService.GetAllAsync()
         });
+
+    [HttpGet("search/item")]
+    public async Task<IActionResult> SearchUserAsync(string Item)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _userService.SearchUsersAsync(Item)
+        });
 }
