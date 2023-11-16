@@ -41,4 +41,13 @@ public class CommonSubjectController : BaseController
             Message = "Success",
             Data = await _subjectService.GetAllAsync()
         });
+
+    [HttpGet("search/item")]
+    public async Task<IActionResult> SearchAsync(string Item)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _subjectService.SearchAsync(Item)
+        });
 }
