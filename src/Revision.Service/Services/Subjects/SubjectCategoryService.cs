@@ -4,6 +4,7 @@ using Revision.DataAccess.IRepositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Subjects;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -89,5 +90,18 @@ public class SubjectCategoryService : ISubjectCategoryService
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(categories);
+    }
+
+    public async Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
+    {
+        var categories = _repository.SelectAll(includes: new[] { "Subjects" });
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            categories = categories.Where(category =>
+            category.Name.ToLower().Equals(search.ToLower()));
+        }
+
+        var result = categories.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<SubjectCategoryResultDto>>(result);
     }
 }

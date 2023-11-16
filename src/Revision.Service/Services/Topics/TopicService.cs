@@ -5,6 +5,7 @@ using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Subjects;
 using Revision.Domain.Entities.Topics;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.Subjects;
 using Revision.Service.DTOs.Topics;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -99,14 +100,16 @@ public class TopicService : ITopicService
         return _mapper.Map<IEnumerable<TopicResultDto>>(topics);
     }
 
-    public async Task<IEnumerable<TopicResultDto>> SearchAsync(string Item)
+    public async Task<IEnumerable<TopicResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var resultDb = await _topicRepository.SelectAll().Where(topic => topic.Name.ToLower().Contains(Item.ToLower()))
-            .ToListAsync();
+        var topics = _topicRepository.SelectAll(includes: new[] { "Subject.SubjectCategory", "TopicPayments" });
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            topics = topics.Where(topic =>
+            topic.Name.ToLower().Equals(search.ToLower()));
+        }
 
-        if (resultDb.Count == 0)
-            throw new RevisionException(404, "This topic is not found");
-
-        return _mapper.Map<IEnumerable<TopicResultDto>>(resultDb);
+        var result = topics.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<TopicResultDto>>(result);
     }
 }

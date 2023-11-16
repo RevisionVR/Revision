@@ -133,13 +133,24 @@ public class EducationService : IEducationService
         return _mapper.Map<IEnumerable<EducationResultDto>>(educations);
     }
 
-    public async Task<IEnumerable<EducationResultDto>> SearchAsync(string Item)
+    public async Task<IEnumerable<EducationResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var resultDb = await _educationRepository.SelectAll().Where(edu => edu.Name.ToLower().Contains(Item)).ToListAsync();
+        var educations = _educationRepository.SelectAll(
+            includes: new[]
+            {
+                "Address.Country",
+                "Address.District",
+                "Address.Region",
+                "EducationCategory"
+            });
 
-        if (resultDb.Count == 0)
-            throw new RevisionException(404, "This education is not found");
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            educations = educations.Where(education =>
+            education.Name.ToLower().Equals(search.ToLower()));
+        }
 
-        return _mapper.Map<IEnumerable<EducationResultDto>>(resultDb);
+        var result = educations.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<EducationResultDto>>(result);
     }
 }

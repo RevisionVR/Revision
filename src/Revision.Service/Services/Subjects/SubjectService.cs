@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
+using Revision.DataAccess.Repositories;
 using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Subjects;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.DTOs.Subjects;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -115,14 +117,16 @@ public class SubjectService : ISubjectService
         return _mapper.Map<IEnumerable<SubjectResultDto>>(subjects);
     }
 
-    public async Task<IEnumerable<SubjectResultDto>> SearchAsync(string Item)
+    public async Task<IEnumerable<SubjectResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var resultDb = await _subjectRepository.SelectAll().Where(subject => subject.Name.ToLower().Contains(Item.ToLower()))
-            .ToListAsync();
+        var subjects = _subjectRepository.SelectAll(includes: new[] { "SubjectCategory", "Topics" });
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            subjects = subjects.Where(subject =>
+            subject.Name.ToLower().Equals(search.ToLower()));
+        }
 
-        if (resultDb.Count == 0)
-            throw new RevisionException(404, "This subject is not found");
-
-        return _mapper.Map<IEnumerable<SubjectResultDto>>(resultDb);
+        var result = subjects.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<SubjectResultDto>>(result);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Revision.Service.DTOs.Devices;
+﻿using Revision.Domain.Configurations;
+using Revision.Service.DTOs.Devices;
 
 namespace Revision.Service.Interfaces.Devices;
 

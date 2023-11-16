@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Revision.DataAccess.IRepositories;
+using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Enums;

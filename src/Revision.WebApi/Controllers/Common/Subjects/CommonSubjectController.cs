@@ -42,12 +42,15 @@ public class CommonSubjectController : BaseController
             Data = await _subjectService.GetAllAsync()
         });
 
-    [HttpGet("search/item")]
-    public async Task<IActionResult> SearchAsync(string Item)
+
+    [HttpGet("get-all-by-pagination")]
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination,
+        [FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _subjectService.SearchAsync(Item)
+            Data = await _subjectService.GetAllAsync(pagination, search)
         });
 }
