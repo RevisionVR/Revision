@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
+using Revision.DataAccess.Repositories;
+using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.DevicePayments;
+using Revision.Service.DTOs.SubjectCategories;
 using Revision.Service.Exceptions;
+using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Payments;
 
 namespace Revision.Service.Services.Payments;
@@ -63,11 +67,16 @@ public class DevicePaymentService : IDevicePaymentService
         return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(existPayments);
     }
 
-    public async Task<IEnumerable<DevicePaymentResultDto>> GetAllAsync()
+    public async Task<IEnumerable<DevicePaymentResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var payments = await _paymentRepository.SelectAll(includes: new[] { "Education" })
-            .ToListAsync();
+        var payments = _paymentRepository.SelectAll(includes: new[] { "Education" });
+        if (!string.IsNullOrEmpty(search))
+        {
+            payments = payments.Where(payment =>
+            payment.Education.Name.ToLower().Equals(search.ToLower()));
+        }
 
-        return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(payments);
+        var result = payments.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<DevicePaymentResultDto>>(result);
     }
 }

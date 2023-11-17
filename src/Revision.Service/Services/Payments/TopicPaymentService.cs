@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
+using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Payments;
 using Revision.Domain.Entities.Topics;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.TopicPayments;
 using Revision.Service.Exceptions;
+using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Payments;
 
 namespace Revision.Service.Services.Payments;
@@ -70,11 +72,18 @@ public class TopicPaymentService : ITopicPaymentService
         return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(existPayments);
     }
 
-    public async Task<IEnumerable<TopicPaymentResultDto>> GetAllAsync()
+    public async Task<IEnumerable<TopicPaymentResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var topicPayments = await _paymentRepository.SelectAll(includes: new[] { "Topic", "Education" })
-            .ToListAsync();
+        var topicPayments = _paymentRepository.SelectAll(includes: new[] { "Topic", "Education" });
 
-        return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(topicPayments);
+        if (!string.IsNullOrEmpty(search))
+        {
+            topicPayments = topicPayments.Where(payment => 
+            payment.Topic.Name.ToLower().Equals(search.ToLower()) || 
+            payment.Education.Name.Equals(search.ToLower()));
+        }
+
+        var result = topicPayments.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<TopicPaymentResultDto>>(result);
     }
 }

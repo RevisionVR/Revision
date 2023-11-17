@@ -93,7 +93,7 @@ public class SubjectCategoryService : ISubjectCategoryService
     public async Task<IEnumerable<SubjectCategoryResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
         var categories = _repository.SelectAll(includes: new[] { "Subjects" });
-        if (string.IsNullOrWhiteSpace(search))
+        if (!string.IsNullOrEmpty(search))
         {
             categories = categories.Where(category =>
             category.Name.ToLower().Equals(search.ToLower()));

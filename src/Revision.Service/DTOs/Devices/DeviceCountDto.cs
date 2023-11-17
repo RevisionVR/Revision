@@ -1,12 +1,13 @@
-﻿using Revision.Service.DTOs.Educations;
+﻿using Revision.Domain.Commons;
+using Revision.Service.DTOs.Educations;
 
 namespace Revision.Service.DTOs.Devices;
 
-public class DeviceCountDto
+public class DeviceCountDto : Auditable
 {
     public int Count { get; set; }
-    public int Glove { get; set; }
-    public int Fragrant { get; set; }
+    public int Gloves { get; set; }
+    public int Fragrants { get; set; }
     public int Active { get; set; }
     public int NoActive { get; set; }
     public EducationResultDto Education { get; set; }

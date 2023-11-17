@@ -96,8 +96,8 @@ public class DeviceService : IDeviceService
 
     public async Task<DeviceResultDto> GetByIdAsync(long id)
     {
-        var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id),
-            includes: new[] { "Education" })
+        var existDevice = await _deviceRepository.SelectAsync(device => device.Id.Equals(id) &&
+        !device.Education.IsDeleted, includes: new[] { "Education" })
            ?? throw new RevisionException(404, "This device is not found");
 
         return _mapper.Map<DeviceResultDto>(existDevice);
@@ -114,8 +114,8 @@ public class DeviceService : IDeviceService
 
     public async Task<IEnumerable<DeviceResultDto>> GetByEducationIdAsync(long educationId)
     {
-        var existDevices = await _deviceRepository.SelectAll(device => device.EducationId.Equals(educationId),
-            includes: new[] { "Education" })
+        var existDevices = await _deviceRepository.SelectAll(device => device.EducationId.Equals(educationId) && 
+        !device.Education.IsDeleted, includes: new[] { "Education" })
             .ToListAsync();
         if (!existDevices.Any())
             throw new RevisionException(404, "This education is not found");
@@ -125,7 +125,8 @@ public class DeviceService : IDeviceService
 
     public async Task<IEnumerable<DeviceResultDto>> GetAllAsync()
     {
-        var devices = await _deviceRepository.SelectAll(includes: new[] { "Education" })
+        var devices = await _deviceRepository.SelectAll(device => !device.Education.IsDeleted, 
+            includes: new[] { "Education" })
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<DeviceResultDto>>(devices);
@@ -133,12 +134,14 @@ public class DeviceService : IDeviceService
 
     public async Task<IEnumerable<DeviceResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
-        var devices = _deviceRepository.SelectAll(includes: new[] { "Education" });
-        if (string.IsNullOrWhiteSpace(search))
+        var devices = _deviceRepository.SelectAll(device => !device.Education.IsDeleted, 
+            includes: new[] { "Education" });
+        if (!string.IsNullOrEmpty(search))
         {
             devices = devices.Where(device =>
             device.UniqueId.ToLower().Equals(search.ToLower()));
         }
+
         var result = devices.ToPagedList(pagination);
         return _mapper.Map<IEnumerable<DeviceResultDto>>(result);
     }
