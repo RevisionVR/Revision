@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Revision.Domain.Configurations;
 using Revision.Service.Interfaces.Subjects;
 using Revision.WebApi.Models;
 
@@ -29,5 +30,17 @@ public class CommonSubjectCategoriesController : BaseController
             StatusCode = 200,
             Message = "Success",
             Data = await _subjectCategoryService.GetAllAsync()
+        });
+
+
+    [HttpGet("get-all-by-page")]
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination, 
+        [FromQuery] string search)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _subjectCategoryService.GetAllAsync(pagination, search)
         });
 }

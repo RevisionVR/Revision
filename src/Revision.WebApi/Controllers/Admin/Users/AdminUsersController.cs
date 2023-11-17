@@ -57,7 +57,7 @@ public class AdminUsersController : AdminBaseController
         });
 
 
-    [HttpGet("get-all")]
+    [HttpGet("get-all-by-page")]
     public async Task<IActionResult> GetAllAsync(
         [FromQuery] PaginationParams pagination, 
         [FromQuery] string search)
