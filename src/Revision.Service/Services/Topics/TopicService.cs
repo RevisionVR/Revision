@@ -101,4 +101,12 @@ public class TopicService : ITopicService
         var result = topics.ToPagedList(pagination);
         return _mapper.Map<IEnumerable<TopicResultDto>>(result);
     }
+
+    public async Task<IEnumerable<TopicResultDto>> GetAllAsync()
+    {
+        var topics = await _topicRepository.SelectAll(
+            includes: new[] { "Subject.SubjectCategory", "TopicPayments" })
+            .ToListAsync();
+        return _mapper.Map<IEnumerable<TopicResultDto>>(topics);
+    }
 }

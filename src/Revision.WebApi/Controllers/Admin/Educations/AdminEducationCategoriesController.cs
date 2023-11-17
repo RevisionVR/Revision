@@ -87,18 +87,6 @@ public class AdminEducationCategoriesController : AdminBaseController
         });
 
 
-    [HttpGet("get-all-by-page")]
-    public async Task<IActionResult> GetAllAsync(
-        [FromQuery] PaginationParams pagination,
-        [FromQuery] string search)
-        => Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "Success",
-            Data = await _educationCategoryService.GetAllAsync(pagination, search)
-        });
-
-
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync()
         => Ok(new Response
@@ -106,5 +94,16 @@ public class AdminEducationCategoriesController : AdminBaseController
             StatusCode = 200,
             Message = "Success",
             Data = await _educationCategoryService.GetAllAsync()
+        });
+
+    [HttpGet("get-all-by-page")]
+    public async Task<IActionResult> GetAllAsync(
+    [FromQuery] PaginationParams pagination,
+    [FromQuery] string search)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _educationCategoryService.GetAllAsync(pagination, search)
         });
 }
