@@ -46,7 +46,7 @@ public class AdminDevicePaymentsController : AdminBaseController
         });
 
 
-    [HttpGet("get-all-by-pagination")]
+    [HttpGet("get-all-by-page")]
     public async Task<IActionResult> GetAllAsync(
         [FromQuery] PaginationParams pagination,
         [FromQuery] string search)

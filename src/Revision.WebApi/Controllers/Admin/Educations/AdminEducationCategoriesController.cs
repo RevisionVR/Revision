@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Revision.Domain.Configurations;
 using Revision.Service.DTOs.EducationCategories;
 using Revision.Service.Interfaces.Educations;
 using Revision.Service.Validations.Educations.Categories;
@@ -83,6 +84,18 @@ public class AdminEducationCategoriesController : AdminBaseController
             StatusCode = 200,
             Message = "Success",
             Data = await _educationCategoryService.GetByIdAsync(id)
+        });
+
+
+    [HttpGet("get-all-by-page")]
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination,
+        [FromQuery] string search)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _educationCategoryService.GetAllAsync(pagination, search)
         });
 
 

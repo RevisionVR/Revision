@@ -42,8 +42,6 @@ public class TopicPaymentService : ITopicPaymentService
         var mappedPayment = _mapper.Map<TopicPayment>(dto);
 
         mappedPayment.CreatedAt = TimeHelper.GetDateTime();
-        mappedPayment.LastDay = TimeHelper.GetDateTime();
-        mappedPayment.NextDay = mappedPayment.LastDay.AddMonths(1);
         mappedPayment.Topic = existTopic;
         mappedPayment.Education = education;
 
