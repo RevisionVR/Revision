@@ -143,7 +143,7 @@ public class EducationService : IEducationService
                 "EducationCategory"
             });
 
-        if (string.IsNullOrWhiteSpace(search))
+        if (!string.IsNullOrEmpty(search))
         {
             educations = educations.Where(education =>
             education.Name.ToLower().Equals(search.ToLower()));

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Revision.Domain.Configurations;
 using Revision.Service.DTOs.TopicPayments;
 using Revision.Service.Interfaces.Payments;
+using Revision.Service.Services.Payments;
 using Revision.Service.Validations.Payments.Topics;
 using Revision.WebApi.Models;
 
@@ -45,12 +47,14 @@ public class AdminTopicPaymentsController : AdminBaseController
         });
 
 
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync()
+    [HttpGet("get-all-by-pagination")]
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination,
+        [FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _paymentService.GetAllAsync()
+            Data = await _paymentService.GetAllAsync(pagination, search)
         });
 }

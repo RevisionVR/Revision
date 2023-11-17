@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Revision.DataAccess.IRepositories;
+using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Devices;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Enums;
 using Revision.Service.DTOs.Devices;
 using Revision.Service.DTOs.Educations;
 using Revision.Service.Exceptions;
+using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Devices;
 
 namespace Revision.Service.Services.Devices;
@@ -27,7 +29,7 @@ public class DeviceCountService : IDeviceCountService
 
     public async Task<DeviceCountDto> GetCountByEducactionIdAsync(long educationId)
     {
-        var education = await _educationRepository.SelectAsync(education => education.Id.Equals(educationId));
+        var education = await _educationRepository.SelectAsync(education => education.Id.Equals(educationId) && !education.IsDeleted);
         if (education is null)
             throw new RevisionException(404, "This education is not found");
 
@@ -38,8 +40,8 @@ public class DeviceCountService : IDeviceCountService
         var result = new DeviceCountDto
         {
             Count = existDevices.Count(),
-            Glove = existDevices.Where(device => device.Glove).Count(),
-            Fragrant = existDevices.Where(device => device.Fragrant).Count(),
+            Gloves = existDevices.Where(device => device.Glove).Count(),
+            Fragrants = existDevices.Where(device => device.Fragrant).Count(),
             Active = existDevices.Where(device => device.Status.Equals(DeviceStatus.Active)).Count(),
             NoActive = existDevices.Where(device => device.Status.Equals(DeviceStatus.NoActive)).Count(),
             Education = _mapper.Map<EducationResultDto>(education)
@@ -50,7 +52,7 @@ public class DeviceCountService : IDeviceCountService
 
     public async Task<IEnumerable<DeviceCountDto>> GetCountAllAsync()
     {
-        var existGroupDevices = _deviceRepository.SelectAll()
+        var existGroupDevices = _deviceRepository.SelectAll(education => !education.IsDeleted)
             .AsEnumerable()
             .GroupBy(e => e.EducationId);
 
@@ -66,8 +68,8 @@ public class DeviceCountService : IDeviceCountService
             var deviceCount = new DeviceCountDto();
 
             deviceCount.Count = educationGroup.Count();
-            deviceCount.Glove = educationGroup.Where(device => device.Glove).Count();
-            deviceCount.Fragrant = educationGroup.Where(device => device.Fragrant).Count();
+            deviceCount.Gloves = educationGroup.Where(device => device.Glove).Count();
+            deviceCount.Fragrants = educationGroup.Where(device => device.Fragrant).Count();
             deviceCount.Active = educationGroup.Where(device => device.Status.Equals(DeviceStatus.Active)).Count();
             deviceCount.NoActive = educationGroup.Where(device => device.Status.Equals(DeviceStatus.NoActive)).Count();
 
@@ -77,5 +79,42 @@ public class DeviceCountService : IDeviceCountService
         }
 
         return result;
+    }
+
+    public async Task<IEnumerable<DeviceCountDto>> GetCountAllAsync(PaginationParams pagination, string search = null)
+    {
+        var existGroupDevices = _deviceRepository.SelectAll(education => !education.IsDeleted)
+            .AsEnumerable()
+            .GroupBy(e => e.EducationId);
+
+        var result = new List<DeviceCountDto>();
+
+        foreach (var educationGroup in existGroupDevices)
+        {
+            var educationId = educationGroup.Key;
+            var education = await _educationRepository.SelectAsync(e => e.Id.Equals(educationId));
+            if (education is null)
+                continue;
+
+            var deviceCount = new DeviceCountDto();
+
+            deviceCount.Count = educationGroup.Count();
+            deviceCount.Gloves = educationGroup.Where(device => device.Glove).Count();
+            deviceCount.Fragrants = educationGroup.Where(device => device.Fragrant).Count();
+            deviceCount.Active = educationGroup.Where(device => device.Status.Equals(DeviceStatus.Active)).Count();
+            deviceCount.NoActive = educationGroup.Where(device => device.Status.Equals(DeviceStatus.NoActive)).Count();
+
+            deviceCount.Education = _mapper.Map<EducationResultDto>(education);
+
+            result.Add(deviceCount);
+        }
+        if (!string.IsNullOrEmpty(search))
+        {
+            result = result.Where(device => 
+            device.Education.Name.ToLower().Equals(search.ToLower())).ToList();
+        }
+
+        var devieCounts = result.AsQueryable().ToPagedList(pagination);
+        return devieCounts;
     }
 }

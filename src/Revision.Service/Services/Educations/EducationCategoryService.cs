@@ -91,7 +91,7 @@ public class EducationCategoryService : IEducationCategoryService
     public async Task<IEnumerable<EducationCategoryResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
         var categories = _repository.SelectAll(includes: new[] { "Educations" });
-        if (string.IsNullOrWhiteSpace(search))
+        if (!string.IsNullOrEmpty(search))
         {
             categories = categories.Where(category =>
             category.Name.ToLower().Equals(search.ToLower()));

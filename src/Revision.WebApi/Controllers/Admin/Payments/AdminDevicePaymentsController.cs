@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Revision.Domain.Configurations;
 using Revision.Service.DTOs.DevicePayments;
 using Revision.Service.Interfaces.Payments;
 using Revision.Service.Validations.Payments.Devices;
@@ -45,12 +46,14 @@ public class AdminDevicePaymentsController : AdminBaseController
         });
 
 
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync()
+    [HttpGet("get-all-by-pagination")]
+    public async Task<IActionResult> GetAllAsync(
+        [FromQuery] PaginationParams pagination,
+        [FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _devicePaymentService.GetAllAsync()
+            Data = await _devicePaymentService.GetAllAsync(pagination, search)
         });
 }

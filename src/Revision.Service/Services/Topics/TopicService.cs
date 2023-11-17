@@ -89,19 +89,10 @@ public class TopicService : ITopicService
         return _mapper.Map<TopicResultDto>(existTopic);
     }
 
-    public async Task<IEnumerable<TopicResultDto>> GetAllAsync()
-    {
-        var topics = await _topicRepository.SelectAll(
-            includes: new[] { "Subject.SubjectCategory", "TopicPayments" })
-            .ToListAsync();
-
-        return _mapper.Map<IEnumerable<TopicResultDto>>(topics);
-    }
-
     public async Task<IEnumerable<TopicResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
     {
         var topics = _topicRepository.SelectAll(includes: new[] { "Subject.SubjectCategory", "TopicPayments" });
-        if (string.IsNullOrWhiteSpace(search))
+        if (!string.IsNullOrEmpty(search))
         {
             topics = topics.Where(topic =>
             topic.Name.ToLower().Equals(search.ToLower()));
