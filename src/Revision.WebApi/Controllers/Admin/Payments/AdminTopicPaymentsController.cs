@@ -36,6 +36,15 @@ public class AdminTopicPaymentsController : AdminBaseController
         });
     }
 
+    [HttpDelete("delete/{id:long}")]
+    public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _paymentService.DeleteAsync(id)
+        });
+
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GeAsync(long id)
