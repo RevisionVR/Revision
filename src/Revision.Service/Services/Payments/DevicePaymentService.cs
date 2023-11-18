@@ -34,6 +34,8 @@ public class DevicePaymentService : IDevicePaymentService
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(dto.EducationId))
             ?? throw new RevisionException(404, "This education is not found");
 
+        dto.NextDate = dto.NextDate.ToUniversalTime();
+        dto.LastDate = dto.LastDate.ToUniversalTime();
         var mappedPayment = _mapper.Map<DevicePayment>(dto);
 
         mappedPayment.CreatedAt = TimeHelper.GetDateTime();
