@@ -38,7 +38,9 @@ public class TopicPaymentService : ITopicPaymentService
 
         var education = await _educationRepository.SelectAsync(education => education.Id.Equals(dto.EducationId))
             ?? throw new RevisionException(404, "This education is not found");
-
+        
+        dto.NextDate = dto.NextDate.ToUniversalTime();
+        dto.LastDate = dto.LastDate.ToUniversalTime();
         var mappedPayment = _mapper.Map<TopicPayment>(dto);
 
         mappedPayment.CreatedAt = TimeHelper.GetDateTime();
