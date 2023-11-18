@@ -47,6 +47,17 @@ public class DevicePaymentService : IDevicePaymentService
         return _mapper.Map<DevicePaymentResultDto>(mappedPayment);
     }
 
+    public async Task<bool> DeleteAsync(long id)
+    {
+        var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id))
+            ?? throw new RevisionException(404, "This device payment is not found");
+
+        _paymentRepository.Delete(existPayment);
+        await _paymentRepository.SaveAsync();
+
+        return true;
+    }
+
     public async Task<DevicePaymentResultDto> GetByIdAsync(long id)
     {
         var existPayment = await _paymentRepository.SelectAsync(payment => payment.Id.Equals(id),
@@ -55,6 +66,7 @@ public class DevicePaymentService : IDevicePaymentService
 
         return _mapper.Map<DevicePaymentResultDto>(existPayment);
     }
+
     public async Task<IEnumerable<DevicePaymentResultDto>> GetByEducationIdAsync(long educationId)
     {
         var existPayments = await _paymentRepository.SelectAll(payment => payment.EducationId.Equals(educationId),

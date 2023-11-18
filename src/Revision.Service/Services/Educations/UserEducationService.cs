@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
+using Revision.Domain.Configurations;
 using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.UserEducations;
 using Revision.Service.Exceptions;
+using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Educations;
 
 namespace Revision.Service.Services.Educations;
@@ -70,5 +72,21 @@ public class UserEducationService : IUserEducationService
             throw new RevisionException(404, "This education is not found");
 
         return _mapper.Map<IEnumerable<UserEducationResultDto>>(existUsersEducation);
+    }
+
+    public async Task<IEnumerable<UserEducationResultDto>> GetAllAsync(PaginationParams pagination, string search = null)
+    {
+        var userEducations = _repository.SelectAll(includes: new[] { "User", "Education" });
+        if (!string.IsNullOrEmpty(search))
+        {
+            userEducations = userEducations.Where(user =>
+                user.User.FirstName.ToLower().Contains(search.ToLower()) ||
+                user.User.LastName.ToLower().Contains(search.ToLower()) ||
+                user.Education.Name.ToLower().Contains(search.ToLower())
+            );
+        }
+
+        var result = userEducations.ToPagedList(pagination);
+        return _mapper.Map<IEnumerable<UserEducationResultDto>>(result);
     }
 }
