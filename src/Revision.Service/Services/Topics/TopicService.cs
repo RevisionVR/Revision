@@ -95,7 +95,7 @@ public class TopicService : ITopicService
         if (!string.IsNullOrEmpty(search))
         {
             topics = topics.Where(topic =>
-            topic.Name.ToLower().Equals(search.ToLower()));
+            topic.Name.ToLower().Contains(search.ToLower()));
         }
 
         var result = topics.ToPagedList(pagination);

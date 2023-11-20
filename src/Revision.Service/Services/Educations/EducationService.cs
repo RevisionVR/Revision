@@ -146,7 +146,7 @@ public class EducationService : IEducationService
         if (!string.IsNullOrEmpty(search))
         {
             educations = educations.Where(education =>
-            education.Name.ToLower().Equals(search.ToLower()));
+            education.Name.ToLower().Contains(search.ToLower()));
         }
 
         var result = educations.ToPagedList(pagination);

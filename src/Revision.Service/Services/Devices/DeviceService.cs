@@ -139,7 +139,7 @@ public class DeviceService : IDeviceService
         if (!string.IsNullOrEmpty(search))
         {
             devices = devices.Where(device =>
-            device.UniqueId.ToLower().Equals(search.ToLower()));
+            device.UniqueId.ToLower().Contains(search.ToLower()));
         }
 
         var result = devices.ToPagedList(pagination);

@@ -120,7 +120,7 @@ public class SubjectService : ISubjectService
         if (!string.IsNullOrEmpty(search))
         {
             subjects = subjects.Where(subject =>
-            subject.Name.ToLower().Equals(search.ToLower()));
+            subject.Name.ToLower().Contains(search.ToLower()));
         }
 
         var result = subjects.ToPagedList(pagination);

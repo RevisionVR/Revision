@@ -94,7 +94,7 @@ public class EducationCategoryService : IEducationCategoryService
         if (!string.IsNullOrEmpty(search))
         {
             categories = categories.Where(category =>
-            category.Name.ToLower().Equals(search.ToLower()));
+            category.Name.ToLower().Contains(search.ToLower()));
         }
 
         var result = categories.ToPagedList(pagination);
