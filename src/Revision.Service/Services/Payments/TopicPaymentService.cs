@@ -91,7 +91,7 @@ public class TopicPaymentService : ITopicPaymentService
         {
             topicPayments = topicPayments.Where(payment => 
             payment.Topic.Name.ToLower().Equals(search.ToLower()) || 
-            payment.Education.Name.Equals(search.ToLower()));
+            payment.Education.Name.ToLower().Contains(search.ToLower()));
         }
 
         var result = topicPayments.ToPagedList(pagination);

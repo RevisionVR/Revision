@@ -111,7 +111,7 @@ public class DeviceCountService : IDeviceCountService
         if (!string.IsNullOrEmpty(search))
         {
             result = result.Where(device => 
-            device.Education.Name.ToLower().Equals(search.ToLower())).ToList();
+            device.Education.Name.ToLower().Contains(search.ToLower())).ToList();
         }
 
         var devieCounts = result.AsQueryable().ToPagedList(pagination);

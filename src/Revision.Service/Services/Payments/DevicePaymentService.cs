@@ -84,7 +84,7 @@ public class DevicePaymentService : IDevicePaymentService
         if (!string.IsNullOrEmpty(search))
         {
             payments = payments.Where(payment =>
-            payment.Education.Name.ToLower().Equals(search.ToLower()));
+            payment.Education.Name.ToLower().Contains(search.ToLower()));
         }
 
         var result = payments.ToPagedList(pagination);
