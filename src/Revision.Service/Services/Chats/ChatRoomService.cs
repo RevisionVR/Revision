@@ -6,6 +6,7 @@ using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.ChatRooms;
+using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Chats;
 
@@ -35,6 +36,12 @@ public class ChatRoomService : IChatRoomService
             ?? throw new RevisionException(404, "This user is not found");
         var existEducation = await _educationRepository.SelectAsync(education => education.Id.Equals(dto.EducationId))
             ?? throw new RevisionException(404, "This education is not found");
+
+        var existChatRoom = await _chatRoomRepository.SelectAsync(room => room.EducationId.Equals(dto.EducationId));
+
+        if (existChatRoom is not null)
+            throw new RevisionException(403, "This education already exist");
+
 
         var mappedRoom = _mapper.Map<ChatRoom>(dto);
         if (string.IsNullOrEmpty(dto.Name))
@@ -81,5 +88,12 @@ public class ChatRoomService : IChatRoomService
             throw new RevisionException(404, "This room is not found");
 
         return _mapper.Map<IEnumerable<ChatRoomResultDto>>(existRoom);
+    }
+
+    public async Task<IEnumerable<ChatRoomResultDto>> GetAllAsync()
+    {
+        var resultDb = await  _chatRoomRepository.SelectAll(includes: new[] { "Education", "Chats" }).ToListAsync();
+
+        return _mapper.Map<IEnumerable<ChatRoomResultDto>>(resultDb);
     }
 }
