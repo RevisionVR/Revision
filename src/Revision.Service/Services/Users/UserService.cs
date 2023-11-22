@@ -10,6 +10,7 @@ using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
 using Revision.Service.Interfaces.Users;
+using System.Text;
 
 namespace Revision.Service.Services.Users;
 
@@ -139,5 +140,42 @@ public class UserService : IUserService
 
         var result = users.ToPagedList(pagination);
         return _mapper.Map<IEnumerable<UserResultDto>>(result);
+    }
+
+    public async Task<(byte[], string, string)> GetExcelFileAsync()
+    {
+        var users = await _userRepository.SelectAll().ToListAsync();
+        if (!users.Any())
+            throw new RevisionException(404, "Users table is empty");
+
+        var headers =new string[] {"Last name", "First name", "Email", "Phone", "Gender", "Role" };
+
+        var excelData = ExcelHtmlExtension.GenerateHTMLTable(headers, users, u =>
+        {
+            return new List<string>
+            {
+                u.LastName,
+                u.FirstName,
+                u.Email,
+                u.Phone,
+                u.Gender.ToString(),
+                u.Role.ToString(),
+            };
+        });
+
+        byte[] excelBytes = Encoding.UTF8.GetBytes(excelData);
+
+        string fileName = "GeneratedUsersReport_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
+
+        var webrootPath = Path.Combine(PathHelper.WebRootPath, "ExcelFiles");
+        if (!Directory.Exists(webrootPath))
+            Directory.CreateDirectory(webrootPath);
+
+        string filePath = Path.Combine(webrootPath, fileName);
+        await File.WriteAllBytesAsync(filePath, excelBytes);
+
+        var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+        return (excelBytes, contentType, fileName);
     }
 }
