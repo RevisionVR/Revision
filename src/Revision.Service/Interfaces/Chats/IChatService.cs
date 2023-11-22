@@ -9,4 +9,5 @@ public interface IChatService
     Task<bool> DeleteAsync(long id);
     Task<ChatResultDto> GetByIdAsync(long id);
     Task<IEnumerable<ChatResultDto>> GetByRoomIdAsync(long roomId);
+    Task<IEnumerable<ChatResultDto>> GetByUserIdAsync(long userId);
 }

@@ -1,4 +1,5 @@
 ﻿using Revision.Domain.Commons;
+using Revision.Domain.Entities.Chats;
 using Revision.Domain.Enums;
 
 namespace Revision.Domain.Entities.Users;
@@ -13,4 +14,5 @@ public class User : Auditable
     public string Salt { get; set; } = string.Empty;
     public Gender Gender { get; set; }
     public Role Role { get; set; }
+    public ICollection<Chat> Chats { get; set; }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.IRepositories;
 using Revision.Domain.Entities.Chats;
+using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.Assets;
 using Revision.Service.DTOs.Chats;
@@ -15,22 +16,28 @@ public class ChatService : IChatService
 {
     private readonly IMapper _mapper;
     private readonly IAssetService _assetService;
+    private readonly IRepository<User> _userRepository;
     private readonly IRepository<Chat> _chatRepository;
     private readonly IRepository<ChatRoom> _chatRoomRepository;
     public ChatService(
         IMapper mapper,
         IAssetService assetService,
+        IRepository<User> userRepository,
         IRepository<Chat> chatRepository,
         IRepository<ChatRoom> chatRoomRepository)
     {
         _mapper = mapper;
         _assetService = assetService;
+        _userRepository = userRepository;
         _chatRepository = chatRepository;
         _chatRoomRepository = chatRoomRepository;
     }
 
     public async Task<ChatResultDto> CreateAsync(ChatCreationDto dto)
     {
+        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
+            ?? throw new RevisionException(404, "This user is not found");
+
         var existRoom = await _chatRoomRepository.SelectAsync(room => room.Id.Equals(dto.ChatRoomId))
             ?? throw new RevisionException(404, "This chat room is not found");
 
@@ -42,6 +49,7 @@ public class ChatService : IChatService
             mappedChat.Asset = asset;
         }
 
+        mappedChat.User = existUser;
         mappedChat.ChatRoom = existRoom;
         mappedChat.CreatedAt = TimeHelper.GetDateTime();
         await _chatRepository.AddAsync(mappedChat);
@@ -58,6 +66,9 @@ public class ChatService : IChatService
         var existRoom = await _chatRoomRepository.SelectAsync(room => room.Id.Equals(dto.ChatRoomId))
             ?? throw new RevisionException(404, "This chat room is not found");
 
+        var existUser = await _userRepository.SelectAsync(user => user.Id.Equals(dto.UserId))
+            ?? throw new RevisionException(404, "This user is not found");
+
         var mappedChat = _mapper.Map(dto, existChat);
         mappedChat.Id = id;
         if (dto.FormFile is not null)
@@ -68,6 +79,7 @@ public class ChatService : IChatService
         }
 
         mappedChat.ChatRoom = existRoom;
+        mappedChat.User = existUser;
         mappedChat.UpdatedAt = TimeHelper.GetDateTime();
         _chatRepository.Update(mappedChat);
         await _chatRepository.SaveAsync();
@@ -98,6 +110,15 @@ public class ChatService : IChatService
         var chats = await _chatRepository.SelectAll(chat => chat.ChatRoomId.Equals(roomId)).ToListAsync();
         if (!chats.Any())
             throw new RevisionException(404, "This chat room is not found");
+
+        return _mapper.Map<IEnumerable<ChatResultDto>>(chats);
+    }
+
+    public async Task<IEnumerable<ChatResultDto>> GetByUserIdAsync(long userId)
+    {
+        var chats = await _chatRepository.SelectAll(chat => chat.UserId.Equals(userId)).ToListAsync();
+        if (!chats.Any())
+            throw new RevisionException(404, "This user is not found");
 
         return _mapper.Map<IEnumerable<ChatResultDto>>(chats);
     }
