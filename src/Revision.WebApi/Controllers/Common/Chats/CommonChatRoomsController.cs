@@ -51,4 +51,13 @@ public class CommonChatRoomsController : BaseController
             Message = "Success",
             Data = await _chatRoomService.GetByEducationIdAsync(educationId)
         });
+
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetAllAsync()
+        => Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Success",
+            Data = await _chatRoomService.GetAllAsync()
+        });
 }
