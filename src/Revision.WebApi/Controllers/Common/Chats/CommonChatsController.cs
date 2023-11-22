@@ -61,4 +61,14 @@ public class CommonChatsController : BaseController
            Message = "Success",
            Data = await _chatService.GetByRoomIdAsync(roomId)
        });
+
+
+    [HttpGet("get-by-user/{userId:long}")]
+    public async Task<IActionResult> GetByUserIdAsync(long userId)
+       => Ok(new Response
+       {
+           StatusCode = 200,
+           Message = "Success",
+           Data = await _chatService.GetByUserIdAsync(userId)
+       });
 }
