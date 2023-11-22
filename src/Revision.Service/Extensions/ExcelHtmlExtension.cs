@@ -15,13 +15,13 @@ public static class ExcelHtmlExtension
             "<thead>" +
             "<tr style='font-weight:bold;'>";
 
-        // Generating table headers
+        //table headers
         foreach (var header in headers)
             table += "<td>" + header + "</td>";
 
         table += "</tr></thead><tbody>";
 
-        // Generating table rows
+        //table rows
         foreach (var item in data)
         {
             table += "<tr>";

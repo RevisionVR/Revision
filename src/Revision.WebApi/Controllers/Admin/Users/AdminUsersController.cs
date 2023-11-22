@@ -67,11 +67,4 @@ public class AdminUsersController : AdminBaseController
             Message = "Success",
             Data = await _userService.GetAllAsync(pagination, search)
         });
-
-    [HttpGet("get-excel-file")]
-    public async Task<IActionResult> GetExcelFileAsync()
-    {
-        var result = await _userService.GetExcelFileAsync();
-        return File(result.Item1, result.Item2, result.Item3);
-    }
 }

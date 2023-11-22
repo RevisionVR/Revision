@@ -8,6 +8,7 @@ using Revision.Service.Interfaces.Auth;
 using Revision.Service.Interfaces.Chats;
 using Revision.Service.Interfaces.Devices;
 using Revision.Service.Interfaces.Educations;
+using Revision.Service.Interfaces.Excel;
 using Revision.Service.Interfaces.Notifications;
 using Revision.Service.Interfaces.Payments;
 using Revision.Service.Interfaces.Subjects;
@@ -20,6 +21,7 @@ using Revision.Service.Services.Auth;
 using Revision.Service.Services.Chats;
 using Revision.Service.Services.Devices;
 using Revision.Service.Services.Educations;
+using Revision.Service.Services.Excel;
 using Revision.Service.Services.Payments;
 using Revision.Service.Services.Subjects;
 using Revision.Service.Services.Topics;
@@ -95,6 +97,9 @@ public static class ServiceExtensions
         //Device
         services.AddScoped<IDeviceService, DeviceService>();
         services.AddScoped<IDeviceCountService, DeviceCountService>();
+
+        //Excel 
+        services.AddScoped<IExcelService, ExcelService>();
         #endregion
     }
 }

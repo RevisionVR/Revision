@@ -1,5 +1,6 @@
 ﻿using Revision.Domain.Configurations;
 using Revision.Domain.Enums;
+using Revision.Service.Commons.Models;
 using Revision.Service.DTOs.Users;
 
 namespace Revision.Service.Interfaces.Users;
@@ -14,5 +15,4 @@ public interface IUserService
     Task<IEnumerable<UserResultDto>> GetByRoleAsync(Role role);
     Task<UserResultDto> UpdateSecurityAsync(long id, UserSecurityUpdateDto security);
     Task<IEnumerable<UserResultDto>> GetAllAsync(PaginationParams pagination, string search = null);
-    Task<(byte[], string, string)> GetExcelFileAsync();
 }
