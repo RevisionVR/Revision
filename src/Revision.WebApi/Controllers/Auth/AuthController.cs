@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("verify-code")]
-    public async Task<IActionResult> VerifyResetPasswordAsync([FromForm] ResetPassword dto)
+    public async Task<IActionResult> VerifyResetPasswordAsync([FromForm] ResetPasswordDto dto)
         => Ok(new Response
         {
             StatusCode = 200,
