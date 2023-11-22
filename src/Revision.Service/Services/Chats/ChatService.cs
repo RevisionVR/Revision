@@ -99,7 +99,8 @@ public class ChatService : IChatService
 
     public async Task<ChatResultDto> GetByIdAsync(long id)
     {
-        var existChat = await _chatRepository.SelectAsync(chat => chat.Id.Equals(id))
+        var existChat = await _chatRepository.SelectAsync(chat => chat.Id.Equals(id), 
+            includes: new[] { "ChatRoom", "User" })
             ?? throw new RevisionException(404, "This chat is not found");
 
         return _mapper.Map<ChatResultDto>(existChat);
@@ -107,7 +108,9 @@ public class ChatService : IChatService
 
     public async Task<IEnumerable<ChatResultDto>> GetByRoomIdAsync(long roomId)
     {
-        var chats = await _chatRepository.SelectAll(chat => chat.ChatRoomId.Equals(roomId)).ToListAsync();
+        var chats = await _chatRepository.SelectAll(chat => chat.ChatRoomId.Equals(roomId), 
+            includes: new[] { "ChatRoom","User" })
+            .ToListAsync();
         if (!chats.Any())
             throw new RevisionException(404, "This chat room is not found");
 
@@ -116,7 +119,9 @@ public class ChatService : IChatService
 
     public async Task<IEnumerable<ChatResultDto>> GetByUserIdAsync(long userId)
     {
-        var chats = await _chatRepository.SelectAll(chat => chat.UserId.Equals(userId)).ToListAsync();
+        var chats = await _chatRepository.SelectAll(chat => chat.UserId.Equals(userId),
+            includes: new[] { "ChatRoom", "User" })
+            .ToListAsync();
         if (!chats.Any())
             throw new RevisionException(404, "This user is not found");
 
