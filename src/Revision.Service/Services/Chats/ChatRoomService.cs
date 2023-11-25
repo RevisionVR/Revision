@@ -79,15 +79,13 @@ public class ChatRoomService : IChatRoomService
         return _mapper.Map<IEnumerable<ChatRoomResultDto>>(existRoom);
     }
 
-    public async Task<IEnumerable<ChatRoomResultDto>> GetByEducationIdAsync(long educationId)
+    public async Task<ChatRoomResultDto> GetByEducationIdAsync(long educationId)
     {
-        var existRoom = await _chatRoomRepository.SelectAll(room => room.EducationId.Equals(educationId),
-            includes: new[] { "User", "Education", "Chats" }).ToListAsync();
+        var existRoom = await _chatRoomRepository.SelectAsync(room => room.EducationId.Equals(educationId),
+            includes: new[] { "User", "Education", "Chats" })
+            ?? throw new RevisionException(404, "This room is not found");
 
-        if (!existRoom.Any())
-            throw new RevisionException(404, "This room is not found");
-
-        return _mapper.Map<IEnumerable<ChatRoomResultDto>>(existRoom);
+        return _mapper.Map<ChatRoomResultDto>(existRoom);
     }
 
     public async Task<IEnumerable<ChatRoomResultDto>> GetAllAsync()

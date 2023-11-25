@@ -6,6 +6,7 @@ using Revision.Domain.Entities.Users;
 using Revision.Domain.Enums;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.Commons.Security;
+using Revision.Service.DTOs.Topics;
 using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Extensions;
@@ -139,5 +140,11 @@ public class UserService : IUserService
 
         var result = users.ToPagedList(pagination);
         return _mapper.Map<IEnumerable<UserResultDto>>(result);
+    }
+
+    public async Task<IEnumerable<UserResultDto>> GetAllAsync()
+    {
+        var users = await _userRepository.SelectAll().ToListAsync();
+        return _mapper.Map<IEnumerable<UserResultDto>>(users);
     }
 }
