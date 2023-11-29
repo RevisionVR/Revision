@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Revision.Domain.Configurations;
 using Revision.Domain.Enums;
 using Revision.Service.DTOs.Devices;
@@ -57,14 +58,14 @@ public class AdminDevicesController : AdminBaseController
         });
     }
 
-
+    [AllowAnonymous]
     [HttpPut("update/status/{uniqueId}")]
     public async Task<IActionResult> UpdateIsActiveAsync(string uniqueId, DeviceStatus status)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _deviceService.UpdateIsActiveAsync(uniqueId.ToString(), status)
+            Data = await _deviceService.UpdateIsActiveAsync(uniqueId, status)
         });
 
 
