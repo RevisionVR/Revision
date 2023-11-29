@@ -99,7 +99,8 @@ public class ChatService : IChatService
     public async Task<ChatResultDto> GetByIdAsync(long id)
     {
         var existChat = await _chatRepository.SelectAsync(chat => chat.Id.Equals(id), 
-            includes: new[] { "ChatRoom", "User" })
+            includes: new[] { "ChatRoom", "User", "Asset" })
+
             ?? throw new RevisionException(404, "This chat is not found");
 
         return _mapper.Map<ChatResultDto>(existChat);
@@ -108,7 +109,7 @@ public class ChatService : IChatService
     public async Task<IEnumerable<ChatResultDto>> GetByRoomIdAsync(long roomId)
     {
         var chats = _chatRepository.SelectAll(chat => chat.ChatRoomId.Equals(roomId),
-            includes: new[] { "ChatRoom", "User" });
+            includes: new[] { "ChatRoom", "User", "Asset" });
 
         return _mapper.Map<IEnumerable<ChatResultDto>>(chats);
     }
@@ -116,7 +117,7 @@ public class ChatService : IChatService
     public async Task<IEnumerable<ChatResultDto>> GetByUserIdAsync(long userId)
     {
         var chats = _chatRepository.SelectAll(chat => chat.UserId.Equals(userId),
-            includes: new[] { "ChatRoom", "User" });
+            includes: new[] { "ChatRoom", "User", "Asset" });
 
         return _mapper.Map<IEnumerable<ChatResultDto>>(chats);
     }

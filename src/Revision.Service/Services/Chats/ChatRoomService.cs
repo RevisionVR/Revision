@@ -6,7 +6,6 @@ using Revision.Domain.Entities.Educations;
 using Revision.Domain.Entities.Users;
 using Revision.Service.Commons.Helpers;
 using Revision.Service.DTOs.ChatRooms;
-using Revision.Service.DTOs.Users;
 using Revision.Service.Exceptions;
 using Revision.Service.Interfaces.Chats;
 
@@ -57,7 +56,7 @@ public class ChatRoomService : IChatRoomService
         return _mapper.Map<ChatRoomResultDto>(mappedRoom);
     }
 
-    public async Task<bool> DestroyAsync(long id)
+    public async Task<bool> DeleteAsync(long id)
     {
         var existRoom = await _chatRoomRepository.SelectAsync(room => room.Id.Equals(id),
             includes: new[] { "User", "Education" })
@@ -88,10 +87,14 @@ public class ChatRoomService : IChatRoomService
         return _mapper.Map<ChatRoomResultDto>(existRoom);
     }
 
-    public async Task<IEnumerable<ChatRoomResultDto>> GetAllAsync()
+    public async Task<IEnumerable<ChatRoomResultDto>> GetAllAsync(string search = null)
     {
-        var resultDb = await  _chatRoomRepository.SelectAll(includes: new[] { "Education", "Chats" }).ToListAsync();
-
-        return _mapper.Map<IEnumerable<ChatRoomResultDto>>(resultDb);
+        var chatRooms = _chatRoomRepository.SelectAll(
+            includes: new[] { "Education", "Chats" });
+        if (!string.IsNullOrEmpty(search))
+        {
+            chatRooms = chatRooms.Where(room => room.Education.Name.ToLower().Contains(search.ToLower()));
+        }
+        return _mapper.Map<IEnumerable<ChatRoomResultDto>>(chatRooms);
     }
 }

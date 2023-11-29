@@ -23,13 +23,13 @@ public class CommonChatRoomsController : BaseController
         });
 
 
-    [HttpDelete("destroy/{id:long}")]
-    public async Task<IActionResult> DestroyAsync(long id)
+    [HttpDelete("delete/{id:long}")]
+    public async Task<IActionResult> DeleteAsync(long id)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _chatRoomService.DestroyAsync(id)
+            Data = await _chatRoomService.DeleteAsync(id)
         });
 
 
@@ -52,12 +52,13 @@ public class CommonChatRoomsController : BaseController
             Data = await _chatRoomService.GetByEducationIdAsync(educationId)
         });
 
+
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<IActionResult> GetAllAsync([FromQuery] string search)
         => Ok(new Response
         {
             StatusCode = 200,
             Message = "Success",
-            Data = await _chatRoomService.GetAllAsync()
+            Data = await _chatRoomService.GetAllAsync(search)
         });
 }
