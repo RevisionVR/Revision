@@ -51,6 +51,7 @@ public class TopicService : ITopicService
             ?? throw new RevisionException(404, "This subject is not found");
 
         var mappedTopic = _mapper.Map(dto, existTopic);
+        mappedTopic.UpdatedAt = TimeHelper.GetDateTime();
         mappedTopic.Id = id;
         mappedTopic.Subject = existSubject;
 
