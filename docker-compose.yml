@@ -6,8 +6,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: revision-backend-container-test
-    image: revision-backend-image-test:latest
+    container_name: revision-backend-container
+    image: revision-backend-image:latest
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -15,8 +15,8 @@ services:
     depends_on:
       - database
     ports:
-      - 8888:80
-      - 4444:443
+      - 8080:80
+      - 4343:443
     networks:
       - db_bridge
 
@@ -24,12 +24,12 @@ services:
     build: 
       context: .
       dockerfile: ./apps/postgres/Dockerfile
-    container_name: revision-database-container-test
-    hostname: revision-database-host-test
-    image: revision-database-image-test
+    container_name: revision-database-container
+    hostname: revision-database-host
+    image: revision-database-image
     restart: always
     ports:
-      - 5434:5432
+      - 5433:5432
     networks:
       - db_bridge
     
