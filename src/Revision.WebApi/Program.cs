@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Revision.DataAccess.Contexts;
 using Revision.Service.Commons.Helpers;
+using Revision.Service.Services.Hubs;
 using Revision.Shared.Helpers;
 using Revision.WebApi.Extensions;
 using Revision.WebApi.Middlewares;
@@ -52,5 +53,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<TestRevision>("/TestRevision");
 
 app.Run();
