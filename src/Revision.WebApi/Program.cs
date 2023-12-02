@@ -22,7 +22,7 @@ builder.Services.AddDbContext<RevisionDbContext>(options =>
 //AuthSwagger
 builder.ConfigureSwaggerAuth();
 builder.ConfigureJwtAuth();
-
+builder.Services.AddSignalR();
 //Services
 builder.Services.AddCustomServices();
 //builder.ConfigureServiceLayer();
