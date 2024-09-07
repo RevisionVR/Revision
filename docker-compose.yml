@@ -16,7 +16,7 @@ services:
       - database
     ports:
       - 8080:80
-      - 4343:443
+      - 2323:443
     networks:
       - db_bridge
 
